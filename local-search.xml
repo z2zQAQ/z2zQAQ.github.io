@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>fumo_backdoor复现</title>
+    <link href="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/"/>
+    <url>/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><p>php代码审计，phpsession反序列化利用</p><h2 id="Imgaick类"><a href="#Imgaick类" class="headerlink" title="Imgaick类"></a>Imgaick类</h2><p>（vid:msl与mvg协议)</p><h3 id="msl语法基础"><a href="#msl语法基础" class="headerlink" title="msl语法基础"></a>msl语法基础</h3><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/1fcf8e22a17c633d348dc10bd2451570.png" alt="截图"></p><h3 id="vid特性"><a href="#vid特性" class="headerlink" title="vid特性"></a>vid特性</h3><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/848906440bfb201ccc0ce5f5689e741c.png" alt="截图"></p><h3 id="3-msl脚本标签"><a href="#3-msl脚本标签" class="headerlink" title="3 msl脚本标签"></a>3 msl脚本标签</h3><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/dfd6fe5579b65520eaa4e8505e571de5.png" alt="截图">.</p><p>这题用到了上面的base64解密，据博客所说还可以直接使用inline:data:text&#x2F;8BIM;base64实现不符合PPM协议的数据写入</p><h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/7498bfd512dd2684b33f562988997a92.png" alt="截图"></p><br/><p>接受两个参数，cmd可以实现清除&#x2F;tmp目录与反序列化。</p><p>data构造的链子很简单，__sleep绕过waf后可以实现任意文件读取可以无法触发（需要序列化），__wakeup存在new $class($argv),想到原生类，这里利用了Imagick类</p><h1 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h1><p>三个利用点：需要触发sleep魔术方法来读取文件，同时wakeup会导致无参rce（并不可以直接利用）以及原生类利用（这里用到imagick）</p><p>利用imgick漏洞将flag移动到&#x2F;tmp目录之后</p><p>将一段恶意数据设置到&#x2F;tmp&#x2F;sessxxx目录下，path设置在flag相应目录</p><p>利用vid:msl:&#x2F;tmp&#x2F;php*上传上面的数据到&#x2F;tmp&#x2F;sess_user中</p><p>触发phpsess反序列化来调用wakeup</p><h2 id="0"><a href="#0" class="headerlink" title="0"></a>0</h2><p>清空tmp目录</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/f8b8571bcb7f9390f01b8c83d0e69bb2.png" alt="截图"></p><h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>创建一个写入了脏数据的PPM图片，末尾是复制之后的flag路径，最终用来触发readfile函数</p><blockquote><p><a href="https://github.com/ImageMagick/ImageMagick/blob/main/www/formats.html">https://github.com/ImageMagick/ImageMagick/blob/main/www/formats.html</a></p></blockquote><p>（PPM图片允许末尾写入脏数据并且不被imagic忽略）</p><br/><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/185f0736880412afc3b83c963e308892.png" alt="截图"></p><p>则在末尾写入数据,重要的是数据的大小要符合PPM要求</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/7f6a7e609d6b27fbb324b2960149bef6.png" alt="截图"></p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/cf76657af9f1518ef05dc60103b468bc.png" alt="截图"></p><br/><h2 id="2"><a href="#2" class="headerlink" title="2"></a>2</h2><p>触发wakeup魔术方法利用imagick把上面的图片存入sess_user中</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/3f1d0fb4e117b8c3449602b3ec5765c5.png" alt="截图"></p><p>将上面的图片数据修改为对应格式<img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/db561b80a3827e9584b64354f5ee767d.png" alt="截图"></p><p>本身是想用postman上传的，但是没找着发包的内容导致检查不了，就直接用bp发包了</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/1d902bf270a623ee5e8132229547abc5.png" alt="截图"></p><h2 id="3"><a href="#3" class="headerlink" title="3"></a>3</h2><p>imagick的mvg协议将flag复制到res中</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/c1860808ffa62ecfc54d11a4936bff0e.png" alt="截图"></p><br/><h2 id="4"><a href="#4" class="headerlink" title="4"></a>4</h2><p>启动session传入PHPSESSION反序列化sess_user来触发__sleep方法</p><p><img src="/2023/10/28/fumo-backdoor%E5%A4%8D%E7%8E%B0/e247883ae9dc771e95c8ffe6abbbfa1b.png" alt="截图"></p><pre><code class="hljs">    最后发包就应该能获取flag的，这里可能本地环境有点问题....复现的大佬也说有时候要多试几次，我这边一直没出![截图](93b0dda5e3dba6abe80ceccaf4d888b3.png)</code></pre><h3 id="5"><a href="#5" class="headerlink" title="5"></a>5</h3><p>最后整理一下漏洞触发的流程</p><p>当我们开启session并且访问对应的php_user文件时会将他的内容反序列化，</p><p>这个文件是先前被攻击者利用imagick恶意写入的，因此存在脏数据（反序列化时会访问&#x2F;tmp&#x2F;xxx文件）</p><p>并且攻击者已经利用imagick协议将flag写入到&#x2F;tmp&#x2F;xxx文件中</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote><p><a href="https://www.yuque.com/dat0u/ctf/utr6r6bhaltes2yv">https://www.yuque.com/dat0u/ctf/utr6r6bhaltes2yv</a></p><p><a href="https://aecous.github.io/2023/06/27/Imagick%E8%A7%A6%E5%8F%91msl/#%E6%A0%B7%E9%A2%98-ciscn2022-backdoor">https://aecous.github.io/2023/06/27/Imagick%E8%A7%A6%E5%8F%91msl/#%E6%A0%B7%E9%A2%98-ciscn2022-backdoor</a></p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>ctf</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>代码审计</tag>
+      
+      <tag>ctf</tag>
+      
+      <tag>php</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>机器学习</title>
     <link href="/2023/10/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     <url>/2023/10/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</url>
