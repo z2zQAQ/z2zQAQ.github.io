@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bz.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="z2zQAQ">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="pyjail，ssti相关的python内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python安全">
+<meta property="og:url" content="http://example.com/2024/06/27/python%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="Welcome to my world">
+<meta property="og:description" content="pyjail，ssti相关的python内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\JMYUbN0Muo6bmJxJgCwcaAvsnwd.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\G5h3bn52zoDQfrxaELvc0YHfnWd.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\ApwDbuepgoKiWIx4Kq4cBFMUnvd.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\V3YCbEVRnoZavrxacLXc47e0nwc.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\Lc5Kbt0QSo3rsHx5lovcOmaDnsf.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\QihObZQH1owVLJxaD1PcyTzInNg.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\S5TTbL3oWo5XIrxDmIMcAo7wnAL.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\OI5xbuJxfoKFB4xhk4Jcx78RnJv.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\KkQ6bravHoP8Uoxbo50c9g56n2f.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\V4oobclegoLhIrxH64UcuslYnXc.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\M1FLbpvjxo01PNxouikcmiiOnKc.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\WAkwbNqGZoXmCVxRcAgcPDuGnEE.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\H6H3b0C0RoAnAKx7KjmcMuTrnVg.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610152619197.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610152942891.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610153312932.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610153437556.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610153513555.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610153552642.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610153858787.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610154233610.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610154308261.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610154324692.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612121536686.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612121545670.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612104521484.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240610155737068.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612115730113.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612120104791.png">
+<meta property="og:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\image-20240612104158931.png">
+<meta property="article:published_time" content="2024-06-27T15:08:28.000Z">
+<meta property="article:modified_time" content="2024-06-27T15:12:13.188Z">
+<meta property="article:author" content="z2zQAQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="e:\blog\source_posts\python%E5%AE%89%E5%85%A8\JMYUbN0Muo6bmJxJgCwcaAvsnwd.png">
+  
+  
+  
+  <title>python安全 - Welcome to my world</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/cloudedGlass.css">
+<link rel="stylesheet" href="/z2z_custom/custom.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":80,"cursorChar":"__","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>z2zQAQ</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/moon.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="python安全"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-27 23:08" pubdate>
+          2024年6月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">python安全</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h1><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><blockquote>
+<p>python 函数和类方法(对于类未重写的内置方法数据类型为装饰器 wrapper_descriptor，重写后为 function)都有一个__globals__属性可以将函数或者类方法申明的变量空间中的全局变量以字典的方式返回</p>
+</blockquote>
+<p><img src="E:\blog\source_posts\python安全\JMYUbN0Muo6bmJxJgCwcaAvsnwd.png" srcset="/img/loading.gif" lazyload></p>
+<p>如上定义了全局变量和 a 类中的内置变量，如何通过一个 b 的实例来修改他们？</p>
+<p><img src="E:\blog\source_posts\python安全\G5h3bn52zoDQfrxaELvc0YHfnWd.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取了 b 的__init__方法后调用__globals__属性修改了全局变量以及未继承的类属性</p>
+<h3 id="继承链"><a href="#继承链" class="headerlink" title="继承链"></a>继承链</h3><p><strong>mro</strong>[-1]:获取类的继承关系，最后一个是 class 类，也可以直接用__base__（需要保证直接继承 class）</p>
+<p><strong>init</strong>.<strong>globals</strong>:获取方法后调用 globals 获取全局变量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">payload = &#123;<br>    <span class="hljs-string">&quot;__class__&quot;</span> : &#123;<br>        <span class="hljs-string">&quot;__base__&quot;</span> : &#123;<br>            <span class="hljs-string">&quot;__str__&quot;</span> : <span class="hljs-string">&quot;Polluted ~&quot;</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>获取实例的类之后获取它的基类，修改基类的__str__属性（也可以指向其他属性），但是无法直接修改 object 类，且需要有继承关系</p>
+<h3 id="sys-模块"><a href="#sys-模块" class="headerlink" title="sys 模块"></a>sys 模块</h3><p>在此基础上可以修改其他模块的属性，但是当代码复杂的时候需要利用 sys 模块</p>
+<blockquote>
+<p><code>sys</code> 模块的 <code>modules</code> 属性以字典的形式包含了程序自开始运行时所有已加载过的模块，可以直接从该属性中获取到目标模块</p>
+</blockquote>
+<p><img src="E:\blog\source_posts\python安全\ApwDbuepgoKiWIx4Kq4cBFMUnvd.png" srcset="/img/loading.gif" lazyload></p>
+<p>sys 字典存放了所有加载的模组（python 中存在默认加载的模组，但是其并不一定可用），如果被 ban 掉了 os 模块，可以将其删除后重新导入</p>
+<p><img src="E:\blog\source_posts\python安全\V3YCbEVRnoZavrxacLXc47e0nwc.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="loader-加载器"><a href="#loader-加载器" class="headerlink" title="loader 加载器"></a>loader 加载器</h3><blockquote>
+<p>loader 是为实现模块加载而设计的类，其在 <code>importlib</code> 这一内置模块中有具体实现。令人庆幸的是 <code>importlib</code> 模块下所有的 <code>py</code> 文件中均引入了 <code>sys</code> 模块</p>
+</blockquote>
+<p>因此只要获取一个 loader 就可以得到 sys 模块，其中__loader__属性会被默认赋值为当前模块的 loader(debug 模式为 None)</p>
+<p>__spec__内置属性定义在 importlib 模块下，可以利用</p>
+<p><img src="E:\blog\source_posts\python安全\Lc5Kbt0QSo3rsHx5lovcOmaDnsf.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="E:\blog\source_posts\python安全\QihObZQH1owVLJxaD1PcyTzInNg.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="defaults-与-kwdefaults"><a href="#defaults-与-kwdefaults" class="headerlink" title="defaults 与 kwdefaults"></a>defaults 与 kwdefaults</h3><p>存放了函数默认值</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h1 id="沙箱逃逸"><a href="#沙箱逃逸" class="headerlink" title="沙箱逃逸"></a>沙箱逃逸</h1><h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;os&#x27;</span>).system(<span class="hljs-string">&#x27;sh&#x27;</span>)<br>___import__(<span class="hljs-string">&#x27;os&#x27;</span>).system(<span class="hljs-string">&#x27;cat ./flag.txt&#x27;</span>)_<br><span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag&quot;</span>).read()<br></code></pre></td></tr></table></figure>
+
+<h2 id="Trick"><a href="#Trick" class="headerlink" title="Trick"></a>Trick</h2><p>getattr 获取属性</p>
+<p>chr（）</p>
+<p>bytes.decode</p>
+<p><img src="E:\blog\source_posts\python安全\S5TTbL3oWo5XIrxDmIMcAo7wnAL.png" srcset="/img/loading.gif" lazyload></p>
+<p>Tips:bytes 函数本身也可以寻找</p>
+<p>Help：交互终端 rce</p>
+<p>输入之后再输入模块名（os 获取__main__）</p>
+<p>breakpoint（）:进入 Pdb 调试一句话 RCE</p>
+<p>海象运算符:&#x3D;：一个 input 执行多行命令</p>
+<p>dir 查看方法</p>
+<p>lambda 绕过</p>
+<p>__doc__文档表寻找可用字符</p>
+<p><img src="E:\blog\source_posts\python安全\OI5xbuJxfoKFB4xhk4Jcx78RnJv.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="原型链污染"><a href="#原型链污染" class="headerlink" title="原型链污染"></a>原型链污染</h1><h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>污染 flask secret_key（伪造秘钥）</p>
+<p>和_got_first_request 和_static_url_path</p>
+<p>exported_names</p>
+<h5 id="os-path-pardir（影响了-render-template-的解析，默认为-，flask-通过它来限制目录穿越则可把他修改为其他无关的内容）"><a href="#os-path-pardir（影响了-render-template-的解析，默认为-，flask-通过它来限制目录穿越则可把他修改为其他无关的内容）" class="headerlink" title="os.path.pardir（影响了 render_template 的解析，默认为..，flask****通过它来限制目录穿越则可把他修改为其他无关的内容）"></a><strong>os.path.pardir<strong><strong>（影响了 render_template 的解析，默认为..，</strong></strong>flask****通过它来限制目录穿越则可把他修改为其他无关的内容）</strong></h5><p>jinjia_env(修改语法实现 ssti 绕过 waf)</p>
+<p><img src="E:\blog\source_posts\python安全\KkQ6bravHoP8Uoxbo50c9g56n2f.png" srcset="/img/loading.gif" lazyload></p>
+<p>os.environ</p>
+<h2 id="Trick-1"><a href="#Trick-1" class="headerlink" title="Trick"></a>Trick</h2><h2 id="变量覆盖"><a href="#变量覆盖" class="headerlink" title="变量覆盖"></a>变量覆盖</h2><p>for 循环</p>
+<p><img src="E:\blog\source_posts\python安全\V4oobclegoLhIrxH64UcuslYnXc.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="绕过空格"><a href="#绕过空格" class="headerlink" title="绕过空格"></a>绕过空格</h2><p>list 生成器和中括号</p>
+<p><img src="E:\blog\source_posts\python安全\M1FLbpvjxo01PNxouikcmiiOnKc.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="eval-导致环境变量可修改"><a href="#eval-导致环境变量可修改" class="headerlink" title="eval 导致环境变量可修改"></a>eval 导致环境变量可修改</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/how-I-hack-bash-through-environment-injection.html">https://www.leavesongs.com/PENETRATION/how-I-hack-bash-through-environment-injection.html</a></p>
+</blockquote>
+<p>底层调用了 bash -c 指令</p>
+<p>若环境变量可控则可以执行命令</p>
+<p><img src="E:\blog\source_posts\python安全\WAkwbNqGZoXmCVxRcAgcPDuGnEE.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="unicode-字符"><a href="#unicode-字符" class="headerlink" title="unicode 字符"></a>unicode 字符</h2><p><img src="E:\blog\source_posts\python安全\H6H3b0C0RoAnAKx7KjmcMuTrnVg.png" srcset="/img/loading.gif" lazyload></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://ctf.njupt.edu.cn/archives/805">https://ctf.njupt.edu.cn/archives/805</a></p>
+</blockquote>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://kdxcxs.github.io/posts/wp/idekctf-2022-task-manager-wp/">https://kdxcxs.github.io/posts/wp/idekctf-2022-task-manager-wp/</a></p>
+</blockquote>
+<h1 id="PYjail"><a href="#PYjail" class="headerlink" title="PYjail"></a>PYjail</h1><h2 id="基础-1"><a href="#基础-1" class="headerlink" title="基础"></a>基础</h2><p><img src="E:\blog\source_posts\python安全\image-20240610152619197.png" srcset="/img/loading.gif" lazyload alt="image-20240610152619197"></p>
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><p>空格，_<em>import</em>_, importlib.import_module exefile(也可以open之后exec，一般要事先确认一下(path)</p>
+<h2 id="过滤引号"><a href="#过滤引号" class="headerlink" title="过滤引号"></a>过滤引号</h2><p>str函数</p>
+<p>chr函数</p>
+<p>list+dict</p>
+<p>_<em>doc</em>_</p>
+<p>bytes函数</p>
+<h2 id="字符串变化"><a href="#字符串变化" class="headerlink" title="字符串变化"></a>字符串变化</h2><p>[::-1]</p>
+<p>字符串拼接（+）</p>
+<p>eval&#x2F;exec</p>
+<p>_<em>loader</em>_.load_module</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240610152942891.png" srcset="/img/loading.gif" lazyload alt="image-20240610152942891"></p>
+<h2 id="恢复sys-module"><a href="#恢复sys-module" class="headerlink" title="恢复sys.module"></a>恢复sys.module</h2><p>一个存储加载过的模块信息，里面的模块不能直接使用，需要经过import</p>
+<p>import一个模块的时候：检查是否存在sys.module中吗，没有则创建并加载，有则不加载</p>
+<p>此外，存在modules中的库会优先import，如果在本地创建了同名文件，需要先del</p>
+<p>python3之后的reload需要导入importlib模块</p>
+<p>假如被禁用了：<img src="E:\blog\source_posts\python安全\image-20240610153312932.png" srcset="/img/loading.gif" lazyload alt="image-20240610153312932"></p>
+<h2 id="函数执行"><a href="#函数执行" class="headerlink" title="函数执行"></a>函数执行</h2><p>system不是字符串，不能编码绕过</p>
+<h3 id="其他函数"><a href="#其他函数" class="headerlink" title="其他函数"></a>其他函数<img src="E:\blog\source_posts\python安全\image-20240610153437556.png" srcset="/img/loading.gif" lazyload alt="image-20240610153437556"></h3><h3 id="getattr获取方法属性"><a href="#getattr获取方法属性" class="headerlink" title="getattr获取方法属性"></a>getattr获取方法属性</h3><p><img src="E:\blog\source_posts\python安全\image-20240610153513555.png" srcset="/img/loading.gif" lazyload alt="image-20240610153513555"></p>
+<p><img src="E:\blog\source_posts\python安全\image-20240610153552642.png" srcset="/img/loading.gif" lazyload alt="image-20240610153552642"></p>
+<h2 id="内建模块"><a href="#内建模块" class="headerlink" title="内建模块"></a>内建模块</h2><p>关于dict：一个模块对象有一个由字典对象实现的命名空间，属性的引用会被转换为这个字典中的查找，例如，m.x 等同于 m.dict[“x”]。</p>
+<p>那如果连<code>reload</code>都从<code>__builtins__</code>中删了，就没法恢复<code>__builtins__</code>了，需要另寻他法。还有一种情况是利用 <code>exec command in _global</code> 动态运行语句时的绕过</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240610153858787.png" srcset="/img/loading.gif" lazyload alt="image-20240610153858787"></p>
+<h2 id="继承关系逃逸"><a href="#继承关系逃逸" class="headerlink" title="继承关系逃逸"></a>继承关系逃逸</h2><p>直接继承与间接继承</p>
+<p>site类直接引入了os</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240610154233610.png" srcset="/img/loading.gif" lazyload alt="image-20240610154233610"></p>
+<p>warnings类的子类linecache引入了os<img src="E:\blog\source_posts\python安全\image-20240610154308261.png" srcset="/img/loading.gif" lazyload alt="image-20240610154308261"></p>
+<p><img src="E:\blog\source_posts\python安全\image-20240610154324692.png" srcset="/img/loading.gif" lazyload alt="image-20240610154324692"></p>
+<p>也就是先获取warnings再获取linecache再到os</p>
+<h2 id="行数限制"><a href="#行数限制" class="headerlink" title="行数限制"></a>行数限制</h2><p>exec中\n换行</p>
+<p>empile</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240612121536686.png" srcset="/img/loading.gif" lazyload alt="image-20240612121536686"></p>
+<p>海象表达式</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240612121545670.png" srcset="/img/loading.gif" lazyload alt="image-20240612121545670"></p>
+<h2 id="help"><a href="#help" class="headerlink" title="help()"></a>help()</h2><p>随便进一个模块 #！或者！sh  </p>
+<p>server</p>
+<p>locals</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240612104521484.png" srcset="/img/loading.gif" lazyload alt="image-20240612104521484"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>过滤. [] :_<em>getitem</em>_  pop()</p>
+<p>python3.6:PEP498<img src="E:\blog\source_posts\python安全\image-20240610155737068.png" srcset="/img/loading.gif" lazyload alt="image-20240610155737068"></p>
+<p>__globals__：func_globals</p>
+<p>_<em>mro__： _<em>bases</em></em> _<em>base</em>_</p>
+<p>引号：str</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240612115730113.png" srcset="/img/loading.gif" lazyload alt="image-20240612115730113"></p>
+<p>数字：<img src="E:\blog\source_posts\python安全\image-20240612120104791.png" srcset="/img/loading.gif" lazyload alt="image-20240612120104791"></p>
+<p>fromhex frombytes</p>
+<p>_<em>doc</em>_:从帮助文档获取字符</p>
+<p>dict(list())转换为字符串</p>
+<p>内建函数</p>
+<h2 id="特殊利用"><a href="#特殊利用" class="headerlink" title="特殊利用"></a>特殊利用</h2><p>byte函数：type(str(1).encode)</p>
+<p><img src="E:\blog\source_posts\python安全\image-20240612104158931.png" srcset="/img/loading.gif" lazyload alt="image-20240612104158931"></p>
+<p>抛出异常：raise OSError</p>
+<p>unicode注入</p>
+<p>eval(input)绕过输入长度限制</p>
+<p>breakpoint提起时期</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/12647?time__1311=mqmhDvqIrrGNDQtiQGkI5YW1fwfRmD#toc-9">CTF Pyjail 沙箱逃逸绕过合集 - 先知社区 (aliyun.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mumuhhh/p/17811377.html">(<em>´∇｀</em>) 欢迎回来！ (cnblogs.com)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/pyhon/" class="category-chain-item">pyhon</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>python安全</div>
+      <div>http://example.com/2024/06/27/python安全/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>z2zQAQ</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/27/top10%E6%BC%8F%E6%B4%9E/" title="top10漏洞">
+                        <span class="hidden-mobile">top10漏洞</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/z2z_custom/custom.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":240,"height":480},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
+
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/click.js"></script>
+
+
