@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/CvxDbdbYoo7e7xxC8xXcx2RSnid.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/G27ob7ITvoTlMCx6wkfc0X0Unzc.png">
 <meta property="article:published_time" content="2024-06-27T14:23:00.000Z">
-<meta property="article:modified_time" content="2024-06-27T15:30:52.665Z">
+<meta property="article:modified_time" content="2024-06-28T07:03:28.759Z">
 <meta property="article:author" content="z2zQAQ">
 <meta property="article:tag" content="蓝队">
 <meta property="article:tag" content="应急响应">
@@ -242,7 +242,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          28k 字
+          29k 字
         
       </span>
     
@@ -253,7 +253,7 @@
         
         
         
-          235 分钟
+          242 分钟
         
       </span>
     
@@ -295,39 +295,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="安全服务"><a href="#安全服务" class="headerlink" title="安全服务"></a>安全服务</h1><h1 id="问题处置"><a href="#问题处置" class="headerlink" title="问题处置"></a>问题处置</h1><h2 id="文件无法删除"><a href="#文件无法删除" class="headerlink" title="文件无法删除"></a><strong>文件无法删除</strong></h2><h3 id="进程占用"><a href="#进程占用" class="headerlink" title="进程占用"></a><strong>进程占用</strong></h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">lsof</span> xxxx.xx<br></code></pre></td></tr></table></figure>
-
-<h3 id="隐藏属性"><a href="#隐藏属性" class="headerlink" title="隐藏属性"></a><strong>隐藏属性</strong></h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sattr xxxx<span class="hljs-selector-class">.xx</span><br>chattr -<span class="hljs-selector-tag">a</span> xxxx<span class="hljs-selector-class">.xx</span><br>chattr -<span class="hljs-selector-tag">i</span> xxxx.xx<br></code></pre></td></tr></table></figure>
-
-<h3 id="上层文件存在-SBIT-权限"><a href="#上层文件存在-SBIT-权限" class="headerlink" title="上层文件存在 SBIT 权限"></a><strong>上层文件存在 SBIT 权限</strong></h3><p>这种情况只存在于非 root 权限去删除其他用户创建的目录的情况，即使文件权限是 777 也无法进行删除。<br>当目录被设置了粘滞位权限以后，即便用户对该目录有写入权限，也不能删除该目录中其他用户的文件数据，而是只有该文件的所有者和 root 用户才有权将其删除。<br>这种办法可以保持一种动态的平衡：允许各用户在目录中任意写入、删除数据，但是禁止随意删除其他用户的数据。<br>需要注意的是，粘滞位权限只能针对目录设置，对于文件无效。<br>设置了粘滞位权限的目录，使用 ls 命令查看其属性时，其他用户权限处的“x”将变为“t”。<br>粘滞位权限都是针对其他用户设置，使用 chmod 命令设置目录权限时，“o+t”、“o-t”权限模式可分别用于添加、移除粘滞位权限。</p>
-<h2 id="netstat-pantu-不显示-pid-而显示"><a href="#netstat-pantu-不显示-pid-而显示" class="headerlink" title="netstat -pantu 不显示 pid 而显示 -"></a><strong>netstat -pantu 不显示 pid 而显示 -</strong></h2><p>可能是使用了 <code>mkdir .hidden 或者 mount -o bind .hidden /proc/PID</code> 来隐藏</p>
-<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">cat <span class="hljs-string">/proc/</span>$$<span class="hljs-string">/mountinfo</span>   <span class="hljs-string">//</span>查询挂载信息<br>umount <span class="hljs-string">/proc/PID</span>   <span class="hljs-string">//</span>取消挂载<br></code></pre></td></tr></table></figure>
-
-<h2 id="ps-和-top-看不到恶意进程"><a href="#ps-和-top-看不到恶意进程" class="headerlink" title="ps 和 top 看不到恶意进程"></a><strong>ps 和 top 看不到恶意进程</strong></h2><ol>
-<li>挂载被隐藏（看上一个的操作）</li>
-<li>命令被替换（使用 busybox 进行检修）</li>
-<li>LD_PRELOAD 等方法共享库劫持（使用 busybox 进行检修）</li>
-</ol>
-<h2 id="快速查找文件"><a href="#快速查找文件" class="headerlink" title="快速查找文件"></a><strong>快速查找文件</strong></h2><p>【which】<br>从环境变量查找系统命令的具体文件位置<br>【whereis】<br>从&#x2F;usr 目录快速查找文件<br>【locate】<br>从 locatedb 数据库查找文件路径<br>【find】<br>强大的搜索命令<br><code>find &lt;检索路径&gt; &lt;选项&gt; &lt;搜索内容&gt;</code><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1348438">具体使用方法</a></p>
-<h2 id="确定系统信息"><a href="#确定系统信息" class="headerlink" title="确定系统信息"></a><strong>确定系统信息</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">cat <span class="hljs-regexp">/etc/i</span>ssue   <span class="hljs-regexp">//</span>系统版本<br>uname -m<br>getconf LONG_BIT   <span class="hljs-regexp">//</span>查看系统位数<br>cat <span class="hljs-regexp">/proc/</span>version   <span class="hljs-regexp">//</span>查看内核版本<br>uname -a<br></code></pre></td></tr></table></figure>
-
-<h2 id="系统完整性检测"><a href="#系统完整性检测" class="headerlink" title="系统完整性检测"></a><strong>系统完整性检测</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">rpm -Va   <span class="hljs-regexp">//</span>Centos<br>apt install debsums   <span class="hljs-regexp">//</span>Ubuntu、Debian<br>debsums --all --changed<br></code></pre></td></tr></table></figure>
-
-<h2 id="系统文件监控工具"><a href="#系统文件监控工具" class="headerlink" title="系统文件监控工具"></a><strong>系统文件监控工具</strong></h2><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">AIDE<span class="hljs-string">\inotify\tripwire</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="查看-glibc-版本"><a href="#查看-glibc-版本" class="headerlink" title="查看 glibc 版本"></a><strong>查看 glibc 版本</strong></h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">ldd <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="误删文件恢复"><a href="#误删文件恢复" class="headerlink" title="误删文件恢复"></a><strong>误删文件恢复</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk">被删除的文件在进程的内存空间还保存着一份，可以通过访问某个目录来找到文件恢复<br>如果正在进行读写操作：<br>lsof   <span class="hljs-regexp">//</span>查找进程文件恢复即可<br>mount   <span class="hljs-regexp">//</span>查看所有挂载点<br>umount   <span class="hljs-regexp">//</span>删除挂载点<br>lsblk -f   <span class="hljs-regexp">//</span>查看所有设备的挂载情况<br>df -T 路径   <span class="hljs-regexp">//</span>可查看该路径的所属挂载点、所在分区、所在分区的文件系统类型<br>cat <span class="hljs-regexp">/proc/</span>filesystems   <span class="hljs-regexp">//</span>查看文件系统的类型<br>常用恢复工具有：Extundelete、Debugfs、R-Linux、Ext3grep、Ext4magic<br></code></pre></td></tr></table></figure>
-
-<h2 id="批量检索文件并打印信息"><a href="#批量检索文件并打印信息" class="headerlink" title="批量检索文件并打印信息"></a><strong>批量检索文件并打印信息</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find / -name <span class="hljs-string">&quot;内容&quot;</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span> <span class="hljs-keyword">if</span> [ -f <span class="hljs-variable">$line</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">ls</span> -al <span class="hljs-variable">$line</span>; <span class="hljs-keyword">elif</span> [ -d <span class="hljs-variable">$line</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">ls</span> -al ../ | grep <span class="hljs-variable">$line</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="拷贝取证"><a href="#拷贝取证" class="headerlink" title="拷贝取证"></a><strong>拷贝取证</strong></h2><ol>
-<li>使用虚拟化平台存储快照</li>
-<li>打包整个系统</li>
-<li>全盘拷贝（推荐 clonezilla）</li>
-<li>进程拷贝（推荐 CRIU）</li>
-<li>组合运用（冻结进程 + 全盘拷贝 + 恢复进程）</li>
-</ol>
+                <p>通篇摘录，尚待学习&#x3D; &#x3D;</p>
 <h1 id="应急响应"><a href="#应急响应" class="headerlink" title="应急响应"></a>应急响应</h1><blockquote>
 <p><a target="_blank" rel="noopener" href="https://bypass007.github.io/Emergency-Response-Notes/Summary/">https://bypass007.github.io/Emergency-Response-Notes/Summary/</a></p>
 </blockquote>
@@ -340,7 +308,7 @@
 <p>现场现象是什么?如何发现的?(依据是什么) ?<br>什么时候发现的?<br>目前是否有做物理隔离(断网) ?<br>受害机器是哪个?<br>受害服务有几台?(1 台&#x2F;N 台)<br>最先发现是哪台 ?<br>这台服务器对外有哪些服务?<br>这台服务器于其他机器是否处于同一个内网?<br>操作系统类型?<br>是否有公网映射业务?<br>远程管理方式?<br>网络边界有没有流量监控设备?<br>主机侧是否有 EDR 等安全设备</p>
 </blockquote>
 <p><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/image-20240627162018816.png" srcset="/img/loading.gif" lazyload alt="image-20240627162018816"></p>
-<h3 id="问题处置-1"><a href="#问题处置-1" class="headerlink" title="问题处置"></a>问题处置</h3><blockquote>
+<h3 id="问题处置"><a href="#问题处置" class="headerlink" title="问题处置"></a>问题处置</h3><blockquote>
 <p>事件判断:判断是否是安全事件，何种安全事件，勒索、挖矿、断网、DDoS等等。以及安全事件的危害程度 </p>
 <p>临时处置:给出客户临时处置建议，断网隔离，保护现场环境，切断供给链</p>
 <p>深入分析:收集客户信息和中毒主机信息，包括<strong>样本，日志分析、进程分析、启动项分析、样本分析</strong>。 </p>
@@ -360,11 +328,11 @@
 <h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a><strong>Windows</strong></h2><h3 id="账号安全"><a href="#账号安全" class="headerlink" title="账号安全"></a>账号安全</h3><p>1.弱口令，远程端口</p>
 <p>2.可疑账号 <code>lusrmgr.msc</code></p>
 <p>3.隐藏账号，克隆账号</p>
-<p>a.打开注册表</p>
-<p>b.D 盾查杀</p>
+<p>​	a.打开注册表</p>
+<p>​	b.D 盾查杀</p>
 <p>4.日志</p>
-<p>a、Win+R 打开运行，输入“eventvwr.msc”，回车运行，打开“事件查看器”。</p>
-<p>b、导出 Windows 日志–安全，利用 Log Parser 进行分析。</p>
+<p>​	a、Win+R 打开运行，输入“eventvwr.msc”，回车运行，打开“事件查看器”。</p>
+<p>​	b、导出 Windows 日志–安全，利用 Log Parser 进行分析。</p>
 <h3 id="异常端口，进程"><a href="#异常端口，进程" class="headerlink" title="异常端口，进程"></a>异常端口，进程</h3><p>1、检查端口连接情况，是否有远程连接、可疑连接。</p>
 <ul>
 <li>检查方法：</li>
@@ -394,7 +362,7 @@
 <ul>
 <li>检查方法：</li>
 <li>a、登录服务器，单击【开始】&gt;【所有程序】&gt;【启动】，默认情况下此目录在是一个空目录，确认是否有非业务程序在该目录下。</li>
-<li>b、单击开始菜单 &gt;【运行】，输入 msconfig，查看是否存在命名异常的启动项目，是则取消勾选命名异常的启动项目，并到命令中显示的路径删除文件。</li>
+<li>b、单击开始菜单 &gt;【运行】，输入 <strong>msconfig</strong>，查看是否存在命名异常的启动项目，是则取消勾选命名异常的启动项目，并到命令中显示的路径删除文件。</li>
 <li>c、单击【开始】&gt;【运行】，输入 regedit，打开注册表，查看开机启动项是否正常，特别注意如下三个注册表项： <code>HKEY_CURRENT_USER\software\micorsoft\windows\currentversion\run HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Runonce</code> 检查右侧是否有启动异常的项目，如有请删除，并建议安装杀毒软件进行病毒查杀，清除残留病毒或木马。</li>
 <li>d、利用安全软件查看启动项、开机时间管理等。</li>
 <li>e、组策略，运行 gpedit.msc。</li>
@@ -404,15 +372,15 @@
 <ul>
 <li>检查方法：</li>
 <li>a、单击【开始】&gt;【设置】&gt;【控制面板】&gt;【任务计划】，查看计划任务属性，便可以发现木马文件的路径。</li>
-<li>b、单击【开始】&gt;【运行】；输入 cmd，然后输入 at，检查计算机与网络上的其它计算机之间的会话或计划任务，如有，则确认是否为正常连接。</li>
+<li>b、单击【开始】&gt;【运行】；输入 <strong>cmd</strong>，然后输入 <strong>at</strong>，检查计算机与网络上的其它计算机之间的会话或计划任务，如有，则确认是否为正常连接。</li>
 </ul>
 <p>3、服务自启动</p>
 <ul>
-<li>检查方法：单击【开始】&gt;【运行】，输入 services.msc，注意服务状态和启动类型，检查是否有异常服务。</li>
+<li>检查方法：单击【开始】&gt;【运行】，输入 <strong>services.msc</strong>，注意服务状态和启动类型，检查是否有异常服务。</li>
 </ul>
 <h3 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h3><p>1、查看系统版本以及补丁信息</p>
 <ul>
-<li>检查方法：单击【开始】&gt;【运行】，输入 systeminfo，查看系统信息</li>
+<li>检查方法：单击【开始】&gt;【运行】，输入 <strong>systeminfo</strong>，查看系统信息</li>
 </ul>
 <p>2、查找可疑目录及文件</p>
 <ul>
@@ -424,21 +392,21 @@
 </ul>
 <p>3、得到发现 WEBSHELL、远控木马的创建时间，如何找出同一时间范围内创建的文件？</p>
 <h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/image-20240627162645478.png" srcset="/img/loading.gif" lazyload alt="image-20240627162645478"></p>
-<p>系统日志</p>
+<p><strong>系统日志</strong></p>
 <ul>
 <li>分析方法：</li>
 <li>a、前提：开启审核策略，若日后系统出现故障、安全事故则可以查看系统的日志文件，排除故障，追查入侵者的信息等。</li>
 <li>b、Win+R 打开运行，输入“eventvwr.msc”，回车运行，打开“事件查看器”。</li>
 <li>C、导出应用程序日志、安全日志、系统日志，利用 Log Parser 进行分析。</li>
+<li><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/SWF3b6fXyoi5UzxjU3pcmeVTneg.png" srcset="/img/loading.gif" lazyload alt="截图"></li>
 </ul>
-<p>WEB 访问日志</p>
+<p><strong>WEB 访问日志</strong></p>
 <ul>
 <li>分析方法：</li>
 <li>a、找到中间件的 web 日志，打包到本地方便进行分析。</li>
 <li>b、推荐工具：Window 下，推荐用 EmEditor 进行日志分析，支持大文本，搜索效率还不错。</li>
 <li>Linux 下，使用 Shell 命令组合查询分析</li>
 </ul>
-<p><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/SWF3b6fXyoi5UzxjU3pcmeVTneg.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a><strong>常用命令</strong></h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-section">获取本机用户列表: net user</span><br><span class="hljs-section">本机管理员: net localgroup administrators</span><br><span class="hljs-section">查看当前会话: net session</span><br><span class="hljs-section">查看当前运行的服务: net start</span><br><span class="hljs-section">远程连接: net use</span><br><span class="hljs-section">查看当前用户下的共享目录: net share</span><br><span class="hljs-section">最近打开的文件:</span><br>%UserProfile%\Recent<br>%APPDATA%\Microsoft\Windows\Recent<br><span class="hljs-section">查找文件中的字符串: findstr /m /i /s &quot;hello&quot; *.txt</span><br><span class="hljs-section">查看网络连接: netstat - ano</span><br><span class="hljs-section">操作系统的详细配置信息: systeminfo</span><br><span class="hljs-section">获取系统进程信息: Wmic process</span><br><span class="hljs-section">根据应用程序查找PID: wmic process where name=&quot;cmd.exe” get processid,executablepath,name</span><br><span class="hljs-section">根据PID查找应用程序: wmic process where processid=&quot;1” get executablepath,name</span><br><span class="hljs-section">获取系统进程信息:tasklist</span><br>对于要查询特定dll的调用情况，可以使用命令tasklist /m dll名称<br><span class="hljs-section">计算样本MD5: certutil -hashfile %样本文件名% MD5</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a><strong>工具</strong></h3><p>病毒分析</p>
@@ -512,7 +480,9 @@
 
 <p>此处 sshd 是具体服务的脚本文件，S100ssh 是其软链接，S 开头代表加载时自启动；如果是 K 开头的脚本文件，代表运行级别加载时需要关闭的。</p>
 <p><strong>入侵排查：</strong></p>
-<p>启动项文件： more &#x2F;etc&#x2F;rc.local &#x2F;etc&#x2F;rc.d&#x2F;rc[0~6].d ls -l &#x2F;etc&#x2F;rc.d&#x2F;rc3.d&#x2F;</p>
+<p>启动项文件：</p>
+<p>more &#x2F;etc&#x2F;rc.local &#x2F;etc&#x2F;rc.d&#x2F;rc[0~6].d </p>
+<p>ls -l &#x2F;etc&#x2F;rc.d&#x2F;rc3.d&#x2F;</p>
 <h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p><strong>基本使用</strong></p>
 <p>1、利用 crontab 创建计划任务</p>
 <ul>
@@ -553,7 +523,7 @@
 <p>源码包安装的服务</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">查看服务安装位置 ，一般是在<span class="hljs-regexp">/user/</span>local/<br>service httpd start<br>搜索<span class="hljs-regexp">/etc/</span>rc.d<span class="hljs-regexp">/init.d/</span>  查看是否存在<br></code></pre></td></tr></table></figure>
 
-<h3 id="异常文件"><a href="#异常文件" class="headerlink" title="异常文件"></a>异常文件</h3><p>1、查看敏感目录，如&#x2F;tmp 目录下的文件，同时注意隐藏文件夹，以“..”为名的文件夹具有隐藏属性</p>
+<h3 id="异常文件"><a href="#异常文件" class="headerlink" title="异常文件"></a>异常文件</h3><p>1、查看敏感目录，如&#x2F;tmp 目录下的文件，同时注意隐藏文件夹，以“.*”为名的文件夹具有隐藏属性</p>
 <p>2、得到发现 WEBSHELL、远控木马的创建时间，如何找出同一时间范围内创建的文件？</p>
 <p>可以使用 find 命令来查找，如 <code> find /opt -iname &quot;*&quot; -atime 1 -type f</code> 找出 &#x2F;opt 下一天前访问过的文件</p>
 <p>3、针对可疑文件可以使用 stat 进行创建修改时间。</p>
@@ -592,12 +562,40 @@
 <p>2.匹配文件夹里的脚本类型文件，将其设置为无法读取及操作。</p>
 <p>3.给予上传的文件夹二级域名并且不给予解析权限</p>
 <p>4.只能局域网访问</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="IDS-IPS"><a href="#IDS-IPS" class="headerlink" title="IDS&#x2F;IPS"></a>IDS&#x2F;IPS</h1><p>IDS（Intrusion Detection System）入侵检测系统</p>
-<p>IPS (Intrusion Prevention System)  入侵防御系统</p>
-<blockquote>
-<p>与防火墙相似，IPS 内嵌部署到流量中。IPS 是一个主动的网络组件，会检查每个通过的数据包，并根据其配置和策略采取正确的补救措施。相反，IDS 是一个被动组件，通常不会内嵌部署，而是通过 SPAN 或 TAP 技术监控流量，然后发出通知</p>
-</blockquote>
-<h2 id="IPS-阻断"><a href="#IPS-阻断" class="headerlink" title="IPS 阻断"></a>IPS 阻断</h2><h1 id="远控后门"><a href="#远控后门" class="headerlink" title="远控后门"></a>远控后门</h1><h2 id="获取事件告警信息"><a href="#获取事件告警信息" class="headerlink" title="获取事件告警信息"></a><strong>获取事件告警信息</strong></h2><p>监控 EDR、态势感知、防火墙等平台查看威胁告警以及日志。</p>
+<h1 id="问题处置-1"><a href="#问题处置-1" class="headerlink" title="问题处置"></a>问题处置</h1><h2 id="文件无法删除"><a href="#文件无法删除" class="headerlink" title="文件无法删除"></a><strong>文件无法删除</strong></h2><h3 id="进程占用"><a href="#进程占用" class="headerlink" title="进程占用"></a><strong>进程占用</strong></h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">lsof</span> xxxx.xx<br></code></pre></td></tr></table></figure>
+
+<h3 id="隐藏属性"><a href="#隐藏属性" class="headerlink" title="隐藏属性"></a><strong>隐藏属性</strong></h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">sattr xxxx<span class="hljs-selector-class">.xx</span><br>chattr -<span class="hljs-selector-tag">a</span> xxxx<span class="hljs-selector-class">.xx</span><br>chattr -<span class="hljs-selector-tag">i</span> xxxx.xx<br></code></pre></td></tr></table></figure>
+
+<h3 id="上层文件存在-SBIT-权限"><a href="#上层文件存在-SBIT-权限" class="headerlink" title="上层文件存在 SBIT 权限"></a><strong>上层文件存在 SBIT 权限</strong></h3><p>这种情况只存在于非 root 权限去删除其他用户创建的目录的情况，即使文件权限是 777 也无法进行删除。<br>当目录被设置了粘滞位权限以后，即便用户对该目录有写入权限，也不能删除该目录中其他用户的文件数据，而是只有该文件的所有者和 root 用户才有权将其删除。<br>这种办法可以保持一种动态的平衡：允许各用户在目录中任意写入、删除数据，但是禁止随意删除其他用户的数据。<br>需要注意的是，粘滞位权限只能针对目录设置，对于文件无效。<br>设置了粘滞位权限的目录，使用 ls 命令查看其属性时，其他用户权限处的“x”将变为“t”。<br>粘滞位权限都是针对其他用户设置，使用 chmod 命令设置目录权限时，“o+t”、“o-t”权限模式可分别用于添加、移除粘滞位权限。</p>
+<h2 id="netstat-pantu-不显示-pid-而显示"><a href="#netstat-pantu-不显示-pid-而显示" class="headerlink" title="netstat -pantu 不显示 pid 而显示 -"></a><strong>netstat -pantu 不显示 pid 而显示 -</strong></h2><p>可能是使用了 <code>mkdir .hidden 或者 mount -o bind .hidden /proc/PID</code> 来隐藏</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">cat <span class="hljs-string">/proc/</span>$$<span class="hljs-string">/mountinfo</span>   <span class="hljs-string">//</span>查询挂载信息<br>umount <span class="hljs-string">/proc/PID</span>   <span class="hljs-string">//</span>取消挂载<br></code></pre></td></tr></table></figure>
+
+<h2 id="ps-和-top-看不到恶意进程"><a href="#ps-和-top-看不到恶意进程" class="headerlink" title="ps 和 top 看不到恶意进程"></a><strong>ps 和 top 看不到恶意进程</strong></h2><ol>
+<li>挂载被隐藏（看上一个的操作）</li>
+<li>命令被替换（使用 busybox 进行检修）</li>
+<li>LD_PRELOAD 等方法共享库劫持（使用 busybox 进行检修）</li>
+</ol>
+<h2 id="快速查找文件"><a href="#快速查找文件" class="headerlink" title="快速查找文件"></a><strong>快速查找文件</strong></h2><p>【which】<br>从环境变量查找系统命令的具体文件位置<br>【whereis】<br>从&#x2F;usr 目录快速查找文件<br>【locate】<br>从 locatedb 数据库查找文件路径<br>【find】<br>强大的搜索命令<br><code>find &lt;检索路径&gt; &lt;选项&gt; &lt;搜索内容&gt;</code><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1348438">具体使用方法</a></p>
+<h2 id="确定系统信息"><a href="#确定系统信息" class="headerlink" title="确定系统信息"></a><strong>确定系统信息</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">cat <span class="hljs-regexp">/etc/i</span>ssue   <span class="hljs-regexp">//</span>系统版本<br>uname -m<br>getconf LONG_BIT   <span class="hljs-regexp">//</span>查看系统位数<br>cat <span class="hljs-regexp">/proc/</span>version   <span class="hljs-regexp">//</span>查看内核版本<br>uname -a<br></code></pre></td></tr></table></figure>
+
+<h2 id="系统完整性检测"><a href="#系统完整性检测" class="headerlink" title="系统完整性检测"></a><strong>系统完整性检测</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">rpm -Va   <span class="hljs-regexp">//</span>Centos<br>apt install debsums   <span class="hljs-regexp">//</span>Ubuntu、Debian<br>debsums --all --changed<br></code></pre></td></tr></table></figure>
+
+<h2 id="系统文件监控工具"><a href="#系统文件监控工具" class="headerlink" title="系统文件监控工具"></a><strong>系统文件监控工具</strong></h2><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">AIDE<span class="hljs-string">\inotify\tripwire</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="查看-glibc-版本"><a href="#查看-glibc-版本" class="headerlink" title="查看 glibc 版本"></a><strong>查看 glibc 版本</strong></h2><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">ldd <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="误删文件恢复"><a href="#误删文件恢复" class="headerlink" title="误删文件恢复"></a><strong>误删文件恢复</strong></h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs awk">被删除的文件在进程的内存空间还保存着一份，可以通过访问某个目录来找到文件恢复<br>如果正在进行读写操作：<br>lsof   <span class="hljs-regexp">//</span>查找进程文件恢复即可<br>mount   <span class="hljs-regexp">//</span>查看所有挂载点<br>umount   <span class="hljs-regexp">//</span>删除挂载点<br>lsblk -f   <span class="hljs-regexp">//</span>查看所有设备的挂载情况<br>df -T 路径   <span class="hljs-regexp">//</span>可查看该路径的所属挂载点、所在分区、所在分区的文件系统类型<br>cat <span class="hljs-regexp">/proc/</span>filesystems   <span class="hljs-regexp">//</span>查看文件系统的类型<br>常用恢复工具有：Extundelete、Debugfs、R-Linux、Ext3grep、Ext4magic<br></code></pre></td></tr></table></figure>
+
+<h2 id="批量检索文件并打印信息"><a href="#批量检索文件并打印信息" class="headerlink" title="批量检索文件并打印信息"></a><strong>批量检索文件并打印信息</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">find / -name <span class="hljs-string">&quot;内容&quot;</span> | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line; <span class="hljs-keyword">do</span> <span class="hljs-keyword">if</span> [ -f <span class="hljs-variable">$line</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">ls</span> -al <span class="hljs-variable">$line</span>; <span class="hljs-keyword">elif</span> [ -d <span class="hljs-variable">$line</span> ]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">ls</span> -al ../ | grep <span class="hljs-variable">$line</span>; <span class="hljs-keyword">fi</span>; <span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="拷贝取证"><a href="#拷贝取证" class="headerlink" title="拷贝取证"></a><strong>拷贝取证</strong></h2><ol>
+<li>使用虚拟化平台存储快照</li>
+<li>打包整个系统</li>
+<li>全盘拷贝（推荐 clonezilla）</li>
+<li>进程拷贝（推荐 CRIU）</li>
+<li>组合运用（冻结进程 + 全盘拷贝 + 恢复进程）</li>
+</ol>
+<h1 id="远控后门"><a href="#远控后门" class="headerlink" title="远控后门"></a>远控后门</h1><h2 id="获取事件告警信息"><a href="#获取事件告警信息" class="headerlink" title="获取事件告警信息"></a><strong>获取事件告警信息</strong></h2><p>监控 EDR、态势感知、防火墙等平台查看威胁告警以及日志。</p>
 <h2 id="定位后门文件"><a href="#定位后门文件" class="headerlink" title="定位后门文件"></a><strong>定位后门文件</strong></h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle">根据告警信息定位后门文件位置，查找进程pid<br>lsof | <span class="hljs-keyword">grep</span> xxxx.xx<br>lsof <span class="hljs-regexp">/root/</span>xxxx.xx<br>fuser <span class="hljs-regexp">/root/</span>xxxx.xx<br></code></pre></td></tr></table></figure>
 
 <h2 id="查看外连事件详情"><a href="#查看外连事件详情" class="headerlink" title="查看外连事件详情"></a><strong>查看外连事件详情</strong></h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 1c">根据五元组来查找通信的端口ip对应的pid<br>netstat -pantu <span class="hljs-string">| grep 114.114.114.114</span><br>netstat -pantu <span class="hljs-string">| grep 65533</span><br>lsof -i:<span class="hljs-number">65533</span><br></code></pre></td></tr></table></figure>
@@ -644,32 +642,6 @@
 <li><strong>挖矿病毒</strong>：消耗用户CPU、GPU资源，进行大量运算，获取加密货币的病毒。</li>
 <li><strong>勒索病毒</strong>：能对用户文件进行加密的病毒。</li>
 </ul>
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a><strong>补充</strong></h2><h3 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a><strong>守护进程</strong></h3><p>守护进程是什么？ 其他进程都是在用户登录或运行程序时创建，在运行结束或用户注销时终止，但系统服务进程（守护进程）不受用户登录注销的影响，它们一直在运行着。</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 守护进程的本质是什么？ </span><br>守护进程的本职就是孤儿进程，该进程自成会话，自成进程组，一般守护进程与终端无关；（即：<span class="hljs-attribute">pid</span>=sid=gid） <br>后台进程受用户登录注销的影响，而守护进程不受用户登录和注销的影响。但是它们都受关机的影响。<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 守护进程有什么特点？ </span><br>没有控制终端，终端名设置为？号 <br>父进程不是用户创建的进程，一般由init进程或者systemd（<span class="hljs-attribute">pid</span>=1）的进程为父进程 <br>进程名字通常以字母 d 结束 <br>工作目录为/（根），主要是为了防止占用磁盘导致无法卸载磁盘 <br>以kthreadd内核进程创建的守护进程以kthreadd为父进程<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs perl"><span class="hljs-comment"># 守护进程如何设置？ </span><br>执行一个<span class="hljs-keyword">fork</span>()，之后父进程退出，子进程继续执行。 <br>子进程调用setsid()开启一个新回话并释放它与控制终端之间的所有关联关系。 <br>在setsid()调用之后执行第二个<span class="hljs-keyword">fork</span>()，让父进程退出并让孙进程继续执行。确保了子进程不会成为会话组长。 （根据System V中获取终端的规则，进程永远不会重新请求一个控制终端。多一个<span class="hljs-keyword">fork</span>()调用不会带来任何坏处。） <br>使用 <span class="hljs-keyword">umask</span>(<span class="hljs-number">0</span>); 清除进程的<span class="hljs-keyword">umask</span>以确保当daemon创建文件和目录时拥有所需的权限。 <span class="hljs-number">5</span>. 修改进程的当前工作目录，通常会改为根目录（/）。 <span class="hljs-number">6</span>. 关闭daemon从其父进程继承而来的所有打开着的文件描述符。<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 守护进程如何删除？ </span><br>首先<span class="hljs-built_in">ps</span> axj | grep 守护进程名字，找到相应的守护进程，然后使用<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> 守护进程名杀掉；<br>利用<span class="hljs-built_in">ps</span> <span class="hljs-literal">-ef</span>命令查找相应的守护进程，再用<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span>命令将其杀死；<br>创建shell脚本对进程的启动、关闭、重启进行自动管理。 注：<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> <span class="hljs-literal">-pid</span>   （杀掉进程组）<br></code></pre></td></tr></table></figure>
-
-<h3 id="screen-的原理"><a href="#screen-的原理" class="headerlink" title="screen 的原理"></a><strong>screen 的原理</strong></h3><ul>
-<li>当用户启动 Screen 时，它会创建一个守护进程作为后台进程，并与用户终端会话（称为控制终端）分离。</li>
-<li>控制终端不再直接处理用户输入和输出，而是由 Screen 守护进程负责接收和处理。</li>
-<li>守护进程通过与 Unix 域套接字进行通信，与控制终端保持连接。</li>
-<li>用户在控制终端中输入的命令会被发送到守护进程，并由守护进程解析和执行。</li>
-<li>守护进程还负责从虚拟终端读取输出内容，并将其发送回控制终端进行显示。</li>
-</ul>
-<p>通过这种方式，Screen 实现了在控制终端与守护进程之间的交互，并通过守护进程来管理多个虚拟终端、处理窗口切换、保存会话状态等功能。</p>
-<p>需要注意的是，虽然 Screen 的守护进程在后台运行，但用户仍然可以通过重新连接到控制终端来恢复与之前会话的交互，即使之前的 SSH 连接断开或终端关闭。这是 Screen 的一个重要特性，允许用户在断开连接后恢复他们的工作环境。</p>
-<h3 id="恢复守护进程会话的交互"><a href="#恢复守护进程会话的交互" class="headerlink" title="恢复守护进程会话的交互"></a><strong>恢复守护进程会话的交互</strong></h3><p>可以使用 <code>nohup</code> 命令启动一个守护进程，并将输出重定向到文件中，例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohup ./your_daemon &amp;<br></code></pre></td></tr></table></figure>
-
-<p>通过这种方式启动的守护进程不会因为用户退出终端而停止运行。</p>
-<p>当用户重新连接到控制终端时，可以使用 <code>jobs</code> 命令查看守护进程的状态，并使用 <code>fg</code> 命令将其调至前台，恢复与之前会话的交互。例如：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">jobs<br>fg %job_id<br></code></pre></td></tr></table></figure>
-
-<p>其中，<code>job_id</code> 是守护进程的作业号，可以在 <code>jobs</code> 命令的输出中找到</p>
 <h1 id="挖矿排查"><a href="#挖矿排查" class="headerlink" title="挖矿排查"></a>挖矿排查</h1><p><strong>获取信息</strong></p>
 <ul>
 <li>下线服务器之后从 DNS 服务器、防火墙、态势感知平台等地方获取到攻击事件详细信息</li>
@@ -940,12 +912,110 @@
 <p><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/CvxDbdbYoo7e7xxC8xXcx2RSnid.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <p><img src="/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/G27ob7ITvoTlMCx6wkfc0X0Unzc.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <h1 id="溯源"><a href="#溯源" class="headerlink" title="溯源"></a>溯源</h1><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>溯源思路：</p>
-<p>1.首先通过系统日志、安全设备截获攻击包等从中分析出攻击者的 ip 和攻击方式，通过 webshell 或者木马去微步分析，<br>2.或者去安恒威胁情报中心进行 ip 检测分析，是不是云服务器，基站等，如果是云服务器的话可以直接反渗透，看看开放端口，域名，whois 等进行判断，<br>3.获取姓名电话等丢社工库看看能不能找到更多信息然后收工</p>
-<p>针对国外 IP 的溯源方法：<br>1.使用网络安全工具进行溯源：可以使用网络安全工具，如 traceroute、ping 等命令，对目标 IP 进行探测和跟踪。这些工具可以显示出攻击流量经过的路由器、网关和 ISP 等信息，帮助我们了解攻击流量的来源地点。<br>2.查找域名信息：通过 WHOIS 查询工具查询目标域名的注册信息，包括注册人、注册机构、联系方式等信息，可以从中了解到攻击来源的大致位置。<br>3.联系当地 ISP：如果攻击者使用的是公共网络，如酒店、咖啡厅、机场等，可以联系当地 ISP，寻求协助获取攻击来源的信息。</p>
-<h2 id="溯源反制"><a href="#溯源反制" class="headerlink" title="溯源反制"></a>溯源反制</h2><p>主要是通过混淆和伪装攻击流量，防止攻击者获取真实的攻击来源和行为信息。具体操作包括：<br>1.使用代理服务器：通过使用代理服务器，可以改变攻击流量的来源 IP 地址，使得攻击者无法追踪真实的攻击来源。<br>2.使用 VPN 技术：VPN 技术可以在公网上建立一个私有网络，加密传输数据流量，从而防止攻击者获取敏感信息。<br>3.使用匿名浏览器：匿名浏览器可以隐藏用户真实的 IP 地址和浏览痕迹，使得攻击者无法追踪用户的真实身份和行为。<br>4.使用虚假数据：在攻击流量中混入虚假的数据，如虚假的 IP 地址、协议和端口等信息，可以混淆攻击者的追踪。</p>
+<ol>
+<li><p>首先通过系统日志、安全设备截获攻击包等从中分析出攻击者的 ip 和攻击方式，通过 webshell 或者木马去微步分析，</p>
+</li>
+<li><p>或者去安恒威胁情报中心进行 ip 检测分析，是不是云服务器，基站等，如果是云服务器的话可以直接反渗透，看看开放端口，域名，whois 等进行判断，</p>
+</li>
+<li><p>获取姓名电话等丢社工库看看能不能找到更多信息然后收工</p>
+</li>
+</ol>
+<p>针对国外 IP 的溯源方法：</p>
+<ol>
+<li>使用网络安全工具进行溯源：可以使用网络安全工具，如 traceroute、ping 等命令，对目标 IP 进行探测和跟踪。这些工具可以显示出攻击流量经过的路由器、网关和 ISP 等信息，帮助我们了解攻击流量的来源地点。</li>
+<li>查找域名信息：通过 WHOIS 查询工具查询目标域名的注册信息，包括注册人、注册机构、联系方式等信息，可以从中了解到攻击来源的大致位置。</li>
+<li>联系当地 ISP：如果攻击者使用的是公共网络，如酒店、咖啡厅、机场等，可以联系当地 ISP，寻求协助获取攻击来源的信息。</li>
+</ol>
+<h2 id="溯源反制"><a href="#溯源反制" class="headerlink" title="溯源反制"></a>溯源反制</h2><p>主要是通过混淆和伪装攻击流量，防止攻击者获取真实的攻击来源和行为信息。具体操作包括：<br>    1.使用代理服务器：通过使用代理服务器，可以改变攻击流量的来源 IP 地址，使得攻击者无法追踪真实的攻击来源。<br>    2.使用 VPN 技术：VPN 技术可以在公网上建立一个私有网络，加密传输数据流量，从而防止攻击者获取敏感信息。<br>    3.使用匿名浏览器：匿名浏览器可以隐藏用户真实的 IP 地址和浏览痕迹，使得攻击者无法追踪用户的真实身份和行为。<br>    4.使用虚假数据：在攻击流量中混入虚假的数据，如虚假的 IP 地址、协议和端口等信息，可以混淆攻击者的追踪。</p>
 <h1 id="内存马"><a href="#内存马" class="headerlink" title="内存马"></a>内存马</h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>注入型内存马：通过利用漏洞将恶意代码注入到正常进程中，从而在内存中运行。<br>自执行型内存马：将恶意代码写入自启动项，启动后自动运行。<br>进程注入型内存马：利用进程注入技术，在受感染进程的内存中运行恶意代码。<br>Hook 型内存马：利用 Windows API 的 Hook 机制，修改进程中的关键函数，从而运行恶意代码。<br>要判断内存马的类型，可以使用反病毒软件或专门的安全工具对受感染主机进行扫描和分析。一般来说，不同类型的内存马会留下不同的痕迹和特征，比如某些进程的不正常行为、异常的网络连接等等。</p>
 <h2 id="防护-1"><a href="#防护-1" class="headerlink" title="防护"></a>防护</h2><p>注入型内存马：修复漏洞、升级软件，加强网络安全防护等方法来预防类似攻击；对已经感染的主机，可以通过杀掉受感染进程或卸载恶意程序等方式来清除内存马。<br>自执行型内存马：可以通过清理自启动项、卸载恶意程序等方式来清除内存马。<br>进程注入型内存马：可以通过杀掉受感染进程或卸载恶意程序等方式来清除内存马。<br>Hook 型内存马：可以通过还原 Hook、修复关键函数、杀掉受感染进程或卸载恶意程序等方式来清除内存马。</p>
+<h1 id="基线检查"><a href="#基线检查" class="headerlink" title="基线检查"></a>基线检查</h1><h2 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h2><h3 id="账号管理和授权"><a href="#账号管理和授权" class="headerlink" title="账号管理和授权"></a>账号管理和授权</h3><ul>
+<li>检查特殊账号，是否存在空密码的账户和root权限账户</li>
+<li>禁用或删除无用账号</li>
+<li>添加口令策略:<code>/etc/login.defs</code>修改配置文件，设置过期时间、连续认证失败次数</li>
+<li>禁止root远程登录，限制root用户直接登录。</li>
+<li>检查su权限。<code>vi /etc/pam.d/su</code>添加<code>auth required pam_wheel.so group=test</code></li>
+</ul>
+<h3 id="服务-1"><a href="#服务-1" class="headerlink" title="服务"></a>服务</h3><ul>
+<li>关闭不必要的服务</li>
+<li>SSH服务安全<ul>
+<li>不允许root账号直接登录系统，<code>PermitRootLogin=no</code></li>
+<li>修改SSH使用的协议版本为2</li>
+<li>修改允许密码错误次数（默认6次），<code>MaxAuthTries=3</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><ul>
+<li>设置umask值 <code>vi /etc/profile</code> 添加行 <code>umask 027</code></li>
+<li>设置登录超时 <code>vi /etc/profile</code> 修改配置文件，将以 <code>TMOUT=</code> 开头的行注释，设置为 <code>TMOUT=180</code></li>
+</ul>
+<h3 id="日志-2"><a href="#日志-2" class="headerlink" title="日志"></a>日志</h3><ul>
+<li>启用syslogd日志，配置日志目录权限，或者设置日志服务器</li>
+<li>记录所有用户的登录和操作日志，通过脚本代码实现记录所有用户的登录操作日志，防止出现安全事件后无据可查。<a target="_blank" rel="noopener" href="https://www.alibabacloud.com/help/zh/faq-detail/49809.htm">https://www.alibabacloud.com/help/zh/faq-detail/49809.htm</a></li>
+</ul>
+<h3 id="IP协议安全要求"><a href="#IP协议安全要求" class="headerlink" title="IP协议安全要求"></a>IP协议安全要求</h3><ul>
+<li>远程登录取消telnet采用ssh</li>
+<li>设置&#x2F;etc&#x2F;hosts.allow和deny</li>
+<li>禁止ICMP重定向</li>
+<li>禁止源路由转发</li>
+<li>防ssh破解，iptables(对已经建立的所有链接都放行，限制每分钟连接ssh的次数)+denyhost(添加ip拒绝访问)</li>
+</ul>
+<h2 id="中间件基线规范（APACHE）"><a href="#中间件基线规范（APACHE）" class="headerlink" title="中间件基线规范（APACHE）"></a>中间件基线规范（APACHE）</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.alibabacloud.com/help/zh/faq-detail/52981.htm">https://www.alibabacloud.com/help/zh/faq-detail/52981.htm</a></p>
+</blockquote>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<li>账号</li>
+<li>授权</li>
+<li>日志</li>
+<li>session过期时间（防ddos</li>
+<li>绑定监听地址</li>
+</ul>
+<h3 id="禁止"><a href="#禁止" class="headerlink" title="禁止"></a>禁止</h3><ul>
+<li>目录权限</li>
+<li>访问外部文件</li>
+<li>CGI</li>
+<li>非法HTTP方法（PUT DELETE）</li>
+</ul>
+<h3 id="隐藏"><a href="#隐藏" class="headerlink" title="隐藏"></a>隐藏</h3><ul>
+<li>服务版本号</li>
+<li>重定向错误页面</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>配置文件</li>
+<li>默认安装的无用文件</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a><strong>补充</strong></h1><h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a><strong>守护进程</strong></h2><p>守护进程是什么？ 其他进程都是在用户登录或运行程序时创建，在运行结束或用户注销时终止，但系统服务进程（守护进程）不受用户登录注销的影响，它们一直在运行着。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 守护进程的本质是什么？ </span><br>守护进程的本职就是孤儿进程，该进程自成会话，自成进程组，一般守护进程与终端无关；（即：<span class="hljs-attribute">pid</span>=sid=gid） <br>后台进程受用户登录注销的影响，而守护进程不受用户登录和注销的影响。但是它们都受关机的影响。<br></code></pre></td></tr></table></figure>
 
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 守护进程有什么特点？ </span><br>没有控制终端，终端名设置为？号 <br>父进程不是用户创建的进程，一般由init进程或者systemd（<span class="hljs-attribute">pid</span>=1）的进程为父进程 <br>进程名字通常以字母 d 结束 <br>工作目录为/（根），主要是为了防止占用磁盘导致无法卸载磁盘 <br>以kthreadd内核进程创建的守护进程以kthreadd为父进程<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs perl"><span class="hljs-comment"># 守护进程如何设置？ </span><br>执行一个<span class="hljs-keyword">fork</span>()，之后父进程退出，子进程继续执行。 <br>子进程调用setsid()开启一个新回话并释放它与控制终端之间的所有关联关系。 <br>在setsid()调用之后执行第二个<span class="hljs-keyword">fork</span>()，让父进程退出并让孙进程继续执行。确保了子进程不会成为会话组长。 （根据System V中获取终端的规则，进程永远不会重新请求一个控制终端。多一个<span class="hljs-keyword">fork</span>()调用不会带来任何坏处。） <br>使用 <span class="hljs-keyword">umask</span>(<span class="hljs-number">0</span>); 清除进程的<span class="hljs-keyword">umask</span>以确保当daemon创建文件和目录时拥有所需的权限。 <span class="hljs-number">5</span>. 修改进程的当前工作目录，通常会改为根目录（/）。 <span class="hljs-number">6</span>. 关闭daemon从其父进程继承而来的所有打开着的文件描述符。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 守护进程如何删除？ </span><br>首先<span class="hljs-built_in">ps</span> axj | grep 守护进程名字，找到相应的守护进程，然后使用<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> 守护进程名杀掉；<br>利用<span class="hljs-built_in">ps</span> <span class="hljs-literal">-ef</span>命令查找相应的守护进程，再用<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span>命令将其杀死；<br>创建shell脚本对进程的启动、关闭、重启进行自动管理。 注：<span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> <span class="hljs-literal">-pid</span>   （杀掉进程组）<br></code></pre></td></tr></table></figure>
+
+<h3 id="screen-的原理"><a href="#screen-的原理" class="headerlink" title="screen 的原理"></a><strong>screen 的原理</strong></h3><ul>
+<li>当用户启动 Screen 时，它会创建一个守护进程作为后台进程，并与用户终端会话（称为控制终端）分离。</li>
+<li>控制终端不再直接处理用户输入和输出，而是由 Screen 守护进程负责接收和处理。</li>
+<li>守护进程通过与 Unix 域套接字进行通信，与控制终端保持连接。</li>
+<li>用户在控制终端中输入的命令会被发送到守护进程，并由守护进程解析和执行。</li>
+<li>守护进程还负责从虚拟终端读取输出内容，并将其发送回控制终端进行显示。</li>
+</ul>
+<p>通过这种方式，Screen 实现了在控制终端与守护进程之间的交互，并通过守护进程来管理多个虚拟终端、处理窗口切换、保存会话状态等功能。</p>
+<p>需要注意的是，虽然 Screen 的守护进程在后台运行，但用户仍然可以通过重新连接到控制终端来恢复与之前会话的交互，即使之前的 SSH 连接断开或终端关闭。这是 Screen 的一个重要特性，允许用户在断开连接后恢复他们的工作环境。</p>
+<h3 id="恢复守护进程会话的交互"><a href="#恢复守护进程会话的交互" class="headerlink" title="恢复守护进程会话的交互"></a><strong>恢复守护进程会话的交互</strong></h3><p>可以使用 <code>nohup</code> 命令启动一个守护进程，并将输出重定向到文件中，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">nohup ./your_daemon &amp;<br></code></pre></td></tr></table></figure>
+
+<p>通过这种方式启动的守护进程不会因为用户退出终端而停止运行。</p>
+<p>当用户重新连接到控制终端时，可以使用 <code>jobs</code> 命令查看守护进程的状态，并使用 <code>fg</code> 命令将其调至前台，恢复与之前会话的交互。例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">jobs<br>fg %job_id<br></code></pre></td></tr></table></figure>
+
+<p>其中，<code>job_id</code> 是守护进程的作业号，可以在 <code>jobs</code> 命令的输出中找到</p>
+<h2 id="IDS-IPS"><a href="#IDS-IPS" class="headerlink" title="IDS&#x2F;IPS"></a>IDS&#x2F;IPS</h2><p>IDS（Intrusion Detection System）入侵检测系统</p>
+<p>IPS (Intrusion Prevention System)  入侵防御系统</p>
+<blockquote>
+<p>与防火墙相似，IPS 内嵌部署到流量中。IPS 是一个主动的网络组件，会检查每个通过的数据包，并根据其配置和策略采取正确的补救措施。相反，IDS 是一个被动组件，通常不会内嵌部署，而是通过 SPAN 或 TAP 技术监控流量，然后发出通知</p>
+</blockquote>
+<h3 id="IPS-阻断"><a href="#IPS-阻断" class="headerlink" title="IPS 阻断"></a>IPS 阻断</h3>
                 
               </div>
             

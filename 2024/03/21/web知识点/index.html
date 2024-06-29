@@ -76,7 +76,7 @@
 <meta property="og:image" content="http://example.com/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/AQVWbiG1YoPy1AxHXyxcBE0snJf.png">
 <meta property="og:image" content="http://example.com/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/MUISbyRGeoUEZBxa0TLc7HKOnkc.png">
 <meta property="article:published_time" content="2024-03-21T06:36:51.000Z">
-<meta property="article:modified_time" content="2024-06-27T15:33:03.415Z">
+<meta property="article:modified_time" content="2024-06-29T15:19:51.973Z">
 <meta property="article:author" content="z2zQAQ">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/ZkLLbV8PDoDXJ5xEqXUcebJKnJf.png">
@@ -289,7 +289,7 @@
         
         
         
-          84 分钟
+          85 分钟
         
       </span>
     
@@ -332,26 +332,27 @@
               <div class="markdown-body">
                 
                 <h1 id="WEB-知识点"><a href="#WEB-知识点" class="headerlink" title="WEB 知识点"></a>WEB 知识点</h1><p>用来记一些知识点的概念</p>
+<h1 id="防溯源"><a href="#防溯源" class="headerlink" title="防溯源"></a>防溯源</h1><p><a target="_blank" rel="noopener" href="https://github.com/aplyc1a/blogs/blob/master/%E8%BA%B2%E9%81%BF%E6%A3%80%E6%B5%8B/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B8%AD%E7%9A%84%E8%BA%AB%E4%BB%BD%E9%9A%90%E8%97%8F.md#31-%E5%B7%A5%E5%85%B7%E6%B5%81%E9%87%8F%E6%8C%87%E7%BA%B9">blogs&#x2F;躲避检测&#x2F;渗透测试中的身份隐藏.md at master · aplyc1a&#x2F;blogs (github.com)</a></p>
 <h1 id="流量特征"><a href="#流量特征" class="headerlink" title="流量特征"></a>流量特征</h1><h2 id="冰蝎"><a href="#冰蝎" class="headerlink" title="冰蝎"></a>冰蝎</h2><h3 id="1-0"><a href="#1-0" class="headerlink" title="1.0"></a>1.0</h3><p>1.Accpet 头 application&#x2F;xhtml+xmlapplication&#x2F;xmlapplication&#x2F;signed-exchange</p>
 <p>2.<code>Content-Type: application/octet-stream</code> 这是一个强特征，查阅资料可知 octet-stream 的意思是，只能提交二进制，而且只能提交一个二进制，如果提交文件的话，只能提交一个文件,后台接收参数只能有一个，而且只能是流（或者字节数组），所以很少使用</p>
-<h3 id="2-0"><a href="#2-0" class="headerlink" title="2.0"></a>2.0</h3><p>1.使用 AES+base64,AES 使用动态秘钥进行加密。</p>
-<p>2.请求的时候内置了十几个 UA 头，（导致频繁变化）</p>
+<h3 id="2-0"><a href="#2-0" class="headerlink" title="2.0"></a>2.0</h3><p>1.使用 <strong>AES+base64</strong>,AES 使用动态秘钥进行加密。</p>
+<p>2.请求的时候内置了<strong>十几个 UA</strong> 头，（导致频繁变化）</p>
 <p>3.Content-Length: 16</p>
 <p><img src="/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/ZkLLbV8PDoDXJ5xEqXUcebJKnJf.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/NGMtbsH4IoqQNSxSmDFckIJxnhb.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="3-0"><a href="#3-0" class="headerlink" title="3.0"></a>3.0</h3><blockquote>
 <p>在冰蝎中，任何请求，最终都会调用 Utils.getData 函数，对请求的参数加密。对于上传文件，命令执行来讲，加密的参数不定长。但是对于密钥交互，获取基本信息来讲，payload 都为定长，且无随机 padding。</p>
 </blockquote>
-<p>1.固定链接秘钥</p>
-<p>2.webshell 默认密码 rebeyond（md5(‘rebeyond’)[0:16]&#x3D;e45e329feb5d925b）</p>
-<p>3.连接 jsp 的数据包 content-type 常建伟 application&#x2F;octet-stream</p>
+<p>1.<strong>固定链接秘钥</strong></p>
+<p>2.webshell 默认密码 <strong>rebeyond</strong>（md5(‘rebeyond’)[0:16]&#x3D;e45e329feb5d925b）</p>
+<p>3.连接 jsp 的数据包 content-type 常建伟 <strong>application&#x2F;octet-stream</strong></p>
 <p>4.Accept 头 <code>application/xhtml+xmlapplication/xmlapplication/signed-exchange</code></p>
-<h3 id="4-0"><a href="#4-0" class="headerlink" title="4.0"></a>4.0</h3><p>1.取消连接密码，自定义传输协议算法，默认连接密码 rebeyond (md5(‘rebeyond’)[0:16]&#x3D;e45e329feb5d925b)</p>
-<p>2.Accept 字段（弱特征）通常是: application&#x2F;json, text&#x2F;javascript, &#x2F;; q&#x3D;0.01 意思是浏览器可接受任何文件，但最倾向 application&#x2F;json 和 text&#x2F;javascript。<br>3.Content-Type 字段（弱特征），通常是 Content-type: Application&#x2F;x-www-form-urlencoded<br>4.连接使用本地端口在 49700 左右(就是比较大的端口)，每连接一次，每建立一次新的连接，端口就依次增加。<br>5.使用长连接，避免了频繁的握手造成的资源开销。默认情况下，请求头和响应头里会带有 Connection：Keep-Alive<br>6.固定的请求头和响应头，请求字节头：dFAXQV1LORcHRQtLRlwMAhwFTAg&#x2F;M ，响应字节头：TxcWR1NNExZAD0ZaAWMIPAZjH1BFBFtHThcJSlUXWEd</p>
+<h3 id="4-0"><a href="#4-0" class="headerlink" title="4.0"></a>4.0</h3><p>1.取消连接密码，自定义传输协议算法，默认连接密码 <strong>rebeyond</strong> (md5(‘rebeyond’)[0:16]&#x3D;e45e329feb5d925b)</p>
+<p>2.Accept 字段（弱特征）通常是: application&#x2F;json, text&#x2F;javascript, &#x2F;; q&#x3D;0.01 意思是浏览器可接受任何文件，但最倾向 application&#x2F;json 和 text&#x2F;javascript。<br>3.Content-Type 字段（弱特征），通常是 Content-type: Application&#x2F;x-www-form-urlencoded<br>4.连接使用本地端口在 49700 左右(<strong>就是比较大的端口</strong>)，每连接一次，每建立一次新的连接，端口就依次增加。<br>5.使用<strong>长连接</strong>，避免了频繁的握手造成的资源开销。默认情况下，请求头和响应头里会带有 Connection：Keep-Alive<br>6.固定的<strong>请求头和响应头</strong>，请求字节头：dFAXQV1LORcHRQtLRlwMAhwFTAg&#x2F;M ，响应字节头：TxcWR1NNExZAD0ZaAWMIPAZjH1BFBFtHThcJSlUXWEd</p>
 <h2 id="哥斯拉"><a href="#哥斯拉" class="headerlink" title="哥斯拉"></a>哥斯拉</h2><p>类似冰蝎 2.0 的密钥交换方式，webshell 动态生成</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/BeichenDream/Godzilla/releases">https://github.com/BeichenDream/Godzilla/releases</a></p>
 <h3 id="静态特征"><a href="#静态特征" class="headerlink" title="静态特征"></a><strong>静态特征</strong></h3><p>  在默认脚本编码的情况下，jsp 会出现 xc、pass 字符和 Java 反射(ClassLoader，getClass().getClassLoader())，base64 加解码等特征。</p>
-<h3 id="动态特征"><a href="#动态特征" class="headerlink" title="动态特征"></a><strong>动态特征</strong></h3><p>  1.Accept 字段（弱特征），默认是 <code>Accept:text/html, image/gif, image/jpeg, *; q=.2, /; q=.2</code><br>  2.Cookie 中有一个非常关键的特征，最后会有个分号。估计后续的版本会修复。<br>  3.响应体的数据有一定特征，哥斯拉会把一个 32 位的 md5 字符串按照一半拆分，分别放在 base64 编码的数据的前后两部分。整个响应包的结构体征为：md5 前十六位 +base64+md5 后十六位。<br>  4.请求包长度 52541<br>  5.以 <code>pass=“xxxx”</code> 开始请求包<br>  6.请求包较长，响应包为 0<br>  7.一个 tcp 包里面有三个 http<br>  8.一共 6 个 http 报文，3 去 3 回</p>
+<h3 id="动态特征"><a href="#动态特征" class="headerlink" title="动态特征"></a><strong>动态特征</strong></h3><p>  1.Accept 字段（弱特征），默认是 <code>Accept:text/html, image/gif, image/jpeg, *; q=.2, /; q=.2</code><br>  2.Cookie 中有一个非常关键的特征，最后会有个分号。估计后续的版本会修复。<br>  3.响应体的数据有一定特征，哥斯拉会把一个 32 位的 md5 字符串按照一半拆分，分别放在 base64 编码的数据的前后两部分。整个响应包的结构体征为：<strong>md5 前十六位 +base64+md5 后十六位。</strong><br>  4.请求包长度 <strong>52541</strong><br>  5.以 <code>pass=“xxxx”</code> 开始请求包<br>  6.请求包较长，响应包为 0<br>  7.一个 tcp 包里面有三个 http<br>  8.一共 6 个 http 报文，3 去 3 回</p>
 <h2 id="蚁剑"><a href="#蚁剑" class="headerlink" title="蚁剑"></a><strong>蚁剑</strong></h2><h3 id="静态特征-1"><a href="#静态特征-1" class="headerlink" title="静态特征"></a><strong>静态特征</strong></h3><p>  蚁剑中 php 使用 assert、eval 执行；asp 只有 eval 执行；在 jsp 使用的是 Java 类加载（ClassLoader），同时会带有 base64 编码解码等字符特征。</p>
 <h3 id="动态特征-1"><a href="#动态特征-1" class="headerlink" title="动态特征"></a><strong>动态特征</strong></h3><p>  1.我们使用一句话木马上传 webshell，抓包后会发现每个请求体都存在以 <code>@ini_set(&quot;display_errors&quot;,&quot;0&quot;);@set_time_limit(0)</code> 开头。<br>  2.并且响应体的返回结果是 base64 编码发混淆字符，格式为：随机数 结果 随机数。<br>  3.参数名大多以“_0x…..&#x3D;”这种形式（下划线可替换为其他）所以，以_0x 开头的参数名，后面为加密数据的数据包也可识别为蚁剑的流量特征。</p>
 <p>4.UA 头是 antsword xxx</p>
@@ -611,6 +612,9 @@
 <p>票据</p>
 <p><img src="/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/WbcnbABAFoOopxxCnlrclP9LnWh.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="常见内网ip"><a href="#常见内网ip" class="headerlink" title="常见内网ip"></a>常见内网ip</h2><p>10.0.0.0/8<br>10.0.0.0 - 10.255.255.255<br>172.16.0.0/12<br>172.16.0.0 - 172.31.255.255<br>192.168.0.0/16<br>192.168.0.0 - 192.168.255.255</p>
+<h2 id="DOS类"><a href="#DOS类" class="headerlink" title="DOS类"></a>DOS类</h2><p>ACK UDP ICMP FLOOD CC</p>
+<p>CC攻击：针对web页面的</p>
+<p>LAND攻击：源和请求地址相同</p>
 <h1 id="web-零散知识"><a href="#web-零散知识" class="headerlink" title="web 零散知识"></a>web 零散知识</h1><h2 id="php-源码泄露问题"><a href="#php-源码泄露问题" class="headerlink" title="php 源码泄露问题"></a>php 源码泄露问题</h2><p>PHP<=7.4.21 时通过 <code>php -S</code> 的 WEB 服务器存在源码泄露漏洞，可以将 PHP 文件作为静态文件直接输出源码</p>
 <p><img src="/2024/03/21/web%E7%9F%A5%E8%AF%86%E7%82%B9/FbbPbLpz4oqm3DxlkuJc4zJVnUc.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="tar-解压目录穿越"><a href="#tar-解压目录穿越" class="headerlink" title="tar 解压目录穿越"></a>tar 解压目录穿越</h2><blockquote>
