@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bz.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="z2zQAQ">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="misc中工具的使用与知识点记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="misc">
+<meta property="og:url" content="http://example.com/2024/09/16/misc/index.html">
+<meta property="og:site_name" content="Welcome to my world">
+<meta property="og:description" content="misc中工具的使用与知识点记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912163032590.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912160203960.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912163712019.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912215228777.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240910221343374.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240910225048302.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912125157608.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912125245027.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240913105106499.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912170316898.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240912170612405.png">
+<meta property="og:image" content="http://example.com/2024/09/16/misc/image-20240910230252285.png">
+<meta property="article:published_time" content="2024-09-16T11:51:48.000Z">
+<meta property="article:modified_time" content="2024-09-16T11:59:53.140Z">
+<meta property="article:author" content="z2zQAQ">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/09/16/misc/image-20240912163032590.png">
+  
+  
+  
+  <title>misc - Welcome to my world</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/cloudedGlass.css">
+<link rel="stylesheet" href="/z2z_custom/custom.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":80,"cursorChar":"__","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>z2zQAQ</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/moon.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="misc"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-16 19:51" pubdate>
+          2024年9月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          94 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">misc</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="文件头尾"><a href="#文件头尾" class="headerlink" title="文件头尾"></a>文件头尾</h1><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs dns">.zip的文件头：<span class="hljs-number">50</span> <span class="hljs-number">4</span>B <span class="hljs-number">03 04 14 00</span> <span class="hljs-number">08</span> <span class="hljs-number">00</span><br>.rar的文件头：<span class="hljs-number">52 61 72 21</span><br>.rar的文件尾：C4 <span class="hljs-number">3</span>D <span class="hljs-number">7</span>B <span class="hljs-number">00 40 07 00</span><br>.<span class="hljs-number">7</span>z的文件头：<span class="hljs-number">37</span> <span class="hljs-number">7</span><span class="hljs-keyword">A</span> BC AF <span class="hljs-number">27</span> <span class="hljs-number">1</span>C<br>.pyc的文件头：<span class="hljs-number">03</span> F3 <span class="hljs-number">0</span>D <span class="hljs-number">0</span><span class="hljs-keyword">A</span><br>.jpg的文件头：FF D8 FF E0 <span class="hljs-number">00</span> <span class="hljs-number">10</span> <span class="hljs-number">4</span><span class="hljs-keyword">A</span> <span class="hljs-number">46 49 46 00</span> <span class="hljs-number">01</span><br>.png的文件头：<span class="hljs-number">89</span> <span class="hljs-number">50</span> <span class="hljs-number">4</span>e <span class="hljs-number">47</span> <span class="hljs-number">0d</span> <span class="hljs-number">0</span>a <span class="hljs-number">1</span>a <span class="hljs-number">0</span>a   文件尾：<span class="hljs-number">49</span> <span class="hljs-number">45</span> <span class="hljs-number">4</span>E <span class="hljs-number">44</span> AE <span class="hljs-number">42</span> <span class="hljs-number">60</span> <span class="hljs-number">82</span><br>.gif的文件头：<span class="hljs-number">47 49 46 38</span> <span class="hljs-number">39</span> <span class="hljs-number">61</span>（GIF89A）或 <span class="hljs-number">47 49 46 38</span> <span class="hljs-number">37</span> <span class="hljs-number">61</span>（GIF87A）<br>.gif的文件尾：<span class="hljs-number">00</span> <span class="hljs-number">3</span>B<br>.gz的文件头：<span class="hljs-number">1</span>F <span class="hljs-number">8</span>B <span class="hljs-number">08</span> <span class="hljs-number">00</span><br>.pyc的文件头：<span class="hljs-number">03</span> F3 <span class="hljs-number">0</span>D <span class="hljs-number">0</span><span class="hljs-keyword">A</span><br>.psd的文件头：<span class="hljs-number">38 42 50 53</span><br>TIFF (tif)，文件头：<span class="hljs-number">49492A00</span><br>Windows [Bitmap](https://so.csdn.net/so/search?q=Bitmap&amp;spm=<span class="hljs-number">1001.2101</span>.<span class="hljs-number">3001.7020</span>) (bmp)，文件头：<span class="hljs-number">424</span>D<br>CAD (dwg)，文件头：<span class="hljs-number">41433130</span><br>Adobe Photoshop (psd)，文件头：<span class="hljs-number">38425053</span><br>Rich Text Format (rtf)，文件头：<span class="hljs-number">7</span>B<span class="hljs-number">5C727466</span><br>XML (xml)，文件头：<span class="hljs-number">3</span>C3F786D6C<br>HTML (html)，文件头：<span class="hljs-number">68746</span>D6C3E<br>Email [thorough only] (eml)，文件头：<span class="hljs-number">44656</span>C69766572792D646174653A<br>Outlook Express (dbx)，文件头：CFAD12FEC5FD746F<br>Outlook (pst)，文件头：<span class="hljs-number">2142444</span>E<br>MS Word/Excel (xls.or.doc)，文件头：D0CF11E0<br>MS Access (mdb)，文件头：<span class="hljs-number">5374616</span>E64617264204A<br>WordPerfect (wpd)，文件头：FF575043<br>Postscript (eps.or.ps)，文件头：<span class="hljs-number">252150532</span>D<span class="hljs-number">41646F6265</span><br>Adobe Acrobat (pdf)，文件头：<span class="hljs-number">255044462</span>D312E<br>Quicken (qdf)，文件头：AC9EBD8F<br>Windows Password (pwl)，文件头：E<span class="hljs-number">3828596</span><br>Wave (wav)，文件头：<span class="hljs-number">57415645</span><br>AVI (avi)，文件头：<span class="hljs-number">41564920</span><br>Real Audio (ram)，文件头：<span class="hljs-number">2</span>E7261FD<br>Real Media (rm)，文件头：<span class="hljs-number">2E524D46</span><br>MPEG (mpg)，文件头：<span class="hljs-number">000001</span>BA<br>MPEG (mpg)，文件头：<span class="hljs-number">000001B3</span><br>Quicktime (mov)，文件头：<span class="hljs-number">6D6F6F76</span><br>Windows Media (asf)，文件头：<span class="hljs-number">3026</span>B2758E66CF11<br>MIDI (mid)，文件头：<span class="hljs-number">4D546864</span><br>M4a，文件头：<span class="hljs-number">00000018667479704</span>D3441<br>！！<span class="hljs-number">1</span>.PNG文件的前<span class="hljs-number">16</span>字节是已知的：<span class="hljs-number">89</span> <span class="hljs-number">50</span> <span class="hljs-number">4</span>E <span class="hljs-number">47</span> <span class="hljs-number">0</span>D <span class="hljs-number">0</span><span class="hljs-keyword">A</span> <span class="hljs-number">1</span><span class="hljs-keyword">A</span> <span class="hljs-number">0</span><span class="hljs-keyword">A</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">0</span>D <span class="hljs-number">49 48 44 52</span><br><br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h1><p>隐写一把梭</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/JamesHoi/PuzzleSolver/releases/tag/v1.0.1-beta">Release v1.0.1 beta · JamesHoi&#x2F;PuzzleSolver · GitHub</a><a target="_blank" rel="noopener" href="https://aperisolve.fr/">Aperi’Solve (aperisolve.fr)</a></p>
+<h2 id="JPG"><a href="#JPG" class="headerlink" title="JPG"></a>JPG</h2><p>steghide：通过密码隐藏信息</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">steghide <span class="hljs-keyword">extract </span>-sf test.<span class="hljs-keyword">jpg </span>-p <span class="hljs-number">123456</span><br></code></pre></td></tr></table></figure>
+
+<p>stegseek：配套上面工具，爆破密码</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">stegseek</span> 文件 字典<br></code></pre></td></tr></table></figure>
+
+<p>Stegdetect：针对jpg隐写，支持outguess，jsteg，jphide，invisible</p>
+<p>F5-steganography-master</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#有密码的情况</span><br>java Extract beautiful.jpg -p passwd<br><span class="hljs-comment">#无密码的情况</span><br>java Extract beautiful.jpg<br><span class="hljs-comment">#解密出来的数据会放到F5文件夹下的output.txt中</span><br></code></pre></td></tr></table></figure>
+
+<p>outtguess</p>
+<h2 id="PNG"><a href="#PNG" class="headerlink" title="PNG"></a>PNG</h2><p>zsteg：图片lsb快速分析</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css">zsteg -<span class="hljs-selector-tag">a</span> 图片名<br><br>zsteg -e 通道 图片名<br></code></pre></td></tr></table></figure>
+
+<p>cloacked-pixel：可加密的lsb</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus">python2 lsb<span class="hljs-selector-class">.py</span> analyse 路径<br>python2 lsb<span class="hljs-selector-class">.py</span> extract 路径 out 密码<br>（python lsb<span class="hljs-selector-class">.py</span> extract -<span class="hljs-selector-tag">i</span> <span class="hljs-string">&quot;路径&quot;</span> -o out<span class="hljs-selector-class">.txt</span> -<span class="hljs-selector-tag">p</span> 密码）<br></code></pre></td></tr></table></figure>
+
+<p>盲水印</p>
+<p>爆破宽高</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stylus">import binascii<br>import struct<br><br>crcbp = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;1.png&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>)<span class="hljs-selector-class">.read</span>()    #打开图片<br>crc32frombp = <span class="hljs-built_in">int</span>(crcbp<span class="hljs-selector-attr">[29:33]</span><span class="hljs-selector-class">.hex</span>(),<span class="hljs-number">16</span>)     #读取图片中的CRC校验值<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(crc32frombp)</span></span><br> <br><span class="hljs-keyword">for</span> <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4000</span>):                        #宽度<span class="hljs-number">1</span>-<span class="hljs-number">4000</span>进行枚举<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">4000</span>):                    #高度<span class="hljs-number">1</span>-<span class="hljs-number">4000</span>进行枚举<br>        data = crcbp<span class="hljs-selector-attr">[12:16]</span> + \<br>            struct<span class="hljs-selector-class">.pack</span>(<span class="hljs-string">&#x27;&gt;i&#x27;</span>, i)+struct<span class="hljs-selector-class">.pack</span>(<span class="hljs-string">&#x27;&gt;i&#x27;</span>, j)+crcbp<span class="hljs-selector-attr">[24:29]</span><br>        crc32 = binascii<span class="hljs-selector-class">.crc32</span>(data) &amp; <span class="hljs-number">0</span>xffffffff<br>        <span class="hljs-selector-id">#print</span>(crc32)<br>        <span class="hljs-built_in">if</span>(crc32 == crc32frombp):            #计算当图片大小为<span class="hljs-selector-tag">i</span>:j时的CRC校验值，与图片中的CRC比较，当相同，则图片大小已经确定<br>            <span class="hljs-built_in">print</span>(<span class="hljs-selector-tag">i</span>, j)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hex:&#x27;</span>, <span class="hljs-built_in">hex</span>(i), <span class="hljs-built_in">hex</span>(j))<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<p>IDAT块隐写：010提取数据后解压</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> zlib<br><span class="hljs-keyword">import</span> binascii<br>IDAT = <span class="hljs-string">&quot;789C5D91011280400802BF04FFFF5C75294B5537738A21A27D1E49CFD17DB3937A92E7E603880A6D485100901FB0410153350DE83112EA2D51C54CE2E585B15A2FC78E8872F51C6FC1881882F93D372DEF78E665B0C36C529622A0A45588138833A170A2071DDCD18219DB8C0D465D8B6989719645ED9C11C36AE3ABDAEFCFC0ACF023E77C17C7897667&quot;</span>.decode(<span class="hljs-string">&#x27;hex&#x27;</span>)<br>result = binascii.hexlify(zlib.decompress(IDAT))<br><span class="hljs-built_in">print</span> (result.decode(<span class="hljs-string">&#x27;hex&#x27;</span>))<br><span class="hljs-built_in">print</span> (<span class="hljs-built_in">len</span>(result.decode(<span class="hljs-string">&#x27;hex&#x27;</span>)))<br></code></pre></td></tr></table></figure>
+
+<p>IDTAchunk:010或者tweakpng分析IDAT块，提取异常的加上文件头尾后爆破crc</p>
+<h2 id="GIF"><a href="#GIF" class="headerlink" title="GIF"></a>GIF</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">identify -<span class="hljs-keyword">format</span> <span class="hljs-string">&quot;%s %T \n&quot;</span> flag.gif<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">montage flag*.png -tile x1 -geometry +<span class="hljs-number">0</span>+<span class="hljs-number">0</span> flag.png     #合并图片<br>`.tile`：用于指定拼接的布局，格式为 `rowsxcolumns`。例如，`-tile <span class="hljs-number">2</span>x3` 表示将图像分成 <span class="hljs-number">2</span> 行 <span class="hljs-number">3</span> 列。<br><br>`-geometry`：用于指定每个图像块的大小和位置。例如，`-geometry +<span class="hljs-number">0</span>+<span class="hljs-number">0</span>` 表示没有间隙地拼接图像。<br><br>`-gaps`：在图像之间添加间隙，例如 `-gaps <span class="hljs-number">10</span>x10`。<br></code></pre></td></tr></table></figure>
+
+<h2 id="BMP"><a href="#BMP" class="headerlink" title="BMP"></a>BMP</h2><h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fallback">分解GIF的命令：convert glance.gif flag.png<br>水平镜像翻转图片：convert -flop reverse.jpg reversed.jpg<br>垂直镜像翻转图片：convert -flip reverse.jpg reversed.jpg<br>合成图片的命令：montage flag*.png -tile x1 -geometry +0+0 flag.png<br>-tile是拼接时每行和每列的图片数，这里用x1，就是只一行<br>-geometry是首选每个图和边框尺寸，我们边框为0，图照原始尺寸即可<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs routeros">lsb脚本<br><span class="hljs-keyword">from</span> PIL import Image<br>width = 1532<br>height = 961<br><span class="hljs-attribute">img</span>=Image.open(&quot;41.png&quot;)<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(width):<br>	<span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(height):<br>		<span class="hljs-attribute">pi</span>=img.getpixel((i,j))<br>		<span class="hljs-keyword">if</span>(pi[3] == 255):<br>            <span class="hljs-built_in">print</span>(1,<span class="hljs-attribute">end</span>=<span class="hljs-string">&#x27;&#x27;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(0,<span class="hljs-attribute">end</span>=<span class="hljs-string">&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs stylus">傅里叶盲水印<br>import cv2 as cv<br>import numpy as np<br>import matplotlib<span class="hljs-selector-class">.pyplot</span> as plt<br><span class="hljs-selector-tag">img</span> = cv<span class="hljs-selector-class">.imread</span>(<span class="hljs-string">&#x27;/root/桌面/flag.jpg&#x27;</span>, <span class="hljs-number">0</span>) #直接读为灰度图像，不过此题已经是灰度图片了<br>f = np<span class="hljs-selector-class">.fft</span><span class="hljs-selector-class">.fft2</span>(img)            #做频率变换<br>fshift = np<span class="hljs-selector-class">.fft</span><span class="hljs-selector-class">.fftshift</span>(f)     #转移像素做幅度谱<br>s1 = np<span class="hljs-selector-class">.log</span>(np<span class="hljs-selector-class">.abs</span>(fshift))#取绝对值：将复数变化成实数取对数的目的为了将数据变化到<span class="hljs-number">0</span>-<span class="hljs-number">255</span><br>plt<span class="hljs-selector-class">.subplot</span>(<span class="hljs-number">121</span>)<br>plt<span class="hljs-selector-class">.imshow</span>(<span class="hljs-selector-tag">img</span>, <span class="hljs-string">&#x27;gray&#x27;</span>)<br>plt<span class="hljs-selector-class">.title</span>(<span class="hljs-string">&#x27;original&#x27;</span>)<br>plt<span class="hljs-selector-class">.subplot</span>(<span class="hljs-number">122</span>)<br>plt<span class="hljs-selector-class">.imshow</span>(s1,<span class="hljs-string">&#x27;gray&#x27;</span>)<br>plt<span class="hljs-selector-class">.title</span>(<span class="hljs-string">&#x27;center&#x27;</span>)<br>plt<span class="hljs-selector-class">.show</span>()<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">oletools：提取Microsoft office等文件的VBA宏代码<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs 1c">wbStego4open：PDF,TXT,HTM.BMP隐写<br>打开有<span class="hljs-literal">NULL</span>字符<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">snow</span>隐写：属于空格隐写的一种，还有me隐写，可以用于图片的<span class="hljs-number">16</span>进制文本<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-symbol">NtfsStreamsEditor2</span>：txt文件检查<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-title class_">DeEgger</span> <span class="hljs-title class_">Embedder</span><span class="hljs-symbol">:PDF/</span>图片隐写<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h1><p>慢扫描电视sstv：e2eSoft</p>
+<p>NtfsStreamsEditor2</p>
+<p>频谱图，波形图</p>
+<p>DTMF提取：根据拨号音</p>
+<p><a target="_blank" rel="noopener" href="http://www.dialabc.com/sound/detect/">http://www.dialabc.com/sound/detect/</a></p>
+<h2 id="wav"><a href="#wav" class="headerlink" title="wav"></a>wav</h2><p>deepsound（可以deepsound2john爆破秘钥），slenteye，openpuff</p>
+<p>业余无线电</p>
+<p><img src="/2024/09/16/misc/image-20240912163032590.png" srcset="/img/loading.gif" lazyload alt="image-20240912163032590"></p>
+<h2 id="mp3"><a href="#mp3" class="headerlink" title="mp3"></a>mp3</h2><p>MP3Stego，slenteye</p>
+<h1 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h1><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">AVI</span><br>   │   ├── DeEggerSetup131.msi<br>   │   ├── <span class="hljs-built_in">MP4</span> QuickTime<br>   │   └── ffmpeg-latest-win32-<span class="hljs-keyword">static</span><br></code></pre></td></tr></table></figure>
+
+<p>mkvtool提取音频</p>
+<p>分帧lsb隐写</p>
+<p>分帧指定像素</p>
+<h1 id="压缩包"><a href="#压缩包" class="headerlink" title="压缩包"></a>压缩包</h1><p><img src="/2024/09/16/misc/image-20240912160203960.png" srcset="/img/loading.gif" lazyload alt="image-20240912160203960"></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">文件已损坏：元数据区和目录区的文件名长度<br>如果压缩文件已损坏，则尝试用winrar打开，工具-修复压缩包<br><span class="hljs-keyword">CRC</span>校验错误：元数据区和目录区的压缩方法<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs subunit">伪加密<br>zip<br>压缩源文件数据区：7<span class="hljs-string">-8</span>位表示有无加密<br><br>压缩源文件目录区：9<span class="hljs-string">-10</span>位表示是否是伪加密<br><br>一般这俩地方都是09 00的，大概率就是伪加密了(直接把第二个PK后的09改了就行)<br><br>rar<br>第24个字节尾数为4表示加密，0表示无加密，将尾数改为0即可破解伪加密<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">明文攻击：针对如ZipCrypto等旧版的加密算法，分为全明文和部分明文攻击，部分明文攻击针对ZipCrypto Store算法<br>https:<span class="hljs-regexp">//</span>www.freebuf.com<span class="hljs-regexp">/articles/</span>network/<span class="hljs-number">255145</span>.html<br>部分明文需要<span class="hljs-number">8</span>+<span class="hljs-number">4</span>即<span class="hljs-number">12</span>个已知字符，其中<span class="hljs-number">8</span>个要求连续<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/09/16/misc/image-20240912163712019.png" srcset="/img/loading.gif" lazyload alt="image-20240912163712019"></p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs maxima">首先使用-C输入zip文件 <br>-c指定zip内部文件<br>然后-o 指定偏移量 -p 内部文件的指定明文<br>最后其他偏移量用-x指定<br><br>可以使用命令echo -n <span class="hljs-string">&quot;明文&quot;</span> | xxd -r -ps &gt; <span class="hljs-number">1.</span>txt写入明文文件<br><br>以png文件为例，png开头恒定为<span class="hljs-number">89</span> <span class="hljs-number">50</span> 4E <span class="hljs-number">47</span> <span class="hljs-number">0D</span> <span class="hljs-number">0A</span> 1A <span class="hljs-number">0A</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">0D</span> <span class="hljs-number">49</span> <span class="hljs-number">48</span> <span class="hljs-number">44</span> <span class="hljs-number">52</span><br><br><span class="hljs-built_in">time</span> brcrack -C 压缩包 -c 压缩包中的加密文件 -p 明文文件（已知加密文件的部分） -o 偏移量（也就是<span class="hljs-number">0</span>） &gt;<span class="hljs-number">1.</span><span class="hljs-built_in">log</span>&amp;tail -f <span class="hljs-number">1.</span><span class="hljs-built_in">log</span><br><br>brcrack -C 压缩包 -c 获取的文件 -k 上一步得到的<span class="hljs-built_in">key</span> -d 输出文件名<br><br>压缩包：文件名会出现在zip压缩包的文件头，偏移量为<span class="hljs-number">30</span>，所以当一个压缩包内有另一个压缩包，可以根据内部压缩包名字进行攻击，由zip文件头<span class="hljs-number">4</span>字节，内部压缩包名字≥<span class="hljs-number">8</span>字节<br><br>brcrack -C 压缩包 -c 内部压缩包名字 -p 明文文件（内部压缩包中的压缩文件名，会被写入压缩包文件头中） -o <span class="hljs-number">30</span> -x <span class="hljs-number">0</span> <span class="hljs-number">504B0304</span><br>brcrack -C 压缩包 -c 内部压缩包名字 -k 秘钥 <span class="hljs-number">0d</span> 输出文件名<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/09/16/misc/image-20240912215228777.png" srcset="/img/loading.gif" lazyload alt="image-20240912215228777"></p>
+<p>例如以上题目 zip里面有zip，-c指定内部压缩包，-p指定的文件内容是dasflow.pcap(会出现在内部压缩包文件头内)</p>
+<p><img src="/2024/09/16/misc/image-20240910221343374.png" srcset="/img/loading.gif" lazyload alt="image-20240910221343374"></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">crc爆破：大量文件&lt;=<span class="hljs-number">18</span>字节，爆破出密码<br>https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/mochu7777777/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">110206427</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">密码不可见字符：python处理<br><span class="hljs-built_in">base64</span>加密后再<span class="hljs-built_in">base64</span>解密得到bytes<br>libnum.n2s<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="加密手法"><a href="#加密手法" class="headerlink" title="加密手法"></a>加密手法</h1><p><a target="_blank" rel="noopener" href="https://goodlunatic.github.io/posts/1ad9200/">CTF-Misc Guide - ⚡Lunatic BLOG⚡ (goodlunatic.github.io)</a></p>
+<h2 id="HMAC-SHA"><a href="#HMAC-SHA" class="headerlink" title="HMAC_SHA"></a>HMAC_SHA</h2><p><img src="/2024/09/16/misc/image-20240910225048302.png" srcset="/img/loading.gif" lazyload alt="image-20240910225048302"></p>
+<h2 id="Decabit-脉冲"><a href="#Decabit-脉冲" class="headerlink" title="Decabit 脉冲"></a>Decabit 脉冲</h2><p>也可以替换为01尝试</p>
+<p><img src="/2024/09/16/misc/image-20240912125157608.png" srcset="/img/loading.gif" lazyload alt="image-20240912125157608"></p>
+<h2 id="DNA"><a href="#DNA" class="headerlink" title="DNA"></a>DNA</h2><p><img src="/2024/09/16/misc/image-20240912125245027.png" srcset="/img/loading.gif" lazyload alt="image-20240912125245027"></p>
+<h2 id="arnold猫脸变换"><a href="#arnold猫脸变换" class="headerlink" title="arnold猫脸变换"></a>arnold猫脸变换</h2><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs maxima">from PIL import Image<br><br>img = Image.open(&#x27;catcat.png&#x27;)<br><span class="hljs-keyword">if</span> img.mode == <span class="hljs-string">&quot;P&quot;</span>:<br>    img = img.<span class="hljs-built_in">convert</span>(<span class="hljs-string">&quot;RGB&quot;</span>)<br>assert img.size[<span class="hljs-number">0</span>] == img.size[<span class="hljs-number">1</span>]<br><span class="hljs-built_in">dim</span> = <span class="hljs-built_in">width</span>, <span class="hljs-built_in">height</span> = img.size<br><br>st = <span class="hljs-number">1</span><br>a = <span class="hljs-number">114</span><br>b = <span class="hljs-number">514</span><br><span class="hljs-keyword">for</span> <span class="hljs-symbol">_</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(st):<br>    with Image.<span class="hljs-built_in">new</span>(img.mode, <span class="hljs-built_in">dim</span>) as canvas:<br>        <span class="hljs-keyword">for</span> nx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(img.size[<span class="hljs-number">0</span>]):<br>            <span class="hljs-keyword">for</span> ny <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(img.size[<span class="hljs-number">0</span>]):<br>                y = (ny - nx * a) <span class="hljs-symbol">%</span> <span class="hljs-built_in">width</span><br>                x = (nx - y * b) <span class="hljs-symbol">%</span> <span class="hljs-built_in">height</span><br>                canvas.putpixel((y, x), img.getpixel((ny, nx)))<br>canvas.<span class="hljs-built_in">show</span>()<br>canvas.<span class="hljs-built_in">save</span>(&#x27;flag.png&#x27;)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/09/16/misc/image-20240913105106499.png" srcset="/img/loading.gif" lazyload alt="image-20240913105106499">隐</p>
+<h2 id="螺旋加密"><a href="#螺旋加密" class="headerlink" title="螺旋加密"></a>螺旋加密</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs vim">def <span class="hljs-keyword">function</span>(n):<br>    matrix = [[<span class="hljs-number">0</span>] * n <span class="hljs-keyword">for</span> _ in <span class="hljs-built_in">range</span>(n)]<br><br>    <span class="hljs-keyword">number</span> = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">left</span>, <span class="hljs-keyword">right</span>, <span class="hljs-keyword">up</span>, down = <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, n - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-keyword">left</span> &lt; <span class="hljs-keyword">right</span> <span class="hljs-built_in">and</span> <span class="hljs-keyword">up</span> &lt; down:<br>        # 从左到右<br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-keyword">left</span>, <span class="hljs-keyword">right</span>):<br>            matrix[<span class="hljs-keyword">up</span>][i] = <span class="hljs-keyword">number</span><br>            <span class="hljs-keyword">number</span> += <span class="hljs-number">1</span><br><br>        # 从上到下<br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-keyword">up</span>, down):<br>            matrix[i][<span class="hljs-keyword">right</span>] = <span class="hljs-keyword">number</span><br>            <span class="hljs-keyword">number</span> += <span class="hljs-number">1</span><br><br>        # 从右向左<br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-keyword">right</span>, <span class="hljs-keyword">left</span>, -<span class="hljs-number">1</span>):<br>            matrix[down][i] = <span class="hljs-keyword">number</span><br>            <span class="hljs-keyword">number</span> += <span class="hljs-number">1</span><br><br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(down, <span class="hljs-keyword">up</span>, -<span class="hljs-number">1</span>):<br>            matrix[i][<span class="hljs-keyword">left</span>] = <span class="hljs-keyword">number</span><br>            <span class="hljs-keyword">number</span> += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">left</span> += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">right</span> -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">up</span> += <span class="hljs-number">1</span><br>        down -= <span class="hljs-number">1</span><br>    # n 为奇数的时候，正方形中间会有个单独的空格需要单独填充<br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>: <br>        matrix[n // <span class="hljs-number">2</span>][n // <span class="hljs-number">2</span>] = <span class="hljs-keyword">number</span><br>    <span class="hljs-keyword">return</span> matrix<br></code></pre></td></tr></table></figure>
+
+<p>SilentEyes：通用图片和音频加密</p>
+<p>exiftools：exif数据查看</p>
+<p>wbStego4open：PDF,TXT,HTM.BMP隐写<br>snow隐写：属于空格隐写的一种，还有me隐写，可以用于图片的16进制文本</p>
+<p><a target="_blank" rel="noopener" href="https://www.darkside.com.au/snow">https://www.darkside.com.au/snow</a></p>
+<p>clienteye：行列不对齐的小灰块</p>
+<p>DeEgger Embedder:PDF 图片隐写</p>
+<p>stegpy：stegpy path -p pass</p>
+<h1 id="取证"><a href="#取证" class="headerlink" title="取证"></a>取证</h1><h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>raw&#x2F;mem&#x2F;dmp&#x2F;dump</p>
+<p>可以使用strings获取系统版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 识别操作系统的基本信息</span><br>vol.py mem.dump imageinfo<br><span class="hljs-comment"># 查看进程</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 pslist<br><span class="hljs-comment"># 查看隐藏或者解链的进程</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 pstree<br><span class="hljs-comment"># 通过memdump爆破出进程对应的信息</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 memdump -p 3036 --dump-dir=./<br><span class="hljs-comment"># 扫描镜像中的服务</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f mem.raw --profile=Win7SP1x64 svcscan<br><span class="hljs-comment"># 扫描进程缓存的文件</span><br>vol.py -f memory.raw --profile=Win7SP1x64 filescan<br><span class="hljs-comment"># 查找特定后缀的文件</span><br>vol.py -f example.raw --profile=Win7SP1x64 filescan | grep -E <span class="hljs-string">&#x27;txt|png|jpg|gif|zip|rar|7z|pdf|doc&#x27;</span><br><span class="hljs-comment"># 查找指定文件夹下的文件</span><br>volatility -f example.raw --profile=Win7SP1x64 filescan | grep TMP_User<br><span class="hljs-comment"># 使用dumpfiles爆破文件内容（有时可能会出现vol2提取不了但是vol3可以的情况，也可以使用 R-stdio 工具提取）</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 dumpfiles -Q 0x000000007e410890 --dump-dir=./<br><span class="hljs-comment"># 查看进程环境变量</span><br>vol.py -f memory.raw --profile=Win7SP1x64 envars<br><span class="hljs-comment"># 扫描进程命令行参数</span><br>vol.py -f memory.raw --profile=Win7SP1x64 cmdscan<br>vol.py -f memory.raw --profile=Win7SP1x64 cmdline<br><span class="hljs-comment"># 扫描动态库列表</span><br><span class="hljs-comment"># 可使用-p参数指定PID号</span><br>vol.py -f memory.img --profile=Win2003SP1x86 dlllist<br>vol.py -f memory.img --profile=Win2003SP1x86 ldrmodules<br><span class="hljs-comment"># 扫描系统中的恶意软件</span><br>vol.py -f memory.img --profile=Win2003SP1x86 malfind<br><span class="hljs-comment"># 查看当前镜像中的用户</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f mem.raw --profile=Win7SP1x64 printkey -K <span class="hljs-string">&quot;SAM\Domains\Account\Users\Names&quot;</span><br><span class="hljs-comment"># 查看镜像中的用户名和密码(hash值)</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 hashdump<br><span class="hljs-comment"># 使用mimikatz插件快速获取用户密码</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f mem.dump --profile=Win7SP1x64 mimikatz<br><span class="hljs-comment"># 扫描注册表数据</span><br><span class="hljs-comment"># 查看注册表配置单元</span><br>vol.py -f memory.raw --profile=Win7SP1x64 hivelist<br><span class="hljs-comment"># 查看注册表键值</span><br>vol.py -f OtterCTF.vmem --profile=Win7SP1x64 printkey<br><span class="hljs-comment"># 查看注册表键名</span><br>vol.py -f memory.raw --profile=Win7SP1x64 hivedump -o 0xfffff8a001cce010(注册表Volatility地址)<br><span class="hljs-comment"># 查看网络连接状态</span><br>vol.py -f memory.raw --profile=Win7SP1x64 connscan<br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f mem.raw --profile=Win7SP1x64 netscan<br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f mem.raw --profile=Win7SP1x64 connections<br><span class="hljs-comment"># 查看浏览器历史记录</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 iehistory<br><span class="hljs-comment"># 显示有关编辑控件的信息</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 editbox<br><span class="hljs-comment"># 查看当前展示的notepad的内容</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 notepad<br><span class="hljs-comment"># 获取屏幕截图</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 screenshot --dump-dir=./<br><span class="hljs-comment"># 查看剪贴板信息</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 clipboard<br><span class="hljs-comment"># 查看剪贴板信详细内容</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 clipboard -v<br><span class="hljs-comment"># 查看运行程序相关的记录，比如最后一次更新时间，运行过的次数等</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 userassist<br><span class="hljs-comment"># 最大程序提取信息</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 timeliner<br><span class="hljs-comment"># 恢复被删除的文件</span><br>vol.py -f 1.vmem --profile=Win7SP1x64 mftparser<br><span class="hljs-comment"># 使用ndispktscan插件搜索内核的网络流量包信息</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f OtterCTF.vmem --profile=Win7SP1x64 ndispktscan<br><span class="hljs-comment"># 使用usbstor插件获取USB连接信息</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f OtterCTF.vmem --profile=Win7SP1x64 usbstor<br><span class="hljs-comment"># 使用VolDiff进行恶意软件检测</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f OtterCTF.vmem --profile=Win7SP1x64 voldiff<br><span class="hljs-comment"># 使用bitlocker插件获取Bitlocker的加密密钥</span><br>vol.py --plugins=/home/kali/volatility/volatility/plugins -f OtterCTF.vmem --profile=Win7SP1x64 bitlocker<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看命令</span><br>vol3.py -h<br><span class="hljs-comment"># 扫描镜像中的文件</span><br>vol3.py -f dacong.raw windows.filescan<br><span class="hljs-comment"># 查看桌面上的文件</span><br>vol3.py -f dacong.raw windows.filescan | grep Desktop<br><span class="hljs-comment"># 提取文件</span><br>vol3.py -f mem.raw windows.dumpfiles --virtaddr=<span class="hljs-string">&quot;0x0000e0007ad17f20&quot;</span><br><span class="hljs-comment"># 扫描注册表（感觉这个功能vol2的更好）</span><br>vol3.py -f dacong.raw windows.registry.printkey<br>vol3.py -f dacong.raw windows.registry.hivelist<br><span class="hljs-comment"># 扫描命令行记录</span><br>vol3.py -f dacong.raw windows.cmdline<br><span class="hljs-comment"># 查看网络使用状态、端口占用状态</span><br>vol3.py -f dacong.raw windows.netscan<br>vol3.py -f dacong.raw windows.netstat<br><span class="hljs-comment"># 查看系统中的进程</span><br>vol3.py -f dacong.raw windows.pslist<br>vol3.py -f dacong.raw windows.pstree<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/09/16/misc/image-20240912170316898.png" srcset="/img/loading.gif" lazyload alt="image-20240912170316898"></p>
+<ol>
+<li><code>VBoxTray.exe：类似vmtool</code></li>
+<li><code>ClipboardMonitor：剪切板监控软件</code></li>
+<li><code>mstsc.exe：远程桌面连接</code></li>
+</ol>
+<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h2><p>fat&#x2F;VMDK&#x2F;e01&#x2F;ad1&#x2F;vhd</p>
+<p>veracrypt挂载,取证大师<img src="/2024/09/16/misc/image-20240912170612405.png" srcset="/img/loading.gif" lazyload alt="image-20240912170612405"></p>
+<ul>
+<li>用户的powershell历史记录会保存在这个路径下 \Users\test\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</li>
+<li>D盾扫网站目录</li>
+<li>mysql数据从qp.xb恢复</li>
+<li>磁盘回复：extundelete</li>
+<li>浏览器凭证破解：firepwd</li>
+<li>DPAPI破解</li>
+<li>加密卷：veracrypt truecrypt encfs</li>
+<li>GPG&#x2F;PGP:GPG&#x2F;Kleopatra</li>
+<li>cipher加密：Advanced efs data recovery</li>
+</ul>
+<h1 id="二维码"><a href="#二维码" class="headerlink" title="二维码"></a>二维码</h1><p>修复：QRazyBox，PS</p>
+<p>反色处理</p>
+<h1 id="流量"><a href="#流量" class="headerlink" title="流量"></a>流量</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">tshark提取<br><span class="hljs-comment"># -r [输入的pcap文件路径]: 指定要分析的pcap文件。</span><br><span class="hljs-comment"># -Y &quot;http.request.method == POST&quot;: 使用一个显示过滤器只显示POST请求。</span><br><span class="hljs-comment"># -T fields: 输出指定的字段数据。</span><br><span class="hljs-comment"># -e http.file_data: 输出HTTP负载的数据。</span><br><br>tshark -r 1.pcapng -Y <span class="hljs-string">&quot;http&quot;</span> -T fields -e http.file_data | <span class="hljs-built_in">uniq</span> &gt; data.txt<br>可以使用 <span class="hljs-built_in">uniq</span> 参数去除重复行<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">过滤<br><span class="hljs-keyword">http</span>。request<br></code></pre></td></tr></table></figure>
+
+<p>分类</p>
+<ul>
+<li>USB</li>
+<li>Webshell</li>
+<li>NTLM</li>
+<li>工控</li>
+<li>蓝牙（OBEX）</li>
+<li>邮件（SMTP）</li>
+<li>无线流量</li>
+<li>ICMP</li>
+<li>VPN</li>
+<li>ADS-B</li>
+<li>修复流量包</li>
+</ul>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="邮件"><a href="#邮件" class="headerlink" title="邮件"></a>邮件</h2><p>eml-analyzer：提取邮件附件</p>
+<p><img src="/2024/09/16/misc/image-20240910230252285.png" srcset="/img/loading.gif" lazyload alt="image-20240910230252285"></p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>var&#x2F;cache&#x2F;locate&#x2F;locatedb locate命令数据库</p>
+<h2 id="tupper自指"><a href="#tupper自指" class="headerlink" title="tupper自指"></a>tupper自指</h2><p>数字转图片</p>
+<h2 id="ps临近缩小"><a href="#ps临近缩小" class="headerlink" title="ps临近缩小"></a>ps临近缩小</h2><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">scap文件-sysdig处理</span><br><span class="hljs-keyword"></span>apng文件（文件头acTL和fcTL）-apngdis_gui<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/" class="print-no-link">#CTF</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>misc</div>
+      <div>http://example.com/2024/09/16/misc/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>z2zQAQ</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/16/%E5%81%A5%E8%BA%AB/" title="健身">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">健身</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/16/%E9%9D%A2%E7%AD%8B/" title="面筋">
+                        <span class="hidden-mobile">面筋</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/z2z_custom/custom.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":240,"height":480},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
+
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/click.js"></script>
+
+
