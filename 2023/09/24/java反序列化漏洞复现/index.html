@@ -1,0 +1,889 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bz.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="z2zQAQ">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="跟着p神+b站组长复现了一些java链子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java反序列化漏洞复现">
+<meta property="og:url" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="Welcome to my world">
+<meta property="og:description" content="跟着p神+b站组长复现了一些java链子">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/af6f7ed4fa494b017fd94674d1acac2b.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230141704455.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/0decef64baffec427ca8503b6055d012.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/451006b45403e4916ae89c1bac57168c.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/797821b047a0aa1970d24586a60e6e61.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/286bd714c894d8bf2db07f8f04e02323.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/63a36712d33061393ef3aa3974c6e165.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/78ce747963117a1a74432392b4fae2c8.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/fdb06310411b2b8c0eb1c15a9bd010a4.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/bbcf05b0825c29bc8168c9b99b41ed4f.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/1858e0f761cc2bc3e7092ea2b0a6a5ed.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/5cfdd45bdae2b2417775ed46616fd7e6.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/3b63106246b1c42b6b3edf765722022d.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/1e001eb8613399c766028cca2208c03f.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/e50396f2a799915ae1a443566d136c8a.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/c98fce6b6222229e8bc9037b6b53c8bb.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ff2051707c278f1d4568df83e5ec4438.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ade26093c15bbd94bc93ae52b3c6e75e.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/13d3c235cdee3f76a831e4b5adcf462f.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/950f13a925722aa8a01ef421ce1c21bc.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/96228eadb7d6edc8fcf4d351ebcbdd06.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/85b2366957f5b394f8191f99fefe59a2.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/51cc8f6c209cda4b5236f950aae54f76.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/346ac98b2858372421dd9a0f353b66e2.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/2814ca791e8398adc40537133b3e1e50.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/60e389a8a285f78d23d2860b183d2f89.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/8fb0727ffebea79221cd577f1550031b.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/2f8471b5faf8e18282ad8fc0167cc2b1.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ff2051707c278f1d4568df83e5ec4438.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/255b549250c082d6699e738adcbddce0.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230144141189.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123902078.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123941432.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230124520441.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230124322406.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123640842.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230125549587.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152230884.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152606169.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152543096.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152825431.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173809708.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172546356.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172657803.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172751878.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173957903.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174043718.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174253717.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174549341.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173420723.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173342663.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173556313.png">
+<meta property="og:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173406262.png">
+<meta property="article:published_time" content="2023-09-24T02:58:48.000Z">
+<meta property="article:modified_time" content="2025-01-02T08:45:43.395Z">
+<meta property="article:author" content="z2zQAQ">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/af6f7ed4fa494b017fd94674d1acac2b.png">
+  
+  
+  
+  <title>java反序列化漏洞复现 - Welcome to my world</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/cloudedGlass.css">
+<link rel="stylesheet" href="/z2z_custom/custom.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":80,"cursorChar":"__","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>z2zQAQ</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/moon.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="java反序列化漏洞复现"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-24 10:58" pubdate>
+          2023年9月24日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">java反序列化漏洞复现</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="JAVA反序列化分析思路"><a href="#JAVA反序列化分析思路" class="headerlink" title="JAVA反序列化分析思路"></a>JAVA反序列化分析思路</h1><p>从危险函数出发开始寻找不同类的同名函数实现任意方法调用（反射&#x2F;动态加载字节码）</p>
+<h1 id="反射基础"><a href="#反射基础" class="headerlink" title="反射基础"></a>反射基础</h1><img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/af6f7ed4fa494b017fd94674d1acac2b.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>r是一个Runtime实例，c是一个Runtime类，对c使用反射（getMethod）来获取exec方法，然后在r上调用这个方法</p>
+<h1 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h1><h2 id="CC1"><a href="#CC1" class="headerlink" title="CC1"></a>CC1</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ApacheSerialize</span> &#123;    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;        Transformer[] transformers = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Transformer</span>[] &#123;                <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConstantTransformer</span>(Runtime.class),                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;getMethod&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[] &#123;String.class, Class[].class &#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[] &#123;<span class="hljs-string">&quot;getRuntime&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[<span class="hljs-number">0</span>] &#125;),                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;invoke&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[] &#123;Object.class, Object[].class &#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[] &#123;<span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[<span class="hljs-number">0</span>] &#125;),                <span class="hljs-keyword">new</span> <span class="hljs-title class_">InvokerTransformer</span>(<span class="hljs-string">&quot;exec&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Class</span>[] &#123;String.class &#125;, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[] &#123;<span class="hljs-string">&quot;calc.exe&quot;</span>&#125;)        &#125;; <span class="hljs-comment">//将transformers数组存入ChaniedTransformer这个继承类    Transformer transformerChain = new ChainedTransformer(transformers);java</span><br></code></pre></td></tr></table></figure>
+
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230141704455.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230141704455">
+
+<h3 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a>transformer</h3><p>InvokerTransformer（反射利用点）</p>
+<p>首先是由InvokerTransformer类中的transform实现了任意方法调用的同时还在构造函数中导致参数可控<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/0decef64baffec427ca8503b6055d012.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>上面的java反射就相当于</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/451006b45403e4916ae89c1bac57168c.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>（实际上自己构造的时候在IDE中直接看需要填入的变量还是挺方便的，这里不太好看懂）</p>
+<p>如以下语句就可以实现命令执行</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/797821b047a0aa1970d24586a60e6e61.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p><strong>将Runtime实例传入transfrom，cls就获取了Runtime类，method获取了Runtime类中的exec方法，然后对Runtime实例使用传入的传输calc</strong></p>
+<p>poc如下<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/286bd714c894d8bf2db07f8f04e02323.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/63a36712d33061393ef3aa3974c6e165.png" srcset="/img/loading.gif" lazyload class="" title="截图"> 
+
+<p>最后的目标是回到readObject，所以此时要寻找不同的方法来调用transform</p>
+<hr>
+<h3 id="MAP"><a href="#MAP" class="headerlink" title="MAP"></a><strong>MAP</strong></h3><p>在TransformedMap类里面可以找到调用了transfrom方法的位置</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/78ce747963117a1a74432392b4fae2c8.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>而valueTransformer是TransformedMap构造函数中的一部分，也就是可控<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/fdb06310411b2b8c0eb1c15a9bd010a4.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>如下构造就可以对invokerTransformer调用tansform方法（由于构造函数是保护的，这里用到decorate装饰器）</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/bbcf05b0825c29bc8168c9b99b41ed4f.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>继续向上寻找发现是TransformedMap的父类的MapEntry类重写了setValue方法</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/1858e0f761cc2bc3e7092ea2b0a6a5ed.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>则可以如下，构造一个TransformedMap并且调用setValue即可（让TransformedMap的value为构造的invokertransformer然后通过setValue调用transform）<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/5cfdd45bdae2b2417775ed46616fd7e6.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>现在则需要一个可以遍历数组的地方并且需要value可控或者不同名的调用了setValue</p>
+<hr>
+<h3 id="AnnotationInvocationHandler"><a href="#AnnotationInvocationHandler" class="headerlink" title="AnnotationInvocationHandler"></a><strong>AnnotationInvocationHandler</strong></h3><p>pop链的最后一步<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/3b63106246b1c42b6b3edf765722022d.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>满足两个if条件后即可调用setvalue</p>
+<p><strong>但是这个类是一个default类，需要用反射创建，并且可以看见他的构造函数中的第一个参数是一个注解类（如Override）</strong><img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/1e001eb8613399c766028cca2208c03f.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>此时有三个问题：</p>
+<p><strong>1.如何通过if判断来进入这个setvalue中</strong></p>
+<p><strong>2.setValue貌似不可控</strong></p>
+<p><strong>3.Runtime对象本身是不可序列化的，需要通过反射</strong></p>
+<hr>
+<p><strong>Runtime实现反射调用</strong></p>
+<p><u><strong>解决Runtime不可序列化的问题</strong></u><br>正常情况，由于Runtime对象构造函数是私有的，需要通过getRuntime方法来获取这个对象</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/e50396f2a799915ae1a443566d136c8a.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>上图，<u><strong>通过.class获取了Runtime类，然后getMethod反射获取getRuntime方法，然后调用这个方法，获取r这个Runtime实例化对象，最后反射获取exec方法并且在r上调用</strong></u></p>
+<p>转换为InvokerTransform类中则是</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/c98fce6b6222229e8bc9037b6b53c8bb.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p><strong>chainedtransformer</strong></p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ff2051707c278f1d4568df83e5ec4438.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>这时候通过chainedtransform实现循环调用来使得调用更加简洁</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ade26093c15bbd94bc93ae52b3c6e75e.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<hr>
+<p><strong>进入if语句</strong></p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/13d3c235cdee3f76a831e4b5adcf462f.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>1.通过getKey来获取传入的memberValue中的键是否存在于menberTypes中</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/950f13a925722aa8a01ef421ce1c21bc.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>如上，反序列化入口获取了type参数也就是下面的Override.class<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/96228eadb7d6edc8fcf4d351ebcbdd06.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>接着获取了这个类中的成员方法，检查poc中传入的键在这个类中的成员方法终会是否存在</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/85b2366957f5b394f8191f99fefe59a2.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>则传入一个有成员方法的类并且将key改成他的一个方法名</p>
+<p>如Target的value方法<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/51cc8f6c209cda4b5236f950aae54f76.png" srcset="/img/loading.gif" lazyload alt="截图"></p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/346ac98b2858372421dd9a0f353b66e2.png" srcset="/img/loading.gif" lazyload class="" title="截图">如上修改即可
+
+<p>2.<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/2814ca791e8398adc40537133b3e1e50.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>即检查是否可以强转，这里不需要绕过</p>
+<hr>
+<p><strong>实现可控SetValue</strong></p>
+<p>正常而言，这里会调用</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/60e389a8a285f78d23d2860b183d2f89.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>也就是这里的transform的value不可控<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/8fb0727ffebea79221cd577f1550031b.png" srcset="/img/loading.gif" lazyload class="" title="截图"></p>
+<p>也就相当于要把下面的语句换成上面的语句（实现value可控）</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/2f8471b5faf8e18282ad8fc0167cc2b1.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p><strong>ConstantTransformer</strong></p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/ff2051707c278f1d4568df83e5ec4438.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<p>其transformer方法直接返回自身的一个变量同时可控<br>就可以利用它通过Runtime.getRuntime()创建一个Runtime实例</p>
+<p>此时即可转换成poc中的</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/255b549250c082d6699e738adcbddce0.png" srcset="/img/loading.gif" lazyload class="" title="截图">
+
+<hr>
+<p> <strong>pop链回溯</strong></p>
+<p>通过反射实例化了AnnotationInvocationHandler类—&gt;对他的value遍历并且调用setvalue，调用TransformedMap的父类的MapEntry#SetValue–&gt;transform方法(这一步为了实现可控SetValue借助到ConstantTransformer类)—&gt;在value中，我们恶意构造的chainTransformer类实现命令执行</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>第一次看java的链子，看了点反射跟基本语法就强行看完了，感觉看懂了但是让自己复现还是很困难（语法不清晰），写的逻辑不太清晰</p>
+<p>注意：以上的链子是利用TransformedMap回调调用+AnnotationInvocationHandler类调用SetValue来到transfrom方法，YSO链子的Lazymap需要利用动态代理</p>
+<p>本质上TransformedMap和Lazymap都只是一个<strong>装饰器</strong>，TransformedMap是回调调用（新加入一个键值对的时候调用transform） LazyMap是懒加载（get找不到值的时候去触发transform）</p>
+<h2 id="CC6"><a href="#CC6" class="headerlink" title="CC6"></a>CC6</h2><p>为了解决sun.reflect.annotation.AnnotationInvocationHandler#readObject在8u71后的变化(不再直接调用自定义的map而是弄了一个LinkedHashMap)</p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>首先看一下LazyMap，他的get方法调用了transform</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230144141189.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230144141189">
+
+<p>又回到了如何调用<strong>LazyMap#get</strong>（cc1demo利用的是Hashmap，yso的链子用的是动态代理调用lazymap）的问题，这里利用了<strong>TiedMapEntry</strong>#getValue，</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123902078.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230123902078">
+
+<p>hashCode方法调用了getValue<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123941432.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230123941432"></p>
+<p>hashmap的hash方法调用了hashcode</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230124520441.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230124520441">
+
+<p>他的readObject方法又调用了hash方法</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230124322406.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230124322406">
+
+
+
+<p>则得到链子</p>
+<figure class="highlight leaf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs leaf">Hashmap#readObject--&gt;Hashmap<span class="hljs-function"><span class="hljs-keyword">#</span><span class="hljs-title">hash</span><span class="hljs-params">(<span class="hljs-variable">key</span>)</span></span>--&gt;TiedMapEntry#hashcode--&gt;TiedMapEntry<span class="hljs-function"><span class="hljs-keyword">#</span><span class="hljs-title">getValue</span><span class="hljs-params">(<span class="hljs-variable">key</span>)</span></span>--&gt;LazyMap#get<br></code></pre></td></tr></table></figure>
+
+<p>同样写一个chain，decorate绑定到outputmap上面</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230123640842.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230123640842">
+
+<p>再把这个恶意的map绑定到TME的key上，最后构造一个hashmap，将TME放到他的key上</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230125549587.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230125549587">
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>调试发现，反序列化的时候并没有进入tranfrom方法，在map中判断存在这个叫做keykey的key</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152230884.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230152230884">
+
+<p>这是因为hashmap#put的时候触发了对TME的hash操作</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152606169.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230152606169">
+
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152543096.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230152543096">
+
+<p>所以最后添加上remove操作</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230152825431.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230152825431">
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>跟cc1很像的链子，主要是这次分析换成了LazyMap,绕过了jdk8u71</p>
+<h2 id="CC3"><a href="#CC3" class="headerlink" title="CC3"></a>CC3</h2><h3 id="链子"><a href="#链子" class="headerlink" title="链子"></a>链子</h3><p>利用字节码打的cc链</p>
+<p>首先记住 可以通过newTransformer和getOutputProperties来RCE</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173809708.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173809708">
+
+<p>cc3的关键在于TrAXFilter类的构造方法调用了newTransformer来绕过InvokerTransformer的限制</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172546356.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230172546356">
+
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172657803.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230172657803">
+
+<p>至于如何调用这个类的构造方法，利用类InstantiateTransformer</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230172751878.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230172751878">
+
+<h3 id="字节码"><a href="#字节码" class="headerlink" title="字节码"></a>字节码</h3><img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173957903.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173957903">
+
+<p>需要保证name为空 给class赋值</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174043718.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230174043718">
+
+<p>bytecodes不为空，同时对于_tfactory需要存在调用getExternalExtensionsMap的时候不返回空<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174253717.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230174253717"></p>
+<p>因为他是TransformerFactoryImpl类，给他赋一个即可</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230174549341.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230174549341">
+
+<p>对于TrAXFilter的赋值</p>
+<p>需要保证以下调用链的正常</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173420723.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173420723">
+
+<p>写一个反射修改属性的函数</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173342663.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173342663">
+
+<p>构造合法的恶意类</p>
+<p>首先需要继承AbstractTranslet</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173556313.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173556313">
+
+<p>注意name和tfactory</p>
+<img src="/2023/09/24/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/image-20241230173406262.png" srcset="/img/loading.gif" lazyload class="" title="image-20241230173406262">
+
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>链子剩余的部分和cc1 cc6相同，主要是会写恶意字节码类</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="category-chain-item">代码审计</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="print-no-link">#代码审计</a>
+      
+        <a href="/tags/java/" class="print-no-link">#java</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>java反序列化漏洞复现</div>
+      <div>http://example.com/2023/09/24/java反序列化漏洞复现/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>z2zQAQ</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/24/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B-%E6%84%8F%E4%B9%89/" title="《局外人》--意义">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《局外人》--意义</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/z2z_custom/custom.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":240,"height":480},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
+
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/click.js"></script>
+
+

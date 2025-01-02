@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2024/06/27/%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0/SWF3b6fXyoi5UzxjU3pcmeVTneg.png">
 <meta property="og:image" content="e:\blog\source_posts\%E8%93%9D%E9%98%9F%E7%AC%94%E8%AE%B0\image-20240707113633366.png">
 <meta property="article:published_time" content="2024-06-27T14:23:00.000Z">
-<meta property="article:modified_time" content="2024-09-07T09:35:05.239Z">
+<meta property="article:modified_time" content="2024-12-24T06:25:03.876Z">
 <meta property="article:author" content="z2zQAQ">
 <meta property="article:tag" content="蓝队">
 <meta property="article:tag" content="应急响应">
@@ -423,7 +423,7 @@
 <p><strong>DumpIt</strong><br>内存取证工具，需要 dump 整个系统，取证空间占用太大，不建议使用<br>替代工具:<code>FTK Imager</code> 和 <code>WinPMem</code></p>
 <p><strong>Volatility</strong><br>内存取证工具</p>
 <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a><strong>Linux</strong></h2><p>账号安全，历史命令，异常端口，开机启动、服务，异常文件，&#x2F;tmp&#x2F;user&#x2F;bin 目录、进程</p>
-<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-strong">**top和ps -aux**</span><br>查看系统资源占用<br></code></pre></td></tr></table></figure>
+<h3 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-strong">**top和ps aux**</span><br>查看系统资源占用<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-strong">**netstat -antpl**</span><br>查看网络连接以及其对应可执行程序<br></code></pre></td></tr></table></figure>
 
@@ -476,8 +476,10 @@
 <p>此处 sshd 是具体服务的脚本文件，S100ssh 是其软链接，S 开头代表加载时自启动；如果是 K 开头的脚本文件，代表运行级别加载时需要关闭的。</p>
 <p><strong>入侵排查：</strong></p>
 <p>启动项文件：</p>
-<p>more &#x2F;etc&#x2F;rc.local &#x2F;etc&#x2F;rc.d&#x2F;rc[0~6].d </p>
-<p>ls -l &#x2F;etc&#x2F;rc.d&#x2F;rc3.d&#x2F;</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">more <span class="hljs-regexp">/etc/</span>rc.local <span class="hljs-regexp">/etc/</span>rc.d/rc[<span class="hljs-number">0</span>~<span class="hljs-number">6</span>].d <br><br>ls -l <span class="hljs-regexp">/etc/</span>rc.d<span class="hljs-regexp">/rc3.d/</span><br></code></pre></td></tr></table></figure>
+
+
+
 <h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p><strong>基本使用</strong></p>
 <p>1、利用 crontab 创建计划任务</p>
 <ul>
@@ -1112,9 +1114,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" title="渗透">
+                      <a href="/2024/06/27/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" title="内网渗透">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">渗透</span>
+                        <span class="hidden-mobile">内网渗透</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
